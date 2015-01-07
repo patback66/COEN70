@@ -1,0 +1,38 @@
+Matthew Koken
+Coen 70
+Debug Report
+
+1. 
+Incorrect variable assignment meant that B would be modified with A when A was
+modified. B needs to be its own separate object, not referencing A. Create a new
+string for B.s and dereference A.s when assigning to get the proper output.
+1. Created breakpoints where B is modified (break).
+2. Step through variable assignments (s/step), check variable values at each point (display A, display B).
+3. Find that B = A only passes the object reference and B gets modified along
+    with A. Display shows that B and A change at the same time.
+4. Modify assignment for B to provide correct output.
+5. Rerun and verify correct assignment.
+
+2. 
+The array was not properly used. Initializing a size 10 array gives slots 0-9. In
+the for loop, it looked at array slots beginning at 1 and goes beyond the boundary
+of the array at i <= 10
+1. Create break point at the start of the for loop (break <line number>).
+2. Step through iterations of the for loop (c/continue);
+3. Examine the the values stored in the array (print score)
+4. See that unexpected values are printed/stored in the wrong slots.
+5. Modify bounds of for loop to cover first and last slot.
+6. Rerun and verify expected values at the same break points.
+
+3. 
+Surface area was calculated after it was used in the volume calculation.
+This meant that the volume would always be 0 since surfaceArea had not been
+modified since its initialization.
+1. Create breakpoint at variable initialization (break).
+2. Step to calculation of volume (s), verify radius value after 
+   GetRadius is called (print radius).
+4. Examine value of radius, surface area before the volume and surface area calculations       are performed.
+5. Notice that surfaceArea is always 0 before volume is calculated, 
+   it needs to be calculated before volume is calculated.
+6. Swap the lines for calculating volume and surfaceArea.
+7. Rerun and verify values are as expected after the swapped lines.
