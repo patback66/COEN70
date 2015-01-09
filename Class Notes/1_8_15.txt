@@ -1,0 +1,215 @@
+Class Notes 1/8/15
+Lecture 2
+
+//Fraction ADT
+//class interface
+class fraction {
+    private:
+        int n;
+        int d;
+        int gcd(int, int);
+    public:
+        fraction()
+        fraction(int);
+        fraction(int, int); //or the following to replace the 3: fraction int=0, int = 1);
+        float frac2dec();
+        void print();
+        void setN(int);
+        void setD(int);
+        int getN();
+        int getD();
+        fraction operator*(fraction);
+        fraction operator/(fraction);
+        fraction operator+(fraction);
+        fraction operator-(fraction);
+        friend ostream& operator<<(ostream&, const fraction&);
+};
+
+
+//use class name, name operator when done externally
+fraction::fraction() {
+    n = 0;
+    d = 1
+}
+
+fraction::fraction(int a) {
+    n = a;
+    d = 1;
+}
+
+//should look at requirements if d is allowed to be zero
+fraction::fraction(int n, int d) {
+    this->n = n; //could also use (*p). instead of p->
+    this->d = d;
+    simplify();
+}
+
+void fraction::setN(int n) {
+    this->n = n;
+    simplify();
+}
+
+void fraction::setD(int d) {
+    this->d = d;
+    simplify();
+}
+
+int fraction::getD() {
+    return d;
+}
+
+int fraction::getN() {
+    return n;
+}
+
+float fraction::frac2dec() {
+    return (float)n/d;
+}
+
+
+int fraction::gcd(int n, int n2)
+{
+    int temp;
+    n = abs(n);
+    n2 = abs(n2);
+    while(n>0) {
+        temp = n2;
+        n = n2 & n;
+        n2 - tmp;
+    }
+    return n2;
+}
+
+void fraction::simplify() {
+    int x = gcd(n,d);
+    if(x>o) {
+        n = n/x;
+        d/=x;
+    }
+}
+
+//assume using namespace standard
+void fraction::print() {
+    cout << n << "/" << d << endl;
+    return;
+}
+
+fraction fraction::operator*(const fraction& f) {
+    fraction v();
+    v.n = this->n * f.n; //in class so can use n, d
+    v.d = this->d * f.d; //if outside, then use get/set
+    v.simplify();
+    return v;
+}
+
+fraction fraction::operator/(const fraction& f) {
+    fraction rf(f.d, f.n);
+    return (*this)*rf; //operator* implements the * operator
+}
+
+/*****************
+
+x*1; compiler will attempt to cast
+1*x; impossible, need to create an operator
+
+*****************/
+
+//operators can be implemented as member and non member - member assumes lhs is that type
+    //but remember, you cannot access private in non member
+//non-member function (external)
+fraction operator*(int lhs, fraction rhs)
+{
+    return fraction(lhs)*rhs;
+    //or return rhs * lhs;
+}
+
+/*******************
+
+class fraction {
+    public:
+        friend fraction operator*(int, fraction); //allows an external entity to access private
+*******************/
+
+fraction operator+ (fraction lhs, fraction rhs) {
+    
+}
+
+/*******************
+
+    cout << 1 << "Hello" << X; //need to implement this operator for fraction
+
+*******************/
+
+ostream& operator<< (ostream& o, const fraction& f) {
+    o << f.n << "/" << f.d; //no endl
+    //for cout, cout << f.n << "/" << f.d; also works
+    return o;
+}
+
+bool operator< (const fraction& lhs, const fraction& rhs) {
+    return lhs.n * rhs.d < rhs.n * lhs.d;
+    //cross multiply then compare
+}
+
+bool operator> (const fraction& lhs, const fraction& rhs) {
+    return rhs < lhs;
+}
+
+bool operator== (const fraction& lhs, const fraction& rhs) {
+    return !(lhs < rhs) && !(lhs>rhs);
+}
+
+bool operator!= (const fraction& lhs, const fraction& rhs) {
+    return !(lhs!=rhs);
+}
+
+/*******************
+    <=
+    lhs<rhs || lhs == rhs
+    >=
+    lhs>rhs || lhs == rhs
+    
+    You can get by with only implementing the < method. This is the "fundamental"
+    comparison operator.
+*******************/
+
+/*******************
+cin
+int i;
+float f;
+cin >> i >> f;
+5______5.1
+55.1
+
+cin >> f ?? x;
+cin >> x;
+*******************/
+
+//cin needs to be member, friend
+
+istream& operator>>(istream& i, fraction& f) {
+    //read in integers/integers
+    int n, d;
+    char s;
+    i >> n >> "/" >> s >> d; //doesn't check for slash, you need to
+    f.n = n;
+    f.d = d;
+    return i;
+}
+
+/*******************
+potential methods required:
+constructor
+accessor
+mutator
+behavior of class
+operators
+    relations - important for sorting, comparisons
+    mathematical (if the object needs it)
+    input/output (at minimum, output)
+    assignment (fraction x, y; x=y);
+    copy (fraction x(y); <- special constructor called copy constructor)
+        if there are pointers, need to deep copy
+    
+    
+*******************/

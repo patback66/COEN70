@@ -75,3 +75,101 @@ String Constructors
     string phrase; //empty string
     string noun("ants"); //a string version of "ants"
     
+Mixing strings and C-strings
+    sstring phrase = "I love" + adjective + " " + noun + "!";
+    
+Member function length
+    int n = string_var.length();
+    
+String Processing
+    -same accessor operations
+    last_name[i];
+    -i must be inside range of length
+    
+Member Function at
+    -alternative to []
+    string str("Mary");
+    cout << str[6] << end1;
+    cout << str.at(6) << end1;
+    
+More Member Functions
+    (see powerpoint)
+    
+I/O with Class String
+    -insertion reads only until it see white space
+    
+string Objects to C-strings
+    -automatic conversion from C-string to string
+    -strings are not converted to C-strings
+    
+Formatting Output to Files
+    //FOrmat output to the screen
+    cout.setf(ios::fixed);
+    cout.setf(ios::showpoint);
+    cout.precision(2);
+    
+    //Format output to a file using the out-file stream
+    out_stream.setf(ios::fixed);
+    out_stream.setf(ios::showpoint);
+    out_steam.precision(2);
+    
+Creating Space in Output
+    -width function specifies the number of spaces for the next items
+    Not enough width? the entire item is always output
+    
+Unsetting Flags
+    -any flag that is set, may be unset
+    -use unset
+    cout.unset(ios::showpos);
+    
+Manipulators
+    cout << "Start" << setw(4) << 10 << setw(4) MM20<< setw(6) << 30;
+    produces Start  10  20    30
+    
+Setprecision manipulator
+    cout.setf(ios::fixed);
+    cout.setf(ios::showpoint);
+    cout << "$" << setprecision(2) << 10.3 << end1 << "$" << 20.5 << endl;
+
+    produces $10.30
+             $20.50
+ 
+    -setprecision setting stays in effect until changed
+
+Character Functions
+
+
+toupper returns an int
+    -Characters are stored as an int assignted to the char
+    -toupper and tolower actually return the integer representing the character
+    cout<<toupper('a'); //prints the integer for 'A'
+    char c = toupper(a); //places the integer for 'A' in c
+    
+Short-Circuit Evaluation
+    -boolean expressions do not need to be completely evaluated
+    -C++ uses short-circuit evaluation
+        -if the value of the leftmost sub-expression determines the value
+            of the final value of the expression, the rest of the expression is not evaluated
+            
+Increment operator
+    ++a //pre
+    a++ //post
+
+Decrement operator
+    same as increment
+
+void swap(int a, int b)
+{
+    int temp;
+    temp a;
+    a=b;
+    b=temp;
+}
+
+int main()
+{
+    int i=s, j=7;
+    swap(i, j);
+    cout<<i<<j;
+    return 0;
+}
