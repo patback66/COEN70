@@ -1,0 +1,77 @@
+Class Notes 1/7/15
+Lecture 2
+
+<< //out
+>> //in
+
+#include <ifstream>
+
+int main()
+{
+    using namespace std;
+    ifsteam in_stream;
+    ofstream out_stream;
+    in_steam.open("infile.dat");
+    out_stream.open("outfile.dat");
+    
+    
+}
+
+The End of the File
+    -Input files used by a program may vary in length
+        -Programs may not be able to assume the number of items in the file
+    -A way to know the end of the file is readed:
+        -The boolean expression (in_steam>>next)
+            -reads a value from in_steam and stores it in next
+            -true if value can be read and is stored
+            -flase if there is no value to be read
+    Example: to calculate the average of the numbers ina file
+    double next, sum = 0; 
+    int count = 0; 
+    while(in_stream >> next) { 
+        sum = sum + next; count++; 
+    } 
+    double average = sum / count;
+    
+How to Test End of File
+    -while(in_steam >>> next)
+    -while(!in_steam.eof())
+    -Which should be use?
+        -eof treated as text, using a member function to get
+        -extraction operator for number processing
+
+Insertion & extraction operators
+    << insertion
+    >> extraction
+    
+Program Errors
+    -Syntax errors
+        -Violation of the grammar rules of the language]
+        -Discovered by compiler
+    -Run-Time errors
+        -Harder to find,
+        -Detected by system
+    -Logical errors
+        -errors in algorithm
+        -not recognized
+        
+The Standard string class
+    -string is a standard data type
+    string s1, s2, s3;
+    s3 = s2
+    -Quoted strings are type-cast to type string    
+        -string s1 = "Hello Mom!";
+
+Using + with strings
+    -strings can be concatenated with +
+    s3 = s1 + s2;
+    -more space for s3 will be allocated as necesarry
+    
+Comparison of strings
+    -comparators work
+    -<, >, <=, >=
+    
+String Constructors
+    string phrase; //empty string
+    string noun("ants"); //a string version of "ants"
+    
