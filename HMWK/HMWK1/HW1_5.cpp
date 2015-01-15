@@ -60,7 +60,7 @@ void position::rotate(Axis axis, double angle) {
 	double y = _y;
 	double z = _z;
 	
-	//usses provided formulas for a shift
+	//uses provided formulas for a shift
 	switch (axis) {
 		case X:
 			_y = y * cos(angle) - z * sin(angle); 

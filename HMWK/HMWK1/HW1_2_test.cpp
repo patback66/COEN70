@@ -12,5 +12,5 @@ int main(int argc, char *argv[]) {
 	cout << s.getLastNumber() << endl; //expected 0.8
 	cout << s.getMean() << endl; //expected -0.166667
 	cout << s.getSmallestNumber() << endl; //expected-2.4
-	cout << s.getSum() << endl; //expected -.05
+	cout << s.getSum() << endl; //expected -0.5
 }
