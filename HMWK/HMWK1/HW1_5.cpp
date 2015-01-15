@@ -55,13 +55,15 @@ Makes a rotation about the specified axis for the specified angle.
 Uses Enum Axis defined in HW1_5.h
 */
 void position::rotate(Axis axis, double angle) {
+	//need to save current position to use while calculating and updating position.
 	double x = _x;
 	double y = _y;
 	double z = _z;
-	//need to save current position to use while calculating and updating position
+	
+	//usses provided formulas for a shift
 	switch (axis) {
 		case X:
-			_y = y * cos(angle) - z * sin(angle);
+			_y = y * cos(angle) - z * sin(angle); 
 			_z = y * sin(angle) + z * cos(angle);
 			break;
 		case Y:
