@@ -1,9 +1,9 @@
 #include <iostream>
-#include "HW1_5.h"
+#include "HW1_5.cpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 	position point(1,2,3);
-	cout << point.getCoordinates().x << endl; //expected 1
+	cout << point.getCoordinates().x;
 }

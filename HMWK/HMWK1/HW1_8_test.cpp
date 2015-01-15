@@ -7,9 +7,9 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	quadratic q(2,-10,3);
 	
-	cout << q.numberOfRealRoots() << endl;
-	cout << q.smallerSolution() << endl;
-	cout << q.largerSolution() << endl;
+	cout << q.numberOfRealRoots() << endl; //expected 2
+	cout << q.smallerSolution() << endl; //expected 0.320551
+	cout << q.largerSolution() << endl; //expected 4.67945
 	
 	return 0;
 }

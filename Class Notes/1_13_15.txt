@@ -1,0 +1,129 @@
+friend fractoin operator+ (fraction lhs, fraction rhs); //passes whole object
+                        --(fraction* lhs, fraction* rhs); //requires &a + &b
+                        --(fraction& lhs, fraction& rhs); //a+b will effect what's passed in
+                        --(const fraction& lhs, fraction& rhs); //a+b and will not change what is passed in
+////////////
+Input output
+
+cout << a;
+lhs     rhs
+////////////
+
+friend operator<< (ostream& lhs, const fraction& rhs);
+
+cout<< a << "Hello";
+int x, y;
+x = (y = 1);
+
+lhs << h << "/"<< d 
+friend istream& operator>>(istream& lhs, fraction& rhs);
+
+/////////////
+constructors
+accessor/mutators
+operators (+ - * / < > != == <= >= << >>)
+Don't make memory leaks
+
+assignment operatora = b; -> assignment
+
+fraction a(b);  <- copy constructor
+fraction a = b;
+
+        b
+    n       d
+    |       |
+        a
+    n       d
+    
+bit copy - don't rely on it
+need to clear memory, don't want pointers pointing to nothing
+
+/////////////
+
+class fraction {
+    public:
+        fraction (const fraction&);
+        fractoin& operator= (const fraction&);
+        ~ fraction(); //destructor - no return, parameters
+    
+};
+
+fraction:: fraction(const fraction& other) {
+    this->n = other n;  //*this=other; <- be lazy and do this, works the same
+    d = other.d;
+}
+
+operator= (const fraction&);
+
+fraction& fraction::operator= (const fraction& other) {
+    this->n = other.n;
+    this->d = other.d;
+    return *this;
+}
+
+fraction::~fraction() {}
+
+//////////////
+//////////////
+
+/////////////
+Data Structures
+Hold x number of floats
+
+"bag" ADT
+floats
+no limit
+allow
+duplicate
+remove_one
+remove_all
+contains
+size
+max
++, -, Union, Intersect
+size_one
+constructor
+destructor
+=
+<<
+
+dyn array
+/////////////
+
+class bag{
+    private:
+        int cap;
+        int size;
+        float* p;
+        float max;
+    public:
+        bag(int = 10);
+        bag(const bag&);
+        ~bag();                      //must have bag, ~bag, operator= if have one
+        bag& operator=(const bag&);
+        friend ostream& operator<<(ostream&, const bag&);
+        float max();
+        void add(float);
+        bool remove_one(float);
+        void remove_all(float);
+        bool contains(float);
+        int(size);
+        bag& operator+(const bag&);
+        bag& operator-(const bag&);
+}
+
+bag::bag(int c) {
+    cap = c;
+    size = 0;
+    p = new float[c];
+    max = 0.0; //will need to check if size is zero before compare for max on add
+    //take care when add 1st float
+}
+
+bag::~bag() {
+    if(p!=NULL)
+        delete [] p;
+}
+
+
+
