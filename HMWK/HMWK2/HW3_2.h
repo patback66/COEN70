@@ -52,6 +52,7 @@ class bag{
         Overload the - operator.
         */
         bag& operator-(const bag&);
+        bag& operator-=(const bag&);
         /*
         Increase the capacity of the bag.
         */

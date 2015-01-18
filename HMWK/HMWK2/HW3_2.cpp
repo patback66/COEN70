@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "HW2_2.h"
+#include "HW3_2.h"
 
 using namespace std;
 
@@ -147,7 +147,7 @@ bag bag::operator+ (const bag& rhs) {
 /*
 Overload the - operator.
 */
-bag bag::operator- (const bag&rhs) {
+bag& bag::operator- (const bag& rhs) {
     bag n;
     if(this->size == 0) {
         return n;
@@ -156,7 +156,13 @@ bag bag::operator- (const bag&rhs) {
     }
     bag a = *this;
     bag b = rhs;
-    for(int i = 0; i< a.size; i++) {
-        
+    for(int i = 0; i< b.size; i++) {
+        a.remove_one(b.p[i]);
     }
+    return a;
+}
+
+bag& operator-=(const bag& rhs) {
+    *this = *this - rhs;
+    return *this;
 }
