@@ -1,7 +1,11 @@
+#include <iostream>
+
+using namespace std;
+
 class bag{
     private:
         int cap;
-        int size;
+        int _size;
         float* p;
     public:
         /*
@@ -44,17 +48,18 @@ class bag{
         Returns the element count of the bag.
         */
         int size();
+        int size_one(float);
         /*
         Overload the + operator
         */
-        bag& operator+(const bag&);
+        bag operator+(const bag&);
         /*
         Overload the - operator.
         */
-        bag& operator-(const bag&);
-        bag& operator-=(const bag&);
+        bag operator-(const bag&);
+        bag operator-=(const bag&);
         /*
         Increase the capacity of the bag.
         */
         void increase();
-}
+};

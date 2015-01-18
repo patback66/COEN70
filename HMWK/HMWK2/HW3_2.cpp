@@ -10,7 +10,7 @@ Constructor
 */
 bag::bag(int c) {
     cap = c;
-    size = 0;
+    _size = 0;
     p = new float[c];
 }
 
@@ -36,9 +36,8 @@ bag& bag::operator= (const bag& other) {
     //copy
     this->p = new float[other.cap];
     this->cap = other.cap;
-    this->size = other.size;
-    this->max = other.max;
-    std::copy(other.p, other.p+other.size, this->p);
+    this->_size = other._size;
+    std::copy(other.p, other.p+other._size, this->p);
     return *this;
 }
 
@@ -54,8 +53,8 @@ bag::bag(const bag& other) {
 Overload operator <<
 */
 ostream& operator<< (ostream& out, const bag& b) {
-    for(int i = 0; i < b.size; i++) {
-        out<< p[i] << (i==b.size-1)?'':',';
+    for(int i = 0; i < b._size; i++) {
+        out<< b.p[i] << ((i==b._size-1)?"":", ");
     }
     return out;
 }
@@ -64,10 +63,10 @@ ostream& operator<< (ostream& out, const bag& b) {
 Add one "float" to the bag.
 */
 void bag::add(float x) {
-    if(this->size >= cap) {
+    if(this->_size >= cap) {
         increase();
     }
-    p[size++]=x;
+    p[_size++]=x;
 }
 
 /*
@@ -76,7 +75,7 @@ Increase the capacity of the bag.
 void bag::increase() {
     
     float* temp = new float[cap*2];
-    std::copy(p, p+size, temp);
+    std::copy(p, p+_size, temp);
     delete[] p;
     p=temp;
     cap*=2;
@@ -86,10 +85,10 @@ void bag::increase() {
 Remove one of "float" from the bag.
 */
 bool bag::remove_one(float x) {
-    for(int i = 0; i < size; i++) {
+    for(int i = 0; i < _size; i++) {
         if(p[i]== x) {
-            p[i] = p[size-1];
-            size--;
+            p[i] = p[_size-1];
+            _size--;
             return true;
         }
     }
@@ -106,11 +105,11 @@ void bag::remove_all(float x) {
 /*
 Return the size of the bag.
 */
-int bag::size() {return size;}
+int bag::size() {return _size;}
 
-int bag:size_one(float x) {
+int bag::size_one(float x) {
     int count = 0;
-    for(int i = 0; i< size; i++) {
+    for(int i = 0; i< _size; i++) {
         if(p[i] == x)
             count++;
     }
@@ -121,48 +120,42 @@ int bag:size_one(float x) {
 Overload the + operator
 */
 bag bag::operator+ (const bag& rhs) {
-    if(this->size == 0) {
+    if(this->_size == 0) {
         return rhs;
     }
-    if(rhs.size == 0) {
+    if(rhs._size == 0) {
         return *this;
     }
     bag new_bag;
     delete[] new_bag.p;
     new_bag.p = new float[cap + rhs.cap];
     new_bag.cap = cap + rhs.cap;
-    new_bag.size = size + rhs.size;
+    new_bag._size = _size + rhs._size;
     
-    if(max>rhs.max) {
-        max_bag.max = max;
-    } else {
-        new_bag.max = rhs.max;
-    }
-    
-    std::copy(this->p, this->p + this->size, new_bag.p);
-    std::copy(rhs.p, rhs.p + rhs.size, new_bag.p + this->size);
+    std::copy(this->p, this->p + this->_size, new_bag.p);
+    std::copy(rhs.p, rhs.p + rhs._size, new_bag.p + this->_size);
     return new_bag;
 }
 
 /*
 Overload the - operator.
 */
-bag& bag::operator- (const bag& rhs) {
+bag bag::operator- (const bag& rhs) {
     bag n;
-    if(this->size == 0) {
+    if(this->_size == 0) {
         return n;
-    } if(rhs.size == 0) {
+    } if(rhs._size == 0) {
         return n;
     }
     bag a = *this;
     bag b = rhs;
-    for(int i = 0; i< b.size; i++) {
+    for(int i = 0; i< b._size; i++) {
         a.remove_one(b.p[i]);
     }
     return a;
 }
 
-bag& operator-=(const bag& rhs) {
+bag bag::operator-=(const bag& rhs) {
     *this = *this - rhs;
     return *this;
 }
