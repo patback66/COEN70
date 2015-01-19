@@ -35,11 +35,38 @@ void keyed_bag::deallocItems(item* obj) {
 }
 
 keyed_bag::keyed_bag(const keyed_bag& other) {
-
+	*this = other;
 }
 
 keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
+	if (this != &rhs)
+	{
+		_size = rhs._size;
+		_cap = rhs._cap;
 
+		for (int i = 0; i < _cap; ++i)
+		{
+			deallocItems(_hashTable[i]);
+		}
+
+		for (int i = 0; i < rhs._cap; ++i)
+		{
+			if (rhs._hashTable[i] != NULL)
+			{
+				item *head = rhs._hashTable[i];
+				_hashTable[i] = new item(head -> key, head -> value);
+				item *p = _hashTable[i];
+				head = head -> next;
+				while(head != NULL) {
+					item *obj = new item(head -> key, head -> value);
+					p -> next = obj;
+					p = obj;
+					head = head -> next;
+				}
+			}
+		}
+	}
+	return *this;
 }
 
 ostream& operator<<(ostream& out, const keyed_bag& rhs) {
