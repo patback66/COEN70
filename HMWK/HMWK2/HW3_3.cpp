@@ -9,13 +9,14 @@ using namespace std;
 Constructor
 */
 sequence::sequence() {
-    
+    used = 0;
+    current_index = -1;
 }
 void sequence::start() {
     
 }
 void sequence::advance() {
-    
+    if(current_index )
 }
 void sequence::insert(const value_type& entry) {
     
@@ -26,13 +27,13 @@ void sequence::attach(const value_type& entry) {
 void sequence::remove_current() {
     
 }
-size_type sequence::size() {
+size_type sequence::size() const {
     
 }
-bool sequence::is_item() {
+bool sequence::is_item() const {
     
 }
-value_type sequence::current() {
+value_type sequence::current() const{
     
 }
 void sequence::add_front(const value_type& entry) {
