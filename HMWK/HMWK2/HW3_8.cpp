@@ -17,7 +17,9 @@ keyed_bag::keyed_bag(int cap) {
 keyed_bag::~keyed_bag() {
 	for (int i = 0; i < _cap; ++i)
 	{
-		deallocItems(_hashTable[i]);
+		if (_hashTable[i] != NULL) {
+			deallocItems(_hashTable[i]);
+		}
 	}
 	delete []_hashTable;
 }
@@ -35,36 +37,43 @@ void keyed_bag::deallocItems(item* obj) {
 }
 
 keyed_bag::keyed_bag(const keyed_bag& other) {
+	_cap = 0;
+	_size = 0;
 	*this = other;
 }
 
 keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
 	if (this != &rhs)
 	{
-		_size = rhs._size;
-		_cap = rhs._cap;
-
-		for (int i = 0; i < _cap; ++i)
+		for (int i = 0; i < _cap; i++)
 		{
-			deallocItems(_hashTable[i]);
+			if (_hashTable[i] != NULL) {
+				deallocItems(_hashTable[i]);
+			}
 		}
-
+		
+		if (_cap == 0) {
+			_hashTable = new item*[rhs._cap];
+		}
+		
 		for (int i = 0; i < rhs._cap; ++i)
 		{
 			if (rhs._hashTable[i] != NULL)
 			{
 				item *head = rhs._hashTable[i];
-				_hashTable[i] = new item(head -> key, head -> value);
+				_hashTable[i] = new item(head -> key, head -> data);
 				item *p = _hashTable[i];
 				head = head -> next;
 				while(head != NULL) {
-					item *obj = new item(head -> key, head -> value);
+					item *obj = new item(head -> key, head -> data);
 					p -> next = obj;
 					p = obj;
 					head = head -> next;
 				}
 			}
 		}
+		_size = rhs._size;
+		_cap = rhs._cap;
 	}
 	return *this;
 }
