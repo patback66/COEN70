@@ -66,9 +66,17 @@ void sequence::attach(const value_type& entry) {
     }
 }
 void sequence::remove_current() {
-    if (/* condition */)
+    if (is_item())
     {
-    	/* code */
+    	for (int i = current_index; i < used - 1; i++)
+    	{
+    		data[i] = data[i + 1];
+    	}
+    	used --;
+    	if (used == 0)
+    	{
+    		current_index = -1;
+    	}
     }
 }
 size_type sequence::size() const {
