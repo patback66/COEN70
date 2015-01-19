@@ -66,6 +66,21 @@ int keyed_bag::slot(int key) {
 	return (key % _cap);
 }
 
+/*
+True if the key is found to be used in the hash table, else false.
+*/
 bool keyed_bag::keyExist(int key) {
-
+    int index = slot(key);
+    if(_hashTable[index]==NULL)
+        return false;
+    else {
+        item* p = _hashTable[index];
+        
+        while(p != NULL) {
+            if(p->key == key)
+                return true;
+            p = p->next;
+        }
+    }
+    return false;
 }
