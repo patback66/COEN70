@@ -6,7 +6,13 @@ class keyed_bag {
 	private:
 		int _size;
 		int _cap;
-		/* TBD: Data Struct to implement? */
+		item* hashTable;
+		class item {
+			item(int,double);
+			double data;
+			int key;
+			item* next;
+		};
 	public:
 		keyed_bag(int = 30);
 		~keyed_bag();
