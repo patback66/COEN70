@@ -49,10 +49,27 @@ void sequence::insert(const value_type& entry) {
     }
 }
 void sequence::attach(const value_type& entry) {
-    
+    if (used < CAPACITY)
+    {
+    	if (current_index == -1)
+    	{
+    		data[used] = entry;
+    		current_index = used;
+    	} else {
+    		for (int i = used - 1; i > current_index; i--)
+    		{
+    			data[i + 1] = data[i];
+    		}
+    		data[++current_index] = entry;
+    	}
+		used ++;
+    }
 }
 void sequence::remove_current() {
-    
+    if (/* condition */)
+    {
+    	/* code */
+    }
 }
 size_type sequence::size() const {
     return used;
