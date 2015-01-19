@@ -48,6 +48,9 @@ void sequence::insert(const value_type& entry) {
         used++;
     }
 }
+/*
+Adds a copy of "entry" after the current item or to the end if no current.
+*/
 void sequence::attach(const value_type& entry) {
     if (used < CAPACITY)
     {
@@ -65,6 +68,9 @@ void sequence::attach(const value_type& entry) {
 		used ++;
     }
 }
+/*
+Removes the current item, then shifts to fill the gap.
+*/
 void sequence::remove_current() {
     if (is_item())
     {
@@ -86,6 +92,9 @@ bool sequence::is_item() const {
     return (current_index != -1);
 }
 
+/*
+Returns the current item or -1 if no current item.
+*/
 value_type sequence::current() const {
     if (is_item())
     {
@@ -109,7 +118,16 @@ void sequence::add_front(const value_type& entry) {
         current_index++;
     }
 }
+/*
+Removes the item in pos 0, then shifts the list down to fill the gap and 
+updates the current index.
+*/
 void sequence::remove_front() {
+    for(int i = 0; i < used; i++) {
+        data[i] = data[i+1];
+    }
+    used--;
+    current_index--;
     
 }
 void sequence::add_end(const value_type& entry) {
