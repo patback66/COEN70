@@ -185,6 +185,8 @@ sequence sequence::operator+(const sequence& other) {
 		return other;
 	}
 
+	assert(used + other.used <= CAPACITY);
+
     sequence nseq;
     copy(data, data + used, nseq.data);
     copy(other.data, other.data + other.used, nseq.data + used);
