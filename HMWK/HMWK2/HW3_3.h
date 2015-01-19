@@ -1,8 +1,8 @@
+#include <iostream>
+
+using namespace std;
+
 class sequence {
-    private:
-        value_type data[capacity];
-        size_type used;
-        size_type current_index;
     public:
         //Typedefs
         typedef double value_type;
@@ -15,7 +15,7 @@ class sequence {
         void start();
         void advance();
         void insert(const value_type& entry);
-        attach(const value_type& entry);
+        void attach(const value_type& entry);
         void remove_current();
         size_type size() const;
         bool is_item() const;
@@ -26,6 +26,10 @@ class sequence {
         void last_current();
         sequence& operator+(const sequence& other);
         sequence& operator+=(const sequence& other);
-        value_type operator[] (size_type index) const
-        
-}
+        value_type operator[] (size_type index) const;
+        friend ostream& operator<< (ostream&, const sequence&);
+    private:
+        value_type data[CAPACITY];
+        size_type used;
+        size_type current_index;
+};

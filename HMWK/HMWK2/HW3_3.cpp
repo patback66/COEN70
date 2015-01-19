@@ -35,11 +35,10 @@ void sequence::advance() {
 Inserts "entry" before the current item or ar the front.
 */
 void sequence::insert(const value_type& entry) {
-    if(size_t < CAPACITY) {
-        
+    if(used < CAPACITY) {
         if(current_index!=-1) {
-            for(int i = used-1; i >= current_index; i--) {
-                data[i+1]=data[i];
+            for(int i = used; i > current_index; i--) {
+                data[i] = data[i - 1];
             }
         } else {
             current_index = 0;
@@ -85,7 +84,7 @@ void sequence::remove_current() {
     	}
     }
 }
-size_type sequence::size() const {
+sequence::size_type sequence::size() const {
     return used;
 }
 bool sequence::is_item() const {
@@ -95,7 +94,7 @@ bool sequence::is_item() const {
 /*
 Returns the current item or -1 if no current item.
 */
-value_type sequence::current() const {
+sequence::value_type sequence::current() const {
     if (is_item())
     {
     	return data[current_index];
@@ -103,6 +102,14 @@ value_type sequence::current() const {
     	return -1;
     }
 }
+
+ostream& operator<< (ostream& out, const sequence& seq) {
+    for (int i = 0; i < seq.used; i++) {
+        out << seq.data[i] << ", ";
+    }
+    return out;
+}
+
 /*
 Adds "entry" to the front of the list. Updates current_index to match updated list.
 */
