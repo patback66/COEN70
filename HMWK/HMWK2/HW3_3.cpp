@@ -137,11 +137,26 @@ void sequence::remove_front() {
     current_index--;
     
 }
+/*
+Adds "entry" to the end of the list. If the list is empty, "entry" becomes the 
+current item.
+*/
 void sequence::add_end(const value_type& entry) {
-    
+    if(used < CAPACITY) {
+        data[used] = entry;
+        used++;
+        if(current_index==-1)
+            current_index = 0;
+    }
 }
+/*
+The last entry becomes the current entry.
+*/
 void sequence::last_current() {
-    
+    if(used = 0)
+        current_index = 0;
+    else
+        current_index = used -1;
 }
 sequence& sequence::operator+(const sequence& other) {
     
