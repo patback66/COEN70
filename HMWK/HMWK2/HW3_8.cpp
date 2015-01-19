@@ -49,6 +49,10 @@ void keyed_bag::remove(int key) {
 
 }
 
+int keyed_bag::slot(int key) {
+	return (key % _cap);
+}
+
 bool keyed_bag::keyExist(int key) {
 
 }
