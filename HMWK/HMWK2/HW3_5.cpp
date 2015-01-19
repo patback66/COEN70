@@ -3,22 +3,34 @@
 
 using namespace std;
 
+/*
+Struct for a set node
+*/
 set::node::node(double value, node* prev) {
 	_data = value;
 	_prev = prev;
 	_next = NULL;
 }
 
+/*
+Constructor
+*/
 set::set() {
 	_size = 0;
 	_head = new node();
 	_tail = _head;
 }
 
+/*
+Destructor
+*/
 set::~set() {
 	deallocNodes(_tail);
 }
 
+/*
+Copies the nodes from one set to another.
+*/
 void set::copyNodes(node* dst, node* src) {
 	if (src -> _next != NULL)
 	{
@@ -28,6 +40,9 @@ void set::copyNodes(node* dst, node* src) {
 	}
 }
 
+/*
+Frees the memory for nodes to be removed.
+*/
 void set::deallocNodes(node *nd) {
 	node* t = nd;
 	while(t != NULL) {
@@ -37,12 +52,18 @@ void set::deallocNodes(node *nd) {
 	}
 }
 
+/*
+Copy Comnstructor
+*/
 set::set(const set& other) {
 	_head = NULL;
 	_tail = NULL;
 	*this = other;
 }
 
+/*
+Override the + operator of the set.
+*/
 set& set::operator=(const set& rhs) {
 
 	if (this != &rhs)
@@ -63,6 +84,9 @@ set& set::operator=(const set& rhs) {
 	return *this;
 }
 
+/*
+Override the << operator for the set.
+*/
 ostream& operator<<(ostream& out, const set& rhs) {
 	set::node *p = rhs._head -> _next;
 
@@ -74,6 +98,9 @@ ostream& operator<<(ostream& out, const set& rhs) {
 	return out;
 }
 
+/*
+Searches for "value" in the set. True if found, else false.
+*/
 bool set::contains(const double& value) const{
 	bool find = false;
 
@@ -91,6 +118,9 @@ bool set::contains(const double& value) const{
 	return find;
 }
 
+/*
+Checks for duplicate before adding to the end.
+*/
 void set::insert(const double& value) {
 	if (!contains(value))
 	{
@@ -101,6 +131,9 @@ void set::insert(const double& value) {
 	}
 }
 
+/*
+Removes specified node and fixes gap in the linked list.
+*/
 void set::remove(const double& value) {
 	node *p = _head -> _next;
 
@@ -122,6 +155,9 @@ void set::remove(const double& value) {
 	}
 }
 
+/*
+Returns the size of the set.
+*/
 long set::size() const {
 	return _size;
 }
