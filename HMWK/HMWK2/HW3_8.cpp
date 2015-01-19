@@ -12,8 +12,15 @@ keyed_bag::keyed_bag(int cap) {
 keyed_bag::~keyed_bag() {
 	for (int i = 0; i < cap; ++i)
 	{
-		
+		deallocItems(_hashTable[i]);
 	}
+	delete []_hashTable;
+}
+
+keyed_bag::item::item(int inkey, double value) {
+	key = inkey;
+	data = value;
+	next = NULL;
 }
 
 void keyed_bag::deallocItems(item* obj) {
