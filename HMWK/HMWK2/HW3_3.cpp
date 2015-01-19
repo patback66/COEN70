@@ -181,5 +181,8 @@ sequence sequence::operator+=(const sequence& other) {
     return *this;
 }
 sequence::value_type sequence::operator[] (size_type index) const{
-    return data[index];
+    if(index < used)
+        return data[index];
+    else
+        return -1;
 }
