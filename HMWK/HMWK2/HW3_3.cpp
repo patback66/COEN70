@@ -143,12 +143,28 @@ void sequence::add_end(const value_type& entry) {
 void sequence::last_current() {
     
 }
-sequence& sequence::operator+(const sequence& other) {
-    
+sequence sequence::operator+(const sequence& other) {
+	if (other.used == 0)
+	{
+		return *this;
+	}
+
+	if (used == 0)
+	{
+		return other;
+	}
+
+    sequence nseq;
+    copy(data, data + used, nseq.data);
+    copy(other.data, other.data + other.used, nseq.data + used);
+    nseq.used = used + other.used;
+    nseq.current_index = -1;
+    return nseq;
 }
-sequence& sequence::operator+=(const sequence& other) {
-    
+sequence sequence::operator+=(const sequence& other) {
+    *this = *this + other;
+    return *this;
 }
-value_type sequence::operator[] (size_type index) {
-    
+sequence::value_type sequence::operator[] (size_type index) {
+    return data[index];
 }

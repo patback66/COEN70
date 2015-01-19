@@ -24,8 +24,8 @@ class sequence {
         void remove_front();
         void add_end(const value_type& entry);
         void last_current();
-        sequence& operator+(const sequence& other);
-        sequence& operator+=(const sequence& other);
+        sequence operator+(const sequence& other);
+        sequence operator+=(const sequence& other);
         value_type operator[] (size_type index) const;
         friend ostream& operator<< (ostream&, const sequence&);
     private:
