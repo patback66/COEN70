@@ -6,7 +6,7 @@ class keyed_bag {
 	private:
 		int _size;
 		int _cap;
-		item* hashTable;
+		item* _hashTable;
 		class item {
 			item(int,double);
 			double data;

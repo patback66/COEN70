@@ -4,7 +4,9 @@
 using namespace std;
 
 keyed_bag::keyed_bag(int cap) {
-
+	_size = 0;
+	_cap = cap;
+	
 }
 
 keyed_bag::~keyed_bag() {
