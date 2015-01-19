@@ -7,10 +7,15 @@ keyed_bag::keyed_bag(int cap) {
 	_size = 0;
 	_cap = cap;
 	_hashTable = new item*[cap];
+
+	for (int i = 0; i < cap; ++i)
+	{
+		_hashTable[i] = NULL;
+	}
 }
 
 keyed_bag::~keyed_bag() {
-	for (int i = 0; i < cap; ++i)
+	for (int i = 0; i < _cap; ++i)
 	{
 		deallocItems(_hashTable[i]);
 	}
@@ -37,8 +42,16 @@ keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
 
 }
 
-ostream& operator<<(ostream&, const keyed_bag& rhs) {
-
+ostream& operator<<(ostream& out, const keyed_bag& rhs) {
+	for (int i = 0; i < _cap; ++i)
+	{
+		item* p = _hashTable[i];
+		while(p != NULL) {
+			out << p -> data << ", ";
+			p = p -> next;
+		}
+	}
+	return out;
 }
 
 void keyed_bag::insert(const double& value, int key) {
