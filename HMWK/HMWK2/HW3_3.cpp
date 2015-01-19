@@ -86,8 +86,20 @@ value_type sequence::current() const {
     	return -1;
     }
 }
+/*
+Adds "entry" to the front of the list. Updates current_index to match updated list.
+*/
 void sequence::add_front(const value_type& entry) {
-    
+    if(size_t < CAPACITY) {
+        if(current_index!=-1) {
+            for(int i = used-1; i >=0; i--) {
+                data[i+1]=data[i];
+            }
+        } 
+        data[0] = entry;
+        used++;
+        current_index++;
+    }
 }
 void sequence::remove_front() {
     
