@@ -7,6 +7,11 @@ keyed_bag::keyed_bag(int cap) {
 	_size = 0;
 	_cap = cap;
 	_hashTable = new item*[cap];
+	
+	for (int i = 0; i < cap; ++i)
+	{
+		_hashTable[i] = NULL;
+	}
 }
 
 keyed_bag::~keyed_bag() {
