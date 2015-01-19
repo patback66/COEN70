@@ -31,8 +31,22 @@ void sequence::advance() {
             current_index=-1;
     }
 }
+/*
+Inserts "entry" before the current item or ar the front.
+*/
 void sequence::insert(const value_type& entry) {
-    
+    if(size_t < CAPACITY) {
+        
+        if(current_index!=-1) {
+            for(int i = used-1; i >= current_index; i--) {
+                data[i+1]=data[i];
+            }
+        } else {
+            current_index = 0;
+        }
+        data[current_index] = entry;
+        used++;
+    }
 }
 void sequence::attach(const value_type& entry) {
     
