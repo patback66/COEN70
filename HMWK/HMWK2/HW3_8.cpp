@@ -55,7 +55,22 @@ ostream& operator<<(ostream& out, const keyed_bag& rhs) {
 }
 
 void keyed_bag::insert(const double& value, int key) {
-
+	if (!keyExist(key))
+	{
+		int index = slot(key);
+		if (_hashTable[index] == NULL)
+		{
+			item* obj = new item(key, value);
+			_hashTable[index] = obj;
+		} else {
+			item* p = _hashTable[index];
+			while (p -> next != NULL)
+				p = p -> next;
+			item* obj = new item(key, value);
+			p -> next = obj;
+		}
+		_size ++;
+	}
 }
 
 void keyed_bag::remove(int key) {
