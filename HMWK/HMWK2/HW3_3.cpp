@@ -15,8 +15,16 @@ sequence::sequence() {
 void sequence::start() {
     
 }
+/*
+Advances to the next index if there is more, else becomes -1.
+*/
 void sequence::advance() {
-    if(current_index )
+    if(is_item()) {
+        if(current_index+1 >= used)
+            current_index++;
+        else
+            current_index=-1;
+    }
 }
 void sequence::insert(const value_type& entry) {
     
@@ -33,7 +41,7 @@ size_type sequence::size() const {
 bool sequence::is_item() const {
     
 }
-value_type sequence::current() const{
+value_type sequence::current() const {
     
 }
 void sequence::add_front(const value_type& entry) {
