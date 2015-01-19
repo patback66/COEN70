@@ -12,6 +12,9 @@ sequence::sequence() {
     used = 0;
     current_index = -1;
 }
+/*
+Starts the sequence at index 0 if there is data, else -1.
+*/
 void sequence::start() {
     if (used > 0)
 	{
@@ -84,9 +87,16 @@ void sequence::remove_current() {
     	}
     }
 }
+/*
+Returns the size of the sequence.
+*/
 sequence::size_type sequence::size() const {
     return used;
 }
+
+/*
+True if the current_index is an item, else false.
+*/
 bool sequence::is_item() const {
     return (current_index != -1);
 }
@@ -103,6 +113,9 @@ sequence::value_type sequence::current() const {
     }
 }
 
+/*
+Override << operator.
+*/
 ostream& operator<< (ostream& out, const sequence& seq) {
     for (int i = 0; i < seq.used; i++) {
         out << seq.data[i] << ", ";
@@ -158,6 +171,9 @@ void sequence::last_current() {
     else
         current_index = used -1;
 }
+/*
+Override + operator for sequences.
+*/
 sequence sequence::operator+(const sequence& other) {
 	if (other.used == 0)
 	{
@@ -176,10 +192,16 @@ sequence sequence::operator+(const sequence& other) {
     nseq.current_index = -1;
     return nseq;
 }
+/*
+Override += operator for the sequence operator.
+*/
 sequence sequence::operator+=(const sequence& other) {
     *this = *this + other;
     return *this;
 }
+/*
+Override [] operator for sequence allows access to sequence elements by index.
+*/
 sequence::value_type sequence::operator[] (size_type index) const{
     if(index < used)
         return data[index];
