@@ -114,10 +114,10 @@ ostream& operator<< (ostream& out, const sequence& seq) {
 Adds "entry" to the front of the list. Updates current_index to match updated list.
 */
 void sequence::add_front(const value_type& entry) {
-    if(size_t < CAPACITY) {
+    if(used < CAPACITY) {
         if(current_index!=-1) {
-            for(int i = used-1; i >=0; i--) {
-                data[i+1]=data[i];
+            for(int i = used; i > current_index; i--) {
+                data[i] = data[i - 1];
             }
         } 
         data[0] = entry;
@@ -153,7 +153,7 @@ void sequence::add_end(const value_type& entry) {
 The last entry becomes the current entry.
 */
 void sequence::last_current() {
-    if(used = 0)
+    if(used == 0)
         current_index = 0;
     else
         current_index = used -1;
@@ -180,6 +180,6 @@ sequence sequence::operator+=(const sequence& other) {
     *this = *this + other;
     return *this;
 }
-sequence::value_type sequence::operator[] (size_type index) {
+sequence::value_type sequence::operator[] (size_type index) const{
     return data[index];
 }
