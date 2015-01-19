@@ -4,15 +4,19 @@ using namespace std;
 
 class keyed_bag {
 	private:
+		class item {
+			public:
+				item(int,double);
+				double data;
+				int key;
+				item* next;
+		};
 		int _size;
 		int _cap;
 		item** _hashTable;
-		class item {
-			item(int,double);
-			double data;
-			int key;
-			item* next;
-		};
+		
+		void deallocItems(item*);
+		int slot(int);
 	public:
 		keyed_bag(int = 30);
 		~keyed_bag();
