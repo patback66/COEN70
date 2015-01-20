@@ -1,6 +1,6 @@
 /*
 @author Matthew Koken
-@author Manny Armirtharaj
+@author Immanuel Amirtharaj
 */
 #include <iostream>
 #include "list.h"
@@ -8,8 +8,8 @@ using namespace std;
 
 //Function:	Constructors	
 List::List() {
-    list = new node(0, NULL);
-    cursor = list;
+    list = NULL;
+    cursor = NULL;
     size = 0;
 }
 //Function:	Destructor	
@@ -22,16 +22,9 @@ List::~List() {
         deletenode = tempnode;
     }
 }
-//Function:	Copy constructor	
-List::List(const List& other) {
-    if(this != other) {
-        this = other;
-    }
-    return this;
-}
-//Function:	Assignment operator	
+//Function:	Assignment operator
 const List&	List::operator=(const List& other) {
-    if(this != other) {
+    if(this != &other) {
         if(this->list!=NULL) {
             delete[] this->list;
             this->cursor = NULL;
@@ -43,6 +36,7 @@ const List&	List::operator=(const List& other) {
         this->list = new node(np->data, NULL);
         cursor = this->list;
         np = np->next;
+        //loop to copy nodes
         while(np!=NULL) {
             cursor->next = new node(np->data, NULL);
             cursor=cursor->next;
@@ -51,6 +45,28 @@ const List&	List::operator=(const List& other) {
     }
     return *this;
 }
+//Function:	Copy constructor	
+List::List(List& other) {
+    if(this != &other) {
+        if(this->list!=NULL) {
+            this->cursor = NULL;
+        }
+        
+        size = other.size;
+        
+        node* np = other.list;
+        this->list = new node(np->data, NULL);
+        cursor = this->list;
+        np = np->next;
+        //loop to copy all nodes
+        while(np!=NULL) {
+            cursor->next = new node(np->data, NULL);
+            cursor=cursor->next;
+            np=np->next;
+        }
+    }
+}
+
 //Function:	output	operator	
 ostream& operator<<(ostream& out, const List& lhs) {
     List::node *newnode = lhs.list;
