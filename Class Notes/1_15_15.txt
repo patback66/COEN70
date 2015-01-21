@@ -189,3 +189,11 @@ bag bag::operator- (const bag&rhs) {
         
     }
 }
+
+bool bag::contains(float x) {
+    for(int i = 0; i < size; i++) {
+        if(p[i]==x)
+            return true;
+    }
+    return false;
+}
