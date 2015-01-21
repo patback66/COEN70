@@ -150,6 +150,7 @@ void set::remove(const double& value) {
 			
 			delete p;
 			_size --;
+			break;
 		}
 		p = p -> _next;
 	}
