@@ -1,0 +1,177 @@
+////////////////
+Quiz passed back:
+    don't return a local variable. Return a pointer.
+    
+bag a = *this;
+bag b = other;
+
+for(int i = 0; i < a.size; i++) {
+    a.remove_one(x);
+}
+////////////////
+
+bag bag::operator-(bag& other) {
+    bag a = *this;
+    bag b = other;
+    for(int i = 0; i<a.size;) {
+        if(b.contains(p[i])) {
+            n.add(p[i]);
+            b.remove_one(p[i]);
+            a.remove_one(p[i]);
+        } else {
+            i++;
+        }
+    }
+}
+
+////////////////
+bag a;
+bag b(100);
+for(int i = 0; i<11; i++) {
+    a.add(i);
+}
+cout<<a.size <<endl;
+//create a block to define scope
+{
+    bag x;
+    x.add(2);
+}
+////////////////
+
+////////////////
+to convert bag to string/int from float: use a typedef
+typedef float value_type;
+can be anywhere in the class, only needed for bag so can be private
+
+another option: use a template
+////////////////
+
+////////////////
+Templates: can be applied to classes
+
+////////////////
+
+int max(int a, int b) {
+    if(a<b)
+        return b;
+    else
+        return a;
+}
+
+//convert to template
+
+template <class fred>
+fred max(fred a, fred b) {
+    if(a<b)
+        return b;
+    else
+        return a;
+}
+
+int main() {
+    int x = 1;
+    int y = 2;
+    int z = max(x, y);
+    
+    float m = max(1.1, 2.2);
+    int z = max(1.1, x); //compiler will throw an error
+    //so use:
+    int z = max<float>(1.1, x);
+    max<int, float>(a, b);
+    max<int, float>(x, y);
+}
+
+////////////////
+Set
+like a bag, but with unique items
+templates
+linkedList with sentinel node
+add
+remove
++,-,
+contains
+////////////////
+template<class T> 
+class Set {
+    private:
+        class node {
+            public:
+                node(T x, node* n = NULL);
+                T d;
+                node* n;
+        };
+        node* head;
+        int size;
+    public:
+        set(); //required by sentinel
+        set(const set&);
+        set& operator=(const set&);
+        ~set();
+        bool contains(const T&);
+        bool add(const T&);
+        bool remove(const T&);
+        set operator+(const set&);
+        set operator-(const set&);
+        //output operator
+}
+
+/*
+Constructor
+*/
+template <class T>
+set<T>::set() {
+    head = new node(T());
+    size = 0;
+}
+
+set<T>::set(const T& other) {
+    head = new node(T());
+    *this = other;
+}
+
+set& set<T>::operator=(const set& other) {
+    if(this==&other)
+        return*this;
+    clear();
+    head = new node(T());
+    node* temp = other.head->n;
+    while(temp!=NULL) {
+        add(temp->d); //assumes add works with sentinel
+        temp=temp->n;
+    }
+    return this;
+}
+
+template<class T>
+void set<T>::clear() {
+    node* temp;
+    while(head!=NULL) {
+        temp = head;
+        head = head->n;
+        delete temp;
+    }
+}
+
+template<class T>
+set::~set() {
+    clear();
+}
+////////////////
+//contains should be easy: just go through linked list
+
+//add
+template<class T>
+//add to the front (after sentinel)
+node* temp = head->n;
+head->n = new node(x, temp);
+
+//remove
+need previous pointer
+    or
+copy data to current node(the node to delete)
+and then delete the next
+and link
+
+////////////////
+
+
