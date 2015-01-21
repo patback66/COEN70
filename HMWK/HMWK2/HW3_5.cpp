@@ -1,5 +1,5 @@
 #include <iostream>
-#include "set.h"
+#include "HW3_5.h"
 
 using namespace std;
 
@@ -32,11 +32,14 @@ set::~set() {
 Copies the nodes from one set to another.
 */
 void set::copyNodes(node* dst, node* src) {
-	if (src -> _next != NULL)
+	node *p = src -> _next;
+	node *d = dst;
+	while (p != NULL)
 	{
-		node* next = new node((src -> _next) -> _data, dst);
-		copyNodes(next, src -> _next);
-		dst -> _next = next;
+		node* next = new node(p -> _data, d);
+		d -> _next = next;
+		p = p -> _next;
+		d = next;
 	}
 }
 
