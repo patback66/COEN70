@@ -57,9 +57,9 @@ void hw::string::reserve(size_t n) {
 
 void hw::string::operator =(const hw::string& source) {
     if(this != &source) {
-        if(this.sequence!=NULL) {
-                delete[] this->sequence;
-                this.sequence = NULL;
+        if(this -> sequence != NULL) {
+                delete[] this -> sequence;
+                this -> sequence = NULL;
         }
         
         allocated = source.allocated;
@@ -74,7 +74,7 @@ char hw::string::operator [ ](size_t position) const {
     return sequence[position];
 }
 
-std::ostream& operator <<(std::ostream& outs, const hw::string& source) {
+std::ostream& hw::operator <<(std::ostream& outs, const hw::string& source) {
     outs << source.sequence;
     return outs;
 }
@@ -99,7 +99,7 @@ bool operator < (const hw::string& s1, const hw::string& s2) {
     
 }
 
-hw::string::string(const char aChar = ' ') {
+hw::string::string(const char aChar) {
     current_length = 1;
     allocated = current_length + 1;
     sequence = new char[allocated];
