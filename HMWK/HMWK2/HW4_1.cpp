@@ -6,7 +6,7 @@ using namespace std;
 
 hw::string::string(const char str[ ]) {
     current_length = strlen(str);
-    allocated  = current_length +1;
+    allocated  = current_length + 1;
     sequence = new char[allocated];
     strcpy(sequence, str);
 }
@@ -23,26 +23,29 @@ hw::string::~string() {
 }
 
 void hw::string::operator +=(const hw::string& addend) {
-    /*int finalLength = current_length + addend.current_length;
+    int finalLength = current_length + addend.current_length;
     if ((finalLength + 1) > allocated) {
-        char* temp = new char[finalLength];
+        char* temp = new char[finalLength + 1];
         strcpy(temp, sequence);
         delete []sequence;
         sequence = temp;
+        allocated = finalLength + 1;
     }
     for (int i = 0; i < addend.current_length; i++) {
         sequence[current_length + i] = addend.sequence[i];
     }
     sequence[finalLength] = '\0';
-    current_length = finalLength;*/
+    current_length = finalLength;
 }
 
 void hw::string::operator +=(const char addend[ ]) {
-    
+    string str = string(addend);
+    *this += str;
 }
 
 void hw::string::operator +=(char addend) {
-    
+    string str = string(addend);
+    *this += str;
 }
 
 void hw::string::reserve(size_t n) {
