@@ -1,4 +1,5 @@
 #include <iostream>
+#include <assert.h>
 #include "HW4_1.h"
 
 using namespace std;
@@ -11,15 +12,24 @@ hw::string::string(const char str[ ]) {
 }
 
 hw::string::string(const hw::string& source) {
-    
+    sequence = NULL;
+    *this = source;
 }
 
 hw::string::~string() {
-    
+    if (sequence != NULL) {
+        delete []sequence;
+    }
 }
 
 void hw::string::operator +=(const hw::string& addend) {
-    
+    int finalLength = current_length + addend.current_length;
+    if ((finalLength + 1) > allocated) {
+        char* temp = new char[finalLength];
+        strcpy(temp, sequence);
+        delete []sequence;
+        sequence = temp;
+    }
 }
 
 void hw::string::operator +=(const char addend[ ]) {
@@ -31,7 +41,12 @@ void hw::string::operator +=(char addend) {
 }
 
 void hw::string::reserve(size_t n) {
-    
+    if (n > allocated) {
+        char* temp = new char[n];
+        strcpy(temp, sequence);
+        delete []sequence;
+        sequence = temp;
+    }
 }
 
 void hw::string::operator =(const hw::string& source) {
@@ -39,15 +54,17 @@ void hw::string::operator =(const hw::string& source) {
 }
 
 char hw::string::operator [ ](size_t position) const {
-    
+    assert(position < current_length);
+    return sequence[position];
 }
 
 std::ostream& operator <<(std::ostream& outs, const hw::string& source) {
-    
+    outs << source.sequence;
+    return outs;
 }
 
 bool operator !=(const hw::string& s1, const hw::string& s2) {
-    
+    return !(s1 == s2);
 }
 
 bool operator >=(const hw::string& s1, const hw::string& s2) {
@@ -67,7 +84,11 @@ bool operator < (const hw::string& s1, const hw::string& s2) {
 }
 
 hw::string::string(const char aChar = ' ') {
-    
+    current_length = 1;
+    allocated = current_length + 1;
+    sequence = new char[allocated];
+    sequence[0] = aChar;
+    sequence[1] = '\0';
 }
 
 void hw::string::insert(int index, const hw::string& aStr) {
