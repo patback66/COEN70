@@ -23,13 +23,18 @@ hw::string::~string() {
 }
 
 void hw::string::operator +=(const hw::string& addend) {
-    int finalLength = current_length + addend.current_length;
+    /*int finalLength = current_length + addend.current_length;
     if ((finalLength + 1) > allocated) {
         char* temp = new char[finalLength];
         strcpy(temp, sequence);
         delete []sequence;
         sequence = temp;
     }
+    for (int i = 0; i < addend.current_length; i++) {
+        sequence[current_length + i] = addend.sequence[i];
+    }
+    sequence[finalLength] = '\0';
+    current_length = finalLength;*/
 }
 
 void hw::string::operator +=(const char addend[ ]) {
@@ -46,6 +51,7 @@ void hw::string::reserve(size_t n) {
         strcpy(temp, sequence);
         delete []sequence;
         sequence = temp;
+        allocated = n;
     }
 }
 
