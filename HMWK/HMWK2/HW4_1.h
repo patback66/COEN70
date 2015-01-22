@@ -33,7 +33,7 @@ namespace hw {
             string(const char = ' ');
             //Insert substring at index
             void insert(int, const string&);
-            //Delete substring in range
+            //Delete substring in range {index, length}
             void deletion(int,int);
             //Replace char with char
             void replace(char, char);
