@@ -6,10 +6,10 @@ using namespace std;
 hw::string::string(const char str[ ]) {
     current_length = strlen(str);
     allocated  = current_length +1;
-    characters = new char[allocated];
-    strcpy(characters, str);
+    sequence = new char[allocated];
+    strcpy(sequence, str);
 }
 
-bool hw::string::operator== (const string& s1, const string& s2) {
-    return (strcomp(s2.characters, s2.characters) == 0);
+bool hw::operator== (const hw::string& s1, const hw::string& s2) {
+    return (strcmp(s1.sequence, s2.sequence) == 0);
 }

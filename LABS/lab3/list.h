@@ -1,15 +1,13 @@
-#include <iostream>
-using namespace std;
-class List {
+class List {	
     public:	
         //Function:	Constructors	
         List();	
         //Function:	Destructor	
         ~List();	
         //Function:	Copy constructor	
-        List(List&);	
+        List(const List&);	
         //Function:	Assignment operator	
-        const List& operator=(const List&);
+        const List&	operator=(const	List&);	
         //Function:	output	operator	
         friend ostream&	operator<<(ostream&, const List&);	
         //Function:	Insert an item to the list	
@@ -17,10 +15,9 @@ class List {
         //move the pointer to the new item	
         void insert(const int&);	
         class node {	
-            public:
-                node(int, node*);
-                int data;
-                node* next;
+            node(int, node*);	
+            int data;	
+            node* next;	
          };
     private:	
         node* list;	

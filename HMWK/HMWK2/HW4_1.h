@@ -21,7 +21,7 @@ namespace hw {
             size_t length( ) const { return current_length; }
             char operator [ ](size_t position) const;
             // FRIEND FUNCTIONS
-            friend ostream& operator <<(ostream& outs, const string& source);
+            friend std::ostream& operator <<(std::ostream& outs, const string& source);
             friend bool operator ==(const string& s1, const string& s2);
             friend bool operator !=(const string& s1, const string& s2);
             friend bool operator >=(const string& s1, const string& s2);
@@ -30,11 +30,11 @@ namespace hw {
             friend bool operator < (const string& s1, const string& s2);
     
             //Extra
-            string(const char = '');
+            string(const char = ' ');
             //Insert substring at index
             void insert(int, const string&);
             //Delete substring in range
-            void delete(int,int);
+            void deletion(int,int);
             //Replace char with char
             void replace(char, char);
             //Replace string with string
@@ -53,7 +53,7 @@ namespace hw {
     
         // NON-MEMBER FUNCTIONS for the string class
         string operator +(const string& s1, const string& s2);
-        istream& operator >>(istream& ins, string& target);
-        void getline(istream& ins, string& target, char delimiter);
+        std::istream& operator >>(std::istream& ins, string& target);
+        void getline(std::istream& ins, string& target, char delimiter);
 }
 #endif
