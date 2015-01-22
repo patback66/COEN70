@@ -87,19 +87,19 @@ bool operator !=(const hw::string& s1, const hw::string& s2) {
 }
 
 bool operator >=(const hw::string& s1, const hw::string& s2) {
-    
+    return (strcmp(s1.sequence, s2.sequence) >= 0);
 }
 
 bool operator <=(const hw::string& s1, const hw::string& s2) {
-    
+    return (strcmp(s1.sequence, s2.sequence) <= 0);
 }
 
 bool operator > (const hw::string& s1, const hw::string& s2) {
-    
+    return s2 < s1;
 }
 
 bool operator < (const hw::string& s1, const hw::string& s2) {
-    
+    return (strcmp(s1.sequence, s2.sequence) < 0);
 }
 
 hw::string::string(const char aChar) {
