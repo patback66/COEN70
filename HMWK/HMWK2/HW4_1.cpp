@@ -55,7 +55,7 @@ void hw::string::operator =(const hw::string& source) {
     
      if(this->sequence!=NULL) {
             delete[] this->sequence;
-            this->cursor = NULL;
+            this->sequence = NULL;
     }
     
     allocated = source.allocated;
