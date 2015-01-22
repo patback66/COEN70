@@ -46,10 +46,6 @@ std::ostream& operator <<(std::ostream& outs, const hw::string& source) {
     
 }
 
-bool operator ==(const hw::string& s1, const hw::string& s2) {
-    
-}
-
 bool operator !=(const hw::string& s1, const hw::string& s2) {
     
 }
