@@ -127,15 +127,42 @@ void hw::string::replace(const hw::string& oStr, const hw::string& tStr) {
 }
 
 int hw::string::search(char aChar) {
-    
+    for (int i = 0; i < current_length; i++) {
+        if (sequence[i] == aChar) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 int hw::string::search(const hw::string& tStr) {
+    if (current_length < tStr.current_length) {
+        return -1;
+    }
     
+    int targetEnd = current_length - tStr.current_length;
+    for (int i = 0; i <= targetEnd; i++) {
+        if (sequence[i] == tStr.sequence[0]) {
+            for (int v = 1; v < tStr.current_length; v++) {
+                if (sequence[i+v] != tStr.sequence[v]) {
+                    return -1;
+                }
+            }
+            return i;
+        }
+    }
+    
+    return -1;
 }
 
 int hw::string::appearance(char aChar) {
-    
+    int count = 0;
+    for (int i = 0 ;i < current_length;i++) {
+        if (sequence[i] == aChar) {
+            count++;
+        }
+    }
+    return count;
 }
 
 bool hw::operator== (const hw::string& s1, const hw::string& s2) {
