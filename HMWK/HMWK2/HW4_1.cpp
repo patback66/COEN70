@@ -39,11 +39,13 @@ void hw::string::operator +=(const hw::string& addend) {
 }
 
 void hw::string::operator +=(const char addend[ ]) {
-    
+    string str = string(addend);
+    *this += str;
 }
 
 void hw::string::operator +=(char addend) {
-    
+    string str = string(addend);
+    *this += str;
 }
 
 void hw::string::reserve(size_t n) {

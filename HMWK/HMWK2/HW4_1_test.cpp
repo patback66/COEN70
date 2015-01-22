@@ -9,6 +9,9 @@ int main(int argc, char *argv[]) {
 	
 	str += wstr;
 	
+	str += " Woof!";
+	str += 'M';
+	
 	cout << str << endl;
 	
 	return 0;
