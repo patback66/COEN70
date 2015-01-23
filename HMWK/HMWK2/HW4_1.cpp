@@ -133,11 +133,13 @@ void hw::string::deletion(int index, int length) {
     if (length <= current_length - index) {
         if (index + length == current_length - 1) {
             sequence[index] = '\0';
+            current_length = current_length - length;
             return;
         }
         for (int i = index; i <= current_length ; i++) {
             sequence[i] = sequence[i+length];
         }
+        current_length = current_length - length;
     }
 }
 
