@@ -1,3 +1,11 @@
+/*
+ *
+ *    COEN70 HW2
+ *    Tian Zhang
+ *    Matthew Koken
+ *
+ */
+
 #ifndef MYSTRING_H
 #define MYSTRING_H
 #include <cstdlib>  // Provides size_t

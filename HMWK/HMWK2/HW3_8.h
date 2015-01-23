@@ -1,3 +1,11 @@
+/*
+ *
+ *    COEN70 HW2
+ *    Tian Zhang
+ *    Matthew Koken
+ *
+ */
+
 #include <iostream>
 
 using namespace std;
