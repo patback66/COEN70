@@ -82,23 +82,23 @@ std::ostream& hw::operator <<(std::ostream& outs, const hw::string& source) {
     return outs;
 }
 
-bool operator !=(const hw::string& s1, const hw::string& s2) {
+bool hw::operator !=(const hw::string& s1, const hw::string& s2) {
     return !(s1 == s2);
 }
 
-bool operator >=(const hw::string& s1, const hw::string& s2) {
+bool hw::operator >=(const hw::string& s1, const hw::string& s2) {
     return (strcmp(s1.sequence, s2.sequence) >= 0);
 }
 
-bool operator <=(const hw::string& s1, const hw::string& s2) {
+bool hw::operator <=(const hw::string& s1, const hw::string& s2) {
     return (strcmp(s1.sequence, s2.sequence) <= 0);
 }
 
-bool operator > (const hw::string& s1, const hw::string& s2) {
+bool hw::operator > (const hw::string& s1, const hw::string& s2) {
     return s2 < s1;
 }
 
-bool operator < (const hw::string& s1, const hw::string& s2) {
+bool hw::operator < (const hw::string& s1, const hw::string& s2) {
     return (strcmp(s1.sequence, s2.sequence) < 0);
 }
 
@@ -111,11 +111,34 @@ hw::string::string(const char aChar) {
 }
 
 void hw::string::insert(int index, const hw::string& aStr) {
-    
+    if (index < current_length) {
+        int finalLength = current_length + aStr.current_length;
+        if ((finalLength + 1) > allocated) {
+            char* newSeq = new char[finalLength + 1];
+            strcpy(newSeq, sequence);
+            delete []sequence;
+            sequence = newSeq;
+        }
+        for (int i = current_length;i >= index; i--) {
+            sequence[i + aStr.current_length] = sequence[i];
+        }
+        for (int i = 0; i < aStr.current_length;i++) {
+            sequence[index + i] = aStr.sequence[i];
+        }
+        current_length = finalLength;
+    }
 }
 
-void hw::string::deletion(int begin, int end) {
-    
+void hw::string::deletion(int index, int length) {
+    if (length <= current_length - index) {
+        if (index + length == current_length - 1) {
+            sequence[index] = '\0';
+            return;
+        }
+        for (int i = index; i <= current_length ; i++) {
+            sequence[i] = sequence[i+length];
+        }
+    }
 }
 
 void hw::string::replace(char oChar, char tChar) {
