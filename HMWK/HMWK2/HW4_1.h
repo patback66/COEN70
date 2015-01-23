@@ -16,7 +16,7 @@ namespace hw {
             void operator +=(const char addend[ ]);
             void operator +=(char addend);
             void reserve(size_t n);
-            void operator =(const string& source);
+            string& operator =(const string& source);
             // CONSTANT MEMBER FUNCTIONS
             size_t length( ) const { return current_length; }
             char operator [ ](size_t position) const;

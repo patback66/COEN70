@@ -58,7 +58,7 @@ void hw::string::reserve(size_t n) {
     }
 }
 
-void hw::string::operator =(const hw::string& source) {
+hw::string& hw::string::operator =(const hw::string& source) {
     if(this != &source) {
         if(this -> sequence != NULL) {
                 delete[] this -> sequence;
@@ -70,6 +70,7 @@ void hw::string::operator =(const hw::string& source) {
         sequence = new char[allocated];
         strcpy(sequence, source.sequence);
     }
+    return *this;
 }
 
 char hw::string::operator [ ](size_t position) const {
