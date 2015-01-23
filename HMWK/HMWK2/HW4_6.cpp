@@ -3,12 +3,18 @@
 
 using namespace std;
 
+/*
+Parses a string for the given delimiter. Stores each partition between delimiters
+in the vector storage.
+*/
 void tokenize(const string& str, const string& delimiter, vector<string>& storage) {
 	bool inString = false;
 	int begin = 0;
 	int end = 0;
+	//search the entire string
 	for (int i = 0; i < str.length(); i++)
 	{
+		//check for the delimiter
 		if (str[i] == delimiter[0])
 		{
 			inString = true;
@@ -16,6 +22,7 @@ void tokenize(const string& str, const string& delimiter, vector<string>& storag
 			int b = i + 1;
 			int delIndex = 1;
 			bool shouldEnd = false;
+			//get the partition between delimiter
 			if (delimiter.size() > 1) {
 				while(inString && !shouldEnd) {
 					if (str[b] == delimiter[delIndex])

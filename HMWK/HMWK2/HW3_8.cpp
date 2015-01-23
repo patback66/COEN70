@@ -3,6 +3,9 @@
 
 using namespace std;
 
+/*
+Constructor
+*/
 keyed_bag::keyed_bag(int cap) {
 	_size = 0;
 	_cap = cap;
@@ -14,6 +17,9 @@ keyed_bag::keyed_bag(int cap) {
 	}
 }
 
+/*
+Destructor
+*/
 keyed_bag::~keyed_bag() {
 	for (int i = 0; i < _cap; ++i)
 	{
@@ -24,27 +30,40 @@ keyed_bag::~keyed_bag() {
 	delete []_hashTable;
 }
 
+/*
+Creates an item for a keyed bag
+*/
 keyed_bag::item::item(int inkey, double value) {
 	key = inkey;
 	data = value;
 	next = NULL;
 }
 
+/*
+Destructor for item
+*/
 void keyed_bag::deallocItems(item* obj) {
 	while(obj -> next != NULL)
 		deallocItems(obj -> next);
 	delete obj;
 }
 
+/*
+Copy constructor
+*/
 keyed_bag::keyed_bag(const keyed_bag& other) {
 	_cap = 0;
 	_size = 0;
 	*this = other;
 }
 
+/*
+Overload the e operator
+*/
 keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
 	if (this != &rhs)
 	{
+		//clear
 		for (int i = 0; i < _cap; i++)
 		{
 			if (_hashTable[i] != NULL) {
@@ -56,6 +75,7 @@ keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
 			_hashTable = new item*[rhs._cap];
 		}
 		
+		//copy everything
 		for (int i = 0; i < rhs._cap; ++i)
 		{
 			if (rhs._hashTable[i] != NULL)
@@ -78,6 +98,9 @@ keyed_bag& keyed_bag::operator=(const keyed_bag& rhs) {
 	return *this;
 }
 
+/*
+Overload teh << operator
+*/
 ostream& operator<<(ostream& out, const keyed_bag& rhs) {
 	for (int i = 0; i < rhs._cap; ++i)
 	{
@@ -90,6 +113,9 @@ ostream& operator<<(ostream& out, const keyed_bag& rhs) {
 	return out;
 }
 
+/*
+Insert a value with the given key. Only one value per key
+*/
 void keyed_bag::insert(const double& value, int key) {
 	if (!keyExist(key))
 	{
@@ -109,6 +135,9 @@ void keyed_bag::insert(const double& value, int key) {
 	}
 }
 
+/*
+Remove the item with key "key"
+*/
 void keyed_bag::remove(int key) {
 	if (keyExist(key))
 	{
@@ -136,6 +165,9 @@ void keyed_bag::remove(int key) {
 	}
 }
 
+/*
+Return the slot for the item with the key "key"
+*/
 int keyed_bag::slot(int key) {
 	return (key % _cap);
 }
