@@ -24,7 +24,7 @@ hw::string::~string() {
 
 void hw::string::operator +=(const hw::string& addend) {
     int finalLength = current_length + addend.current_length;
-    if ((finalLength + 1) > allocated) {
+    if (finalLength > allocated) {
         char* temp = new char[finalLength + 1];
         strcpy(temp, sequence);
         delete []sequence;
