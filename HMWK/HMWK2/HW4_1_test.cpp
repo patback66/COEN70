@@ -4,16 +4,16 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	hw::string str("Hello World");
+	hw::string str("Hello Hello World");
 	
-	str.replace("Hello", "Meoww?");
+	str.replace("Hello", "Meowdeeeee  !");
 	
 	cout << str << endl;
 	
-	/*
-	hw::string wstr("World");
+	cout << str[32] << endl;
 	
-	int index = str.search(wstr);
+	int index = str.search("World");
+	cout << str[32] << endl;
 	
 	cout << index << endl;
 	
@@ -27,7 +27,6 @@ int main(int argc, char *argv[]) {
 	cout << str.length() << endl;
 	str.deletion(3, 2);
 	cout << str << endl;
-	*/
 	
 	return 0;
 }
