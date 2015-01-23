@@ -8,7 +8,7 @@ namespace hw {
         {
         public:
             // CONSTRUCTORS and DESTRUCTOR
-            string(const char str[ ] = "");
+            string(const char str[ ] = "\0");
             string(const string& source);
             ~string( );
             // MODIFICATION MEMBER FUNCTIONS
@@ -30,7 +30,7 @@ namespace hw {
             friend bool operator < (const string& s1, const string& s2);
     
             //Extra
-            string(const char = ' ');
+            string(const char = '\0');
             //Insert substring at index
             void insert(int, const string&);
             //Delete substring in range {index, length}
