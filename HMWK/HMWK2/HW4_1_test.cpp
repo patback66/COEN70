@@ -8,13 +8,8 @@ int main(int argc, char *argv[]) {
 	
 	str.replace("Hello", "Meowdeeeee  !");
 	
-	cout << str << endl;
-	
-	cout << str[32] << endl;
-	
 	int index = str.search("World");
-	cout << str[32] << endl;
-	
+		
 	cout << index << endl;
 	
 	//str += wstr;

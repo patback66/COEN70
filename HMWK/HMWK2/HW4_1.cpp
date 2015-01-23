@@ -160,24 +160,9 @@ void hw::string::replace(const hw::string& oStr, const hw::string& tStr) {
         if (currentIndex == -1) {
             break;
         }
-        int lengthDiff = tStr.current_length - oStr.current_length;
-        if (lengthDiff > 0) {
-            char* temp = new char[allocated + lengthDiff];
-            strcpy(temp, sequence);
-            delete []sequence;
-            sequence = temp;
-            for (int i = current_length;i >= currentIndex + oStr.current_length ; i--) {
-                sequence[i + lengthDiff] = sequence[i];
-            }
-        } else if (lengthDiff < 0) {
-            for (int i = currentIndex + tStr.current_length; i <= current_length; i ++) {
-                sequence[i] = sequence[i + 1];
-            }
-        }
-        for (int i = 0;i < tStr.current_length;i++) {
-            sequence[currentIndex + i] = tStr.sequence[i];
-        }
-        current_length += lengthDiff;
+        deletion(currentIndex, oStr.current_length);
+        insert(currentIndex, tStr);
+        
         currentIndex += tStr.current_length;
     }
 }
@@ -201,7 +186,6 @@ int hw::string::search(const hw::string& tStr, int pos) {
         if (sequence[i] == tStr.sequence[0]) {
             for (int v = 1; v < tStr.current_length; v++) {
                 if (sequence[i+v] != tStr.sequence[v]) {
-                    cout << sequence << endl;
                     return -1;
                 }
             }
