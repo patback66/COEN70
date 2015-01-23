@@ -125,19 +125,18 @@ void hw::string::insert(int index, const hw::string& aStr) {
         for (int i = 0; i < aStr.current_length;i++) {
             sequence[index + i] = aStr.sequence[i];
         }
+        current_length = finalLength;
     }
 }
 
 void hw::string::deletion(int index, int length) {
-    if (begin < current_length) {
-        if ((current_length - begin) > (end - begin)) {
-            if (end == current_length - 1) {
-                sequence[begin] = '\0';
-                return;
-            }
-            for (int i = begin;i <= end; i++) {
-                sequence[i] = sequence[i + end];
-            }
+    if (length <= current_length - index) {
+        if (index + length == current_length - 1) {
+            sequence[index] = '\0';
+            return;
+        }
+        for (int i = index; i <= current_length ; i++) {
+            sequence[i] = sequence[i+length];
         }
     }
 }

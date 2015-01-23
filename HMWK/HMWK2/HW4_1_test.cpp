@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
 	cout << str << endl;
 	str.insert(0, "Meow");
 	cout << str << endl;
-	str.deletion(3, 10);
+	cout << str.length() << endl;
+	str.deletion(3, 2);
 	cout << str << endl;
 	
 	return 0;
