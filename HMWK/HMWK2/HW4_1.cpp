@@ -144,11 +144,14 @@ void hw::string::deletion(int index, int length) {
 }
 
 void hw::string::replace(char oChar, char tChar) {
-    
+    for(int i = 0; i < current_length; i++) {
+        if(sequence[i] == oChar)
+            sequence[i] = tChar;
+    }
 }
 
 void hw::string::replace(const hw::string& oStr, const hw::string& tStr) {
-    
+
 }
 
 int hw::string::search(char aChar) {
