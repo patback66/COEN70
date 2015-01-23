@@ -39,6 +39,7 @@ namespace hw {
             void replace(char, char);
             //Replace string with string
             void replace(const string&, const string&);
+            int search(const hw::string& tStr, int pos);
             //Find index of first appearance of given char
             int search(char);
             //Find index of first appearance of given substring.

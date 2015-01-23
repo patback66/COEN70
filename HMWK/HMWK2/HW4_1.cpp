@@ -163,13 +163,13 @@ int hw::string::search(char aChar) {
     return -1;
 }
 
-int hw::string::search(const hw::string& tStr) {
-    if (current_length < tStr.current_length) {
+int hw::string::search(const hw::string& tStr, int pos) {
+    if ((current_length - pos) < tStr.current_length) {
         return -1;
     }
     
     int targetEnd = current_length - tStr.current_length;
-    for (int i = 0; i <= targetEnd; i++) {
+    for (int i = pos; i <= targetEnd; i++) {
         if (sequence[i] == tStr.sequence[0]) {
             for (int v = 1; v < tStr.current_length; v++) {
                 if (sequence[i+v] != tStr.sequence[v]) {
@@ -181,6 +181,10 @@ int hw::string::search(const hw::string& tStr) {
     }
     
     return -1;
+}
+
+int hw::string::search(const hw::string& tStr) {
+    return search(tStr, 0);
 }
 
 int hw::string::appearance(char aChar) {
