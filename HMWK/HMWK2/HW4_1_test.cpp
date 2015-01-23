@@ -5,6 +5,12 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 	hw::string str("Hello World");
+	
+	str.replace("Hello", "Meoww?");
+	
+	cout << str << endl;
+	
+	/*
 	hw::string wstr("World");
 	
 	int index = str.search(wstr);
@@ -21,6 +27,7 @@ int main(int argc, char *argv[]) {
 	cout << str.length() << endl;
 	str.deletion(3, 2);
 	cout << str << endl;
+	*/
 	
 	return 0;
 }

@@ -151,7 +151,35 @@ void hw::string::replace(char oChar, char tChar) {
 }
 
 void hw::string::replace(const hw::string& oStr, const hw::string& tStr) {
-
+    int currentIndex = 0;
+    while (true) {
+        int begin = this -> search(oStr, currentIndex);
+        
+        currentIndex = begin;
+        
+        if (currentIndex == -1) {
+            break;
+        }
+        int lengthDiff = tStr.current_length - oStr.current_length;
+        if (lengthDiff > 0) {
+            char* temp = new char[allocated + lengthDiff];
+            strcpy(temp, sequence);
+            delete []sequence;
+            sequence = temp;
+            for (int i = current_length;i >= currentIndex + oStr.current_length ; i--) {
+                sequence[i + lengthDiff] = sequence[i];
+            }
+        } else if (lengthDiff < 0) {
+            for (int i = currentIndex + tStr.current_length; i <= current_length; i ++) {
+                sequence[i] = sequence[i + 1];
+            }
+        }
+        for (int i = 0;i < tStr.current_length;i++) {
+            sequence[currentIndex + i] = tStr.sequence[i];
+        }
+        current_length += lengthDiff;
+        currentIndex += tStr.current_length;
+    }
 }
 
 int hw::string::search(char aChar) {
@@ -167,7 +195,6 @@ int hw::string::search(const hw::string& tStr, int pos) {
     if ((current_length - pos) < tStr.current_length) {
         return -1;
     }
-    
     int targetEnd = current_length - tStr.current_length;
     for (int i = pos; i <= targetEnd; i++) {
         if (sequence[i] == tStr.sequence[0]) {
