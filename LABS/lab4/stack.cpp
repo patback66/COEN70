@@ -9,36 +9,34 @@ stack::stack() {
 }
 
 stack::~stack() {
-    node* delMe = list;
-    list = list->next;
     while(list != NULL) {
+        node* delMe = list;
+        list = list->next;
         delete delMe;
-        delMe = list;
-        list = list-> next;
     }
 }
 
-stack::node(double data, node* n) {
-    value = data;
+stack::node::node(double value, node* n) {
+    data = value;
     next = n;
 }
 
 void stack::push(double x) {
-    node newNode = new node(x);
+    node* newNode = new node(x);
     newNode->next = list;
     list = newNode;
     size++;
 }
 
-float stack::pop() {
+double stack::pop() {
     if(list!=NULL) {
-        node current = list;
-        float data = current->data;
+        node* current = list;
+        double data = current->data;
         list = list->next;
         delete current;
         size--;
         return data;
     }
-    return -1;
+    return 0;
 }
 

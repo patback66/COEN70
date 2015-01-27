@@ -7,12 +7,12 @@ class stack {
         bool empty();
     private:
         int size;
+       
         class node {
             public:
                 node(double, node* = NULL);
-            private:
                 double data;
                 node* next;
-        }
+        };
         node* list;
-}
+};
