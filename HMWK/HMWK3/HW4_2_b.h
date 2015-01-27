@@ -3,22 +3,11 @@ using namespace std;
 
 class set {
 	private:
-		class node {
-			public:
-				node(double = 0, node* = NULL);
-				double _data;
-				node* _prev;
-				node* _next;
-		};
-
 		long _size;
-		node* _head;
-		node* _tail;
-		
-		void copyNodes(node*, node*);
-		void deallocNodes(node *);
+		long _cap;
+		double *_data;
 	public:
-		set();
+		set(long = 30);
 		~set();
 		set(const set&);
 		set& operator=(const set&);

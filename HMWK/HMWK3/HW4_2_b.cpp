@@ -4,63 +4,27 @@
 using namespace std;
 
 /*
-Struct for a set node
-*/
-set::node::node(double value, node* prev) {
-	_data = value;
-	_prev = prev;
-	_next = NULL;
-}
-
-/*
 Constructor
 */
-set::set() {
+set::set(long cap) {
 	_size = 0;
-	_head = new node();
-	_tail = _head;
+	_cap = cap;
+	_data = new double[cap];
 }
 
 /*
 Destructor
 */
 set::~set() {
-	deallocNodes(_tail);
-}
-
-/*
-Copies the nodes from one set to another.
-*/
-void set::copyNodes(node* dst, node* src) {
-	node *p = src -> _next;
-	node *d = dst;
-	while (p != NULL)
-	{
-		node* next = new node(p -> _data, d);
-		d -> _next = next;
-		p = p -> _next;
-		d = next;
-	}
-}
-
-/*
-Frees the memory for nodes to be removed.
-*/
-void set::deallocNodes(node *nd) {
-	node* t = nd;
-	while(t != NULL) {
-		node* p = t;
-		t = t -> _prev;
-		delete p;
-	}
+	if (_data != NULL)
+		delete []_data;
 }
 
 /*
 Copy Comnstructor
 */
 set::set(const set& other) {
-	_head = NULL;
-	_tail = NULL;
+	_data = NULL;
 	*this = other;
 }
 
@@ -71,17 +35,14 @@ set& set::operator=(const set& rhs) {
 
 	if (this != &rhs)
 	{
-		if (_tail != NULL)
-			deallocNodes(_tail);
+		if (_data != NULL)
+			delete []_data;
 
-		_head = new node();
-		copyNodes(_head, rhs._head);
+		_data = new double[rhs._cap];
+		copy(rhs._data,rhs._data + rhs._size, _data);
+
 		_size = rhs._size;
-		node* c = _head;
-		while(c -> _next != NULL) {
-			c = c -> _next;
-		}
-		_tail = c;
+		_cap = rhs._cap;
 	}
 
 	return *this;
@@ -91,11 +52,9 @@ set& set::operator=(const set& rhs) {
 Override the << operator for the set.
 */
 ostream& operator<<(ostream& out, const set& rhs) {
-	set::node *p = rhs._head -> _next;
-
-	while (p != NULL) {
-		out << p -> _data <<", ";
-		p = p -> _next;
+	for (int i = 0; i < rhs._size; i++)
+	{
+		out << rhs._data[i] <<", ";
 	}
 
 	return out;
@@ -107,15 +66,13 @@ Searches for "value" in the set. True if found, else false.
 bool set::contains(const double& value) const{
 	bool find = false;
 
-	node *p = _head -> _next;
-
-	while (p != NULL) {
-		if (p -> _data == value)
+	for (int i = 0; i < _size; i++)
+	{
+		if (_data[i] == value)
 		{
 			find = true;
 			break;
 		}
-		p = p -> _next;
 	}
 
 	return find;
@@ -127,9 +84,16 @@ Checks for duplicate before adding to the end.
 void set::insert(const double& value) {
 	if (!contains(value))
 	{
-		node* next = new node(value, _tail);
-		_tail -> _next = next;
-		_tail = next;
+		if (_size >= _cap)
+		{
+			_cap *= 2;
+			double* temp = new double[_cap];
+			copy(_data,_data + _size, temp);
+			delete []_data;
+			_data = temp;
+		}
+
+		_data[_size] = value;
 		_size ++;
 	}
 }
@@ -138,24 +102,16 @@ void set::insert(const double& value) {
 Removes specified node and fixes gap in the linked list.
 */
 void set::remove(const double& value) {
-	node *p = _head -> _next;
-
-	while (p != NULL) {
-		if (p -> _data == value)
-		{
-			p -> _prev -> _next = p -> _next;
-						
-			if (_tail == p) {
-				_tail = p -> _prev;
-			} else {
-				p -> _next -> _prev = p -> _prev;
-			}
-			
-			delete p;
+	for (int i = 0; i < _size; i++)
+	{
+		if (_data[i] == value) {
 			_size --;
+			for (int j = i; j < _size; j++)
+			{
+				_data[j] = _data[j + 1];
+			}
 			break;
 		}
-		p = p -> _next;
 	}
 }
 
