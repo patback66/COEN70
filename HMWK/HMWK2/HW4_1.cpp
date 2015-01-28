@@ -1,3 +1,11 @@
+/*
+ *
+ *    COEN70 HW2
+ *    Tian Zhang
+ *    Matthew Koken
+ *
+ */
+
 #include <iostream>
 #include <assert.h>
 #include "HW4_1.h"
