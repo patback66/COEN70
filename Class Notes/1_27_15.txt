@@ -1,0 +1,200 @@
+Class Notes
+
+//////////
+Ineritance
+    -polymorphism
+    
+Bag ADT, Set ADT
+//////////
+
+class bag {
+  class set : public bag {
+      //inherits everything from bag
+      //can only access bag functions and variables that are not private
+      public:
+        void add(int);
+  };
+};
+
+//////////
+Levels of security:
+    public
+        anybody can use
+    private
+        only 
+    protected
+//////////
+
+class base {
+    private:
+        int x;
+    protected:
+        float y;
+    public:
+        char z;
+}
+
+
+class derived : public base {
+    private:
+        int a;
+    public:
+        char b;
+        int f();
+        char g();
+    
+}
+
+int main() {
+    base o1;
+    derive o2;
+    //o1.x NO
+    //o1.y NO
+    o1.z; //YES
+    //o2.x; NO
+    //o2.y; NO
+    o2.z; //YES
+    //o2.a; NO
+    o2.b; //YES
+    base::z; //YES
+    base::y; //YES
+    base::x //NO
+    
+    
+}
+
+//////////
+Travel up the hierarchy to look for a var, function
+//////////
+
+class set {
+    private:
+        bag b;
+    public;
+};
+
+//////////
+
+//////////
+
+class set : public bag {
+    private:
+        int y;
+    public:
+        set();
+        ~set();
+        set(const set&);
+        set& operator =(const set&);
+        void add(int);
+};
+
+void set::add(int x) {
+    if(!cointains(x));
+        bag::add(x);
+}
+
+set::set() : bag() {
+    y = -999;
+}
+
+set::set(): bag(), y(-999) {
+    
+}
+
+//////////
+CALL THE BASE CLASS CONSTRUCTOR ON THE LIST, NOT INSIDE
+fraction::fraction(int n, int d) {
+    this->n=n;
+    this->d = d;
+}
+fraction::fraction(int n, int d) : n(n), d(d) {
+    
+}
+//////////
+
+set::~set() {
+    //to do
+    ~bag();
+}
+
+set::set(const set& rhs): bag(rhs) {
+    //this is polymorphic
+}
+
+set& set::operator= (const set& rhs) {
+    bag::operator= (rhs);
+    return *this;
+}
+///////////
+bag ADT <T>
+set ADT
+//////////
+
+template <class J>
+class set : public bag <J> {
+    
+};
+class set: public bag<int> {
+    
+}
+
+template <class J>
+class set: public bag {
+    
+};
+
+//////////
+[bag]   [base]
+    ^       ^
+    |       |
+[set]   [derive]
+
+[student]     [teacher]
+class list  salary
+        [ta]
+        inherits from both
+//////////
+
+class TA : public student, public teacher {
+  TA:TA(): student(), teacher() {
+      
+  }  ;
+};
+
+//////////
+Factoring: 
+        [human]
+        name
+        age
+[student]         [teacher]
+class               salary
+        [TA]
+        
+But there are two humans in TA
+Java doesn't have this problem, C++ does
+    -Java can't do multiple inheritance
+    
+//////////
+
+//virtual keeps TA from having 2 human classes
+class student: public virtual human {
+    
+};
+
+class teacher: virtual public human {
+    
+};
+//////////
+
+//////////
+
+class M {
+    public:
+        virtual int f() = 0;
+        int g(int);
+}; //abstract: only required to implement f
+
+clsas N: public M {
+    public:
+          
+};
