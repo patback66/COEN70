@@ -1,0 +1,148 @@
+1/22/15
+
+///////////
+c++ strings
+
+array of characters that is terminated by a null
+don't need to worry about a null because we have size
+
+///////////
+
+class string {
+    public:
+        string (char[] = "\0");
+        string(const string&);
+        ~string();
+        int length();
+        string& operator+= (const string&);
+        string& operator= (const string&);
+        char operator[] (const string&);
+        void reserve(int);
+    private:
+        char* s;
+        in size;
+        int max;
+}
+
+string::string(char[] str) {
+    int si = std::strlen(str);
+    s = new char[si+1];//+1 to account for the null
+    std::copy(str, si+1, s);
+    size = si;
+    max = si+1;
+}
+
+string::string(const string& other) {
+    s=NULL; //usually need to do the same thing as the constructor
+            //because we use the assignment operator
+    *this = other;
+}
+
+string& string::operator= (const string& other) {
+    if(this==&other)
+        return *this;
+    if(s!=NULL)
+        delete[] s;
+    /*int si = std::strlen(str);
+    s = new char[si+1];//+1 to account for the null
+    std::copy(str, si+1, s);
+    size = si;
+    max = si+1;*/
+    this->s = new char[other.max];
+    std::copy(other.s, other.s+other.size+1, this->s);
+    size = other.size;
+    max = other.max;
+    return *this;
+}
+
+int string::length() {return size};
+
+void string::reserve(int x) {
+    char* new_str = new char[max+x];
+    std::copy(s, s+size+1, new_str);
+    delete[] s;
+    s = new_str;
+    max = max+x;
+}
+
+string& string::operator+= (const string& rhs) {
+    if(this->size+rhs.size > this-> max)
+        reserve(rhs.size);
+    //need to make sure null terminated this->s = NULL;
+    std::copy(rhs.rhs.s+rhs.size+1, this->s + this->size);
+    this->size += rhs.size;
+    return *this;
+}
+
+char string::operator[] (int i) {
+    //check in between i is between 1 and size-1
+    return s[i-1];
+}
+
+///////////
+back to set adt
+linked list w/sentinel
+unique
+template
+
+insertion:
+node* t = new node(x, head->n)
+head->n = t;
+
+remove:
+search for target
+//not last node
+node*t = p->n;
+p->d = t->d;
+p->n = t->n;
+delete t;
+//last node
+p->n->d =x;
+p->n->n == NULL;
+node*t = p->n;
+p->n = NULL;
+delete t;
+
+////
+if(size )
+node* p = head;
+while(p!=NULL) {
+    if(p->n!=NULL && p->n->d == x) {
+        node* t = p->n;
+        p-><n = t->n;
+        delete t;
+        return true;
+    }
+    p = p->n;
+}
+return false;
+///////////
+
+set::operator+ (const& set rhs) {
+    node* p = rhs.head->n;
+    while(p!=NULL) {
+        this->add(p->d);
+        p=p->n;
+    }
+}
+
+set::operator- (const& set rhs) {
+    node* p = rhs.head->n;
+    while(p!=NULL) {
+        this->remove(p->d);
+        p=p->n;
+    }
+}
+
+template<class T>
+class set;
+
+//need to make a function prototype
+template <class T>
+ostream& operator<< (ostrem &, const set<T>&);
+
+template <class T>
+class set{
+    public:
+        friend ostream& operator<< < >(ostream& out, const set &);
+}
