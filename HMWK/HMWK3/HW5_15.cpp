@@ -4,6 +4,12 @@
 
 using namespace std;
 
+sequence::node::node(double value, node* p, node* n) {
+    data = value;
+    prev = p;
+    next = n;
+}
+
 /*
 Constructor
 */
@@ -99,7 +105,7 @@ void sequence::remove_current() {
     node* delMe;
     if(cursor!=NULL) {
         //deleting the only item
-        if(nodeCount = 1) {
+        if(nodeCount == 1) {
             delMe = cursor;
             cursor = NULL;
             head = NULL;
@@ -118,7 +124,7 @@ void sequence::remove_current() {
         else if(cursor == tail) {
             delMe = tail;
             tail = tail->prev;
-            tail->next = null;
+            tail->next = NULL;
             cursor = tail;
             delete delMe;
             current_index--;
@@ -166,7 +172,7 @@ Override << operator.
 */
 ostream& operator<< (ostream& out, const sequence& seq) {
     out << "{";
-    node* cur = seq.head;
+    sequence::node* cur = seq.head;
     while(cur!=NULL)
     {
         out << cur->data << ", ";
@@ -264,7 +270,7 @@ sequence sequence::operator+(const sequence& other) {
         nseq.add_end(pcur->data);
         pcur = pcur->next;
     }
-    pcur = other->head;
+    pcur = other.head;
     while(pcur != NULL) {
         nseq.add_end(pcur->data);
         pcur = pcur->next;
@@ -297,6 +303,6 @@ sequence::value_type sequence::operator[] (size_type index) const{
 
 void sequence::retreat() {
     if(cursor->prev != NULL)
-        cursror = cursor->prev;
+        cursor = cursor->prev;
     //if null, we are at the front so don't go back any more
 }
