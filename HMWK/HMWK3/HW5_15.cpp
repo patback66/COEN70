@@ -180,74 +180,96 @@ ostream& operator<< (ostream& out, const sequence& seq) {
 Adds "entry" to the front of the list. Updates current_index to match updated list.
 */
 void sequence::add_front(const value_type& entry) {
-    if(used >= size_cap) {
-        expand();
+    node* newNode = new node(entry, NULL, NULL);
+    if(head == NULL) {
+        head = newNode;
+        tail = newNode;
+        cursor = newNode;
+        current_index = 0;
+        nodeCount = 1;
+    } else {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+        current_index++;
+        nodeCount++;
     }
-    if(current_index!=-1) {
-        for(int i = used; i > current_index; i--) {
-            data[i] = data[i - 1];
-        }
-    } 
-    data[0] = entry;
-    used++;
-    current_index++;
 }
 /*
 Removes the item in pos 0, then shifts the list down to fill the gap and 
 updates the current index.
 */
 void sequence::remove_front() {
-    for(int i = 0; i < used; i++) {
-        data[i] = data[i+1];
+    node* delMe = head;
+    if(head != NULL){
+        if(head->next == NULL) {
+            head = NULL;
+            delete delMe;
+        } else {
+            head = head->next;
+            head->prev = NULL;
+        }
     }
-    used--;
     current_index--;
-    
+    nodeCount--;
 }
 /*
 Adds "entry" to the end of the list. If the list is empty, "entry" becomes the 
 current item.
 */
 void sequence::add_end(const value_type& entry) {
-    if(used >= size_cap) {
-        expand();
-    }
-    data[used] = entry;
-    used++;
-    if(current_index==-1)
+    node* newNode = new node(entry, NULL, NULL);
+    if(tail == NULL) {
+        head = newNode;
+        tail = newNode;
+        cursor = newNode;
         current_index = 0;
+        nodeCount = 1;
+    } else {
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = newNode;
+        nodeCount++;
+    }
 }
 /*
 The last entry becomes the current entry.
 */
 void sequence::last_current() {
-    if(used == 0)
-        current_index = 0;
-    else
-        current_index = used -1;
+    if(nodeCount == 0) {
+        current_index = -1;
+        cursor = NULL;
+    } else {
+        current_index = nodeCount -1;
+        cursor = tail;
+    }
 }
 /*
 Override + operator for sequences.
 */
 sequence sequence::operator+(const sequence& other) {
-	if (other.used == 0)
+	if (other.nodeCount == 0)
 	{
 		return *this;
 	}
 
-	if (used == 0)
+	if (nodeCount == 0)
 	{
 		return other;
 	}
 
-    if(used + other.used >= size_cap) {
-        expand();
+    sequence nseq;
+    node* pcur = this->head;
+    while(pcur != NULL) {
+        nseq.add_end(pcur->data);
+        pcur = pcur->next;
+    }
+    pcur = other->head;
+    while(pcur != NULL) {
+        nseq.add_end(pcur->data);
+        pcur = pcur->next;
     }
 
-    sequence nseq;
-    copy(data, data + used, nseq.data);
-    copy(other.data, other.data + other.used, nseq.data + used);
-    nseq.used = used + other.used;
     nseq.current_index = -1;
     return nseq;
 }
@@ -262,8 +284,13 @@ sequence sequence::operator+=(const sequence& other) {
 Override [] operator for sequence allows access to sequence elements by index.
 */  
 sequence::value_type sequence::operator[] (size_type index) const{
-    if(index < used)
-        return data[index];
+    if(index < used) {
+        node* n = head;
+        for(size_type i = 0; i < index; i++) {
+            n = n->next;
+        }
+        return n->data;
+    }
     else
         return -1;
 }
