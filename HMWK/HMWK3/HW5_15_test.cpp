@@ -26,4 +26,5 @@ int main(int argc, char *argv[]) {
 	seq += seq1;
 	
 	cout << seq << endl;
+	seq.retreat();
 }
