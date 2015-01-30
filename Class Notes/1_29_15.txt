@@ -1,0 +1,175 @@
+//////////
+        [Human]
+        f()
+[Student]   [Teacher]
+f()         f()
+        [TA]
+        f()
+//////////
+
+TA TA1;
+human ptr = &TA1;
+student s1;
+teaccher T1;
+human p1, p2;
+p1 = &s1;
+p2 = &T1;
+
+//These get from the actual class
+TA1.f();
+S1.f();
+T1.f();
+
+//but these call f() from human
+ptr->f();
+p1->f();
+p2->f();
+
+class human {
+    public:
+        virtual void print();
+    
+};
+
+class student : public human {
+    public:
+        void print();
+};
+
+class teacher : public human {
+    public:
+        void print();
+        
+}
+
+student* sp = &TA1;
+sp->print();
+
+//////////
+need to be careful with polymorphism -> calling the wrong destructor can lead to
+memory leaks
+
+OOP
+data abstraction
+inheritance, multiple inheritance
+polymorphism
+objects - what you want to do
+
+AND NOW BACK TO YOUR PREVIOUSLY SCHEDULED PROGRAMMING: DATA STRUCTURES 2: Electric Boogaloo
+//////////
+
+//////////
+DEQUE
+push_front O(1)
+push_back O(1)
+pop_back O(1)
+pop_back O(1)
+
+ways to implement:
+1) array - start from the middle, make it circular
+2) link list - double 
+
+can be lazy, derive from stack, but add restrictions
+//////////
+
+//////////
+Stack: push, pop, size
+Queue: push, pop, size
+BUT THESE ARE DIFFERENT
+
+15 element circular array
+int for front, int for back
+//////////
+
+//virtual only goes in the interface
+
+int front;
+int back;
+
+//////////
+++back%15 = 0
+7%15=7
+//////////
+void deque::push_back(int x) {
+    int i = get_next(back);
+    data[i] = x;
+    back = i;
+    size++;
+}
+
+int get_next(int i) {
+    return(i+1)%MAX;
+}
+
+
+//with doubly ended
+
+//////////
+doubly linked list
+node po = other.head;
+while(po!=NULL) {
+
+    if(this->head == NULL)
+        head = tail = new node(po->d, NULL, NULL);
+    else {
+        tail = tail->n = new node(po->d, NULL, tail);
+    }
+    po = po->n;
+    size++;
+}
+//////////
+
+//////////
+Simplest application of stack and queue
+palindrome check
+-push each character into stack and queue
+-pop each character from both, if they both match then it is a palindrome
+//////////
+
+bool palindrome(istream& ins) {
+    stack<char> s;
+    queue<char> q;
+    while(ins && ins.peek() != '\n') {
+        char t;
+        ins >> t; //consumes the next char
+        s.push(t);
+        q.push(t);
+    }
+    while(!s.isempty()) {
+        char a = s.top();
+        s.pop();
+        char b = q.front();
+        q.pop();
+        if(a!=b)
+            return false;
+    }
+    return true;
+    }
+}
+
+int main() {
+    palindrome(cin);
+}
+
+//////////
+Next easy program for stack/queue
+parenthesis check
+(())(()) good
+(()))((())
+//////////
+
+bool isBalanced(string& str) {
+    stack<char> k;
+    for(string::size_type i = 0; i < str.length(); i++) {
+        char t = str[i];
+        if(t=='(')
+            k.push(t);
+        else if(t==')' && !k.isempty())
+            k.pop();
+        else if(kt==')' && k.isempty())
+            return false;
+    }
+    return k.isempty();
+}
+
+strchr("[{("'<", t")

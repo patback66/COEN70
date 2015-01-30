@@ -260,7 +260,7 @@ sequence sequence::operator+=(const sequence& other) {
 }
 /*
 Override [] operator for sequence allows access to sequence elements by index.
-*/
+*/  
 sequence::value_type sequence::operator[] (size_type index) const{
     if(index < used)
         return data[index];
