@@ -99,7 +99,7 @@ void set::insert(const double& value) {
 }
 
 /*
-Removes specified node and fixes gap in the linked list.
+Removes specified node and fixes gap in the array.
 */
 void set::remove(const double& value) {
 	for (int i = 0; i < _size; i++)

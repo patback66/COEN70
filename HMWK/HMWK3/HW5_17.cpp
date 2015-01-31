@@ -3,11 +3,17 @@
 
 using namespace std;
 
+/*
+ * Constructor
+ */
 bag::bag() {
 	head_ptr = NULL;
 	many_nodes = 0;
 }
 
+/*
+ * Destructor
+ */
 bag::~bag() {
 	node* p = head_ptr;
 	while (p != NULL) {
@@ -20,15 +26,24 @@ bag::~bag() {
 	}
 }
 
+/*
+ * Copy Constructor
+ */
 bag::bag(const bag& source) {
 	head_ptr = NULL;
 	*this = source;
 }
 
+/*
+ * Assign operator
+ */
 void bag::operator =(const bag& source) {
+	//Self Check
 	if (this != &source) {
+		//Copy the number of nodes
 		many_nodes = source.many_nodes;
 		if (source.many_nodes > 0) {
+			//Perform the copy
 			node* head = new node(source.head_ptr -> data());
 			node* o_T = source.head_ptr;
 			node* c_T = head;
@@ -46,6 +61,7 @@ void bag::operator =(const bag& source) {
 	}
 }
 
+// += operator, reuse the insert()
 void bag::operator +=(const bag& addend) {
 	if (addend.many_nodes > 0) {
 		node* o_H = addend.head_ptr;
@@ -58,6 +74,7 @@ void bag::operator +=(const bag& addend) {
 	}
 }
 
+// Reuse +=
 bag operator +(const bag& b1, const bag& b2) {
 	bag nBG;
 	
@@ -67,6 +84,7 @@ bag operator +(const bag& b1, const bag& b2) {
 	return nBG;
 }
 
+//Insert the value to the bag
 void bag::insert(const bag::value_type& entry) {
 	node* n = new node(entry);
 	
@@ -81,6 +99,7 @@ void bag::insert(const bag::value_type& entry) {
 	many_nodes ++;
 }
 
+//Remove once of the given value
 bool bag::erase_one(const bag::value_type& target) {
 	bool deleted = false;
 	
@@ -126,6 +145,7 @@ bool bag::erase_one(const bag::value_type& target) {
 	return deleted;
 }
 
+//Remove all target items
 bag::size_type bag::erase(const bag::value_type& target) {
 	size_type count = 0;
 	
@@ -136,6 +156,7 @@ bag::size_type bag::erase(const bag::value_type& target) {
 	return count;
 }
 
+//Count the number of target in the bag
 bag::size_type bag::count(const bag::value_type& target) const {
 	size_type count = 0;
 	
@@ -155,6 +176,7 @@ bag::size_type bag::count(const bag::value_type& target) const {
 	return count;
 }
 
+//Return the first object in the bag
 bag::value_type bag::grab( ) const {
 	if (many_nodes == 0) {
 		throw "Try to grab something from an empty bag!";

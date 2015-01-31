@@ -1,6 +1,6 @@
 /*
  *
- *    COEN70 HW2
+ *    COEN70 HW3
  *    Tian Zhang
  *    Matthew Koken
  *
