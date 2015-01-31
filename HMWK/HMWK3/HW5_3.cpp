@@ -2,6 +2,8 @@
 
 using namespace std;
 
+
+//Simple Node definition 
 class item {
 	public:
 		item(int value, item* n = NULL) {

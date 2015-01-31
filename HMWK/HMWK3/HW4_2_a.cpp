@@ -135,7 +135,7 @@ ostream& operator<< (ostream& out, const sequence& seq) {
 }
 
 /*
-Adds "entry" to the front of the list. Updates current_index to match updated list.
+Adds "entry" to the front of the array. Updates current_index to match updated array.
 */
 void sequence::add_front(const value_type& entry) {
     if(used >= size_cap) {
@@ -151,7 +151,7 @@ void sequence::add_front(const value_type& entry) {
     current_index++;
 }
 /*
-Removes the item in pos 0, then shifts the list down to fill the gap and 
+Removes the item in pos 0, then shifts the array down to fill the gap and 
 updates the current index.
 */
 void sequence::remove_front() {
@@ -163,7 +163,7 @@ void sequence::remove_front() {
     
 }
 /*
-Adds "entry" to the end of the list. If the list is empty, "entry" becomes the 
+Adds "entry" to the end of the array. If the array is empty, "entry" becomes the 
 current item.
 */
 void sequence::add_end(const value_type& entry) {
