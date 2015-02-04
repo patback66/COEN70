@@ -1,0 +1,193 @@
+Review
+class/struct
+private/public/protected
+member function (ctrs, dtrs, operators, etc...)
+    how/when are these called (things that happen behind the scene)
+template
+inheritance
+
+A a = b;
+A b;
+A c(b);
+a = b;
+
+D. S.
+array - partially filled (static)
+        dynamic
+linked list
+        single
+        double
+
+ADT
+bag
+stack
+queue
+set
+ordered set
+keyed bag - hash table
+sequence - has an order
+
+No
+    polymorphism
+    virtual
+
+Practical - pretty much just code
+
+~5 questions
+    shouldn't take the whole 2 hours, but 2 hours is available
+Templates
+
+template <class L>
+class queue {
+    private: 
+        class node {
+            public:
+                L d;
+                node* n;
+                node(const L& x = L(), node* y = NULL) : d(x), n(y) {};
+                //queue<L>::node<L>::node(...)
+        };
+        //add from tail, remove from head
+        node* head;
+        node* tail;
+        int size;
+    public:
+        queue();
+        ~queue();
+        queue(const queue&);
+        queue& operator= (const queue&);
+        L pop();
+        void push(const L&);
+        bool isEmpty();
+        queue();
+        int size();
+};
+
+template<class L>
+int queue<L>::size() {
+    return size;
+}
+
+template <class L>
+bool queue<L>::isEmpty() {
+    return !size();
+}
+
+template <class L>
+void queue<L>::push(const L& x) {
+    if(size==0)
+        head = teal = new node(x);
+    else {
+        tail->n = new node(x);
+        tail = tail->n;
+    }
+    size++;
+}
+
+template <class L>
+L queue<L>::pop() {
+    if(size()==0)
+        assert();
+    else {
+        L t = head->d;
+        node* p = head;
+        head = head->n;
+        delete p;
+        size--;
+        return t;
+    }
+}
+
+template <class L>
+queue<L>::queue() {
+    size = 0;
+}
+
+template <class L>
+queue<L>::queue(const queue& other) {
+	head = NULL;
+	*this = other;
+}
+
+template <class L>
+queue<L>::~queue() {
+	clear();
+}
+
+template <class L>
+queue<L>::clear() {
+	while(head!=NULL){
+		node* t = head;
+		head = head->n;
+		delete t;
+	}
+}
+
+template <class L>
+queue<L>::operator= (const queue& other) {
+	if(*this == other)
+		return this;
+	else {
+		clear();
+		node* t = other.head;
+		while(t!=NULL) {
+			this->push(t->d);
+			t=t->n;
+	}
+}
+
+/////////////
+keyed bag
+/////////////
+new node[10];
+struct node {
+    string k;
+    int d;
+}
+
+
+template <class X>
+class bag {
+    
+}
+
+class kBag : public bag<node> {
+    //override contains, add, remove
+    
+}
+
+kbag<str n> a(...)
+
+template <class F>
+inorder(node* r) {
+    inorder(r->l);
+    f(r->d);
+    inorder(r->r);
+}
+
+g
+inorder<g>(...)
+
+public
+protected
+private
+
+friend template
+
+
+template <class Z> 
+class Y;
+
+template<class Z>
+void X(Y&);
+
+template <class Z>
+class Y {
+    public:
+        friend void x<>(Y&);
+        //only required if the object that's used is a template object
+};
+
+/////////////////////////////////
+END REVIEW
+/////////////////////////////////
