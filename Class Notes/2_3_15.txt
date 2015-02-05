@@ -165,7 +165,6 @@ inorder(node* r) {
     inorder(r->r);
 }
 
-g
 inorder<g>(...)
 
 public
