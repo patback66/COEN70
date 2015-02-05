@@ -19,4 +19,6 @@ class stack {
 		virtual void push(double);
 		virtual double pop();
 		virtual long size();
+		
+		friend ostream& operator << (ostream& out, const stack& s);
 };

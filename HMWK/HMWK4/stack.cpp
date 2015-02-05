@@ -60,3 +60,14 @@ double stack::pop() {
 long stack::size() {
 	return _size;
 }
+
+ostream& operator << (ostream& out, const stack& s) {
+	if (s._size > 0) {
+		stack::node* p = s._head -> _next;
+		while (p != NULL) {
+			out << p -> _data << ", ";
+			p = p -> _next;
+		}
+	}
+	return out;
+}

@@ -9,7 +9,7 @@ class stack {
 			public:
 				T _data;
 				node* _next;
-			node(const T& _data = L(), node* _next = NULL) : _data(x), _next(y) {};
+			node(const T& d = T(), node* n = NULL) : _data(d), _next(n) {};
 		};
 		node* _head;
 		long _size;
