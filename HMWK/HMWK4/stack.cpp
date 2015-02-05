@@ -1,42 +1,61 @@
 #include <iostream>
+#include <assert.h>
 #include "stack.h"
 
 using namespace std;
 
+//Constructor for the node
+stack::node::node(double value, node* next) {
+	_data = value;
+	_next = next;
+}
+
+//Constructor for the stack
 stack::stack() {
-    list = NULL;
-    size = 0;
+	_size = 0;
+	//Create a dummy node
+	_head = new node(0, NULL);
 }
 
+//Destructor
+//Free the memory used by nodes
 stack::~stack() {
-    while(list != NULL) {
-        node* delMe = list;
-        list = list->next;
-        delete delMe;
-    }
+	node* p = _head;
+	while (p != NULL) {
+		node* t = p;
+		p = p -> _next;
+		delete t;
+	}
 }
 
-stack::node::node(double value, node* n) {
-    data = value;
-    next = n;
+//Push the value to the second item in the linked list
+void stack::push(double value) {
+	node* n = new node(value, _head -> _next);
+	_head -> _next = n;
+	_size ++;
 }
 
-void stack::push(double x) {
-    node* newNode = new node(x);
-    newNode->next = list;
-    list = newNode;
-    size++;
-}
 
+//Get the value of last pushed object in the stack
 double stack::pop() {
-    if(list!=NULL) {
-        node* current = list;
-        double data = current->data;
-        list = list->next;
-        delete current;
-        size--;
-        return data;
-    }
-    return 0;
+	node *p = _head -> _next;
+	
+	assert(p != NULL);
+	
+	//Adjust the list
+	_head -> _next = p -> _next;
+	
+	double value = p -> _data;
+	
+	//Since the p is no longer needed, free it.
+	delete p;
+	
+	//Update Size.
+	_size --;
+	
+	return value;
 }
 
+long stack::size() {
+	return _size;
+}

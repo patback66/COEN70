@@ -1,18 +1,22 @@
+#include <iostream>
+
+using namespace std;
+
 class stack {
-    public:
-        stack();
-        ~stack();
-        void push(double);
-        double pop();
-        bool empty();
-    private:
-        int size;
-       
-        class node {
-            public:
-                node(double, node* = NULL);
-                double data;
-                node* next;
-        };
-        node* list;
+	private:
+		class node {
+			public:
+				node(double, node* = NULL);
+				double _data;
+				node* _next;
+		};
+		node* _head;
+		long _size;
+	public:
+		stack();
+		~stack();
+		
+		void push(double);
+		double pop();
+		long size();
 };
