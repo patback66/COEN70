@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
 	//Create a stack
 	stack* stk = new stack();
 	
-	//A simple loop to test 10 different expressions.
 	while (true) {
 		//Get the expression from std::cin
 		string str;
