@@ -3,7 +3,7 @@
 using namespace std;
 
 class stack {
-	private:
+	protected:
 		class node {
 			public:
 				node(double, node* = NULL);
@@ -16,7 +16,7 @@ class stack {
 		stack();
 		~stack();
 		
-		void push(double);
-		double pop();
-		long size();
+		virtual void push(double);
+		virtual double pop();
+		virtual long size();
 };

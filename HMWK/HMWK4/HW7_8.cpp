@@ -1,5 +1,4 @@
 #include <iostream>
-#include <assert.h>
 #include "stack.h"
 
 using namespace std;
@@ -125,7 +124,7 @@ double processOpt(char& opt, double& arg2, double& arg1) {
 		}
 		break;
 		default:
-			assert("Unexpected Operator");
+			throw "Unexpected Operator";
 			return -1;
 	}
 }

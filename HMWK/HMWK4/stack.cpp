@@ -1,5 +1,4 @@
 #include <iostream>
-#include <assert.h>
 #include "stack.h"
 
 using namespace std;
@@ -40,7 +39,9 @@ void stack::push(double value) {
 double stack::pop() {
 	node *p = _head -> _next;
 	
-	assert(p != NULL);
+	if (p == NULL) {
+		throw "Empty Header";
+	}
 	
 	//Adjust the list
 	_head -> _next = p -> _next;
