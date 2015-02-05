@@ -5,7 +5,7 @@ using namespace std;
 
 //Constructor for the stack
 template <class T>
-stack::stack() {
+stack<T>::stack() {
 	_size = 0;
 	//Create a dummy node
 	_head = new node(0, NULL);
@@ -55,6 +55,7 @@ T stack<T>::pop() {
 	return value;
 }
 
-long stack::size() {
+template <class T>
+long stack<T>::size() {
 	return _size;
 }
