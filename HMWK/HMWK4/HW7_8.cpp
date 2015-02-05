@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	stack* stk = new stack();
 	
 	//A simple loop to test 10 different expressions.
-	for (int i = 0; i < 10; i++) {
+	while (true) {
 		//Get the expression from std::cin
 		string str;
 		getline(cin, str);
