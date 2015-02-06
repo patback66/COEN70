@@ -17,8 +17,6 @@ double processOpt(char&,double&,double&);
 
 int main(int argc, char *argv[]) {
 	
-	//Create a stack
-	stack* stk = new stack();
 	
 	while (true) {
 		//Get the expression from std::cin
@@ -32,11 +30,11 @@ int main(int argc, char *argv[]) {
 		}
 		
 		//Evaluate the expression
-		evaluateExpression(str, stk);
+		string result = convertInfix(str);
 		
 		
 		//Print out the result
-		cout << stk -> pop() << endl;
+		cout << result) << endl;
 	}
 	
 	//Free the stack
@@ -142,6 +140,69 @@ bool isOperator(string& exp) {
 	}
 }
 
+//verifies if c is an operand
+bool isOperand(char C) 
+{
+    //numbers are operands
+	if(C >= '0' && C <= '9') return true;
+	//variables (lower case)
+	if(C >= 'a' && C <= 'z') return true;
+	//variables (upper case)
+	if(C >= 'A' && C <= 'Z') return true;
+	return false;
+}
+
+// Function to get weight of an operator. An operator with higher weight will have higher precedence. 
+int GetOperatorWeight(char op)
+{
+	int weight = -1; 
+	switch(op)
+	{
+	case '+':
+	case '-':
+		weight = 1;
+	case '*':
+	case '/':
+		weight = 2;
+	}
+	return weight;
+}
+ 
+// Function to perform an operation and return output. 
+int HasHigherPrecedence(char op1, char op2)
+{
+	int op1Weight = GetOperatorWeight(op1);
+	int op2Weight = GetOperatorWeight(op2);
+ 
+	//determine the precidence of the operators 
+	if(op1Weight == op2Weight)
+	{
+	    return true;
+	}
+	return op1Weight > op2Weight ?  true: false;
+}
+
 string convertInfix(string str) {
-    
+    stack_template<string> stk;
+    string postfix = "";
+    for(int i = 0; i < str.length(); i++) {
+        //left paren
+        if(str[i] == "(")
+            stk.push(str[i]);
+        //numbers (including doubles) and variables
+        else if(isOperand(str[i]) || str[i] == '.')
+            stk.push(str[i]);
+        //operator
+        else if(isOperator(str[i])){
+            while(stk._size>0 && stk[i+1]!='(' &&  ) {
+                postfix+=stk.pop();
+            }
+        }
+            stk.push(str[i]);
+        //should be right paren
+        else {
+            i++;
+            postfix += stk.pop();
+        }
+    }
 }
