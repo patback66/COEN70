@@ -191,10 +191,10 @@ string convertInfix(string str) {
             stk.push(str[i]);
         //numbers (including doubles) and variables
         else if(isOperand(str[i]) || str[i] == '.')
-            stk.push(str[i]);
+            postfix+=str[i];
         //operator
         else if(isOperator(str[i])){
-            while(stk._size>0 && stk[i+1]!='(' &&  ) {
+            while(stk._size> && stk[i+1]!='(' &&  ) {
                 postfix+=stk.pop();
             }
         }
