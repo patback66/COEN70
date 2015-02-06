@@ -54,4 +54,5 @@ int main(int argc, char *argv[]) {
 	
 	cout << compare(a, b) << endl;
 	cout << compare(a, c) << endl;
+	return 0;
 }
