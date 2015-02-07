@@ -6,7 +6,10 @@ int main() {
     q.push(10);
     q.push(12);
     q.push(1);
+    cout << q.front() << endl;
     q.pop();
+    cout << q.front() << endl;
     q.pop();
+    cout << q.front() << endl;
     q.pop();
 }

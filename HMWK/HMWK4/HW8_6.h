@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <iostream>
 #include "assert.h"
 
 using namespace std;
@@ -15,16 +16,22 @@ class queue {
             rear_ptr = NULL;
         }
         queue(const queue<Item>& source){
+            rear_ptr = NULL;
            *this = source;
         }
         void clear() {
-            node* cur = rear_ptr;
-            while(cur!=NULL) {
-                node* delMe = cur;
-                cur = cur-> n;
-                delete delMe;
+            if (rear_ptr != NULL)
+            {
+                node* cur = rear_ptr -> n;
+                while(cur != rear_ptr) {
+                    node* delMe = cur;
+                    cur = cur -> n;
+                    delete delMe;
+                }
+                delete rear_ptr;
+                rear_ptr = NULL;
+                count = 0;
             }
-            count = 0;
         }
         ~queue() {
             clear();    
@@ -39,8 +46,12 @@ class queue {
         
         void pop() {
             assert(!empty());
-            node* delMe = rear_ptr->n;
-            rear_ptr->n = delMe->n;
+            node* delMe = rear_ptr -> n;
+            rear_ptr -> n = delMe->n;
+            if (delMe == rear_ptr)
+            {
+                rear_ptr = NULL;
+            }
             delete delMe;
             count--;
         }
@@ -50,8 +61,8 @@ class queue {
                 rear_ptr = new node(entry);
                 rear_ptr->n = rear_ptr;
             } else {
-            node* newNode = new node(entry, rear_ptr->n);
-            rear_ptr->n = newNode;
+                node* newNode = new node(entry, rear_ptr -> n);
+                rear_ptr -> n = newNode;
             }
             count++;
         }
@@ -74,7 +85,7 @@ class queue {
         bool empty() const { return (count == 0); }
         Item front()  const {
             assert(!empty());
-            return rear_ptr->n->d;
+            return rear_ptr-> n ->d;
         }
         size_type size() const { return count; }
     private:
