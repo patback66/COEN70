@@ -1,6 +1,9 @@
+#include "assert.h"
 #include "HW8_6.h"
 
 using namespace std;
+
+template class queue<int>;
 
 template <class Item>
 queue<Item>::queue() {
@@ -14,7 +17,7 @@ queue<Item>::queue(const queue<Item>& source) {
 }
 
 template <class Item>
-queue<Item>::clear() {
+void queue<Item>::clear() {
     node* cur = rear_ptr;
     while(cur!=NULL) {
         node* delMe = cur;
@@ -24,7 +27,7 @@ queue<Item>::clear() {
     count = 0;
 }
 
-template <class item>
+template <class Item>
 queue<Item>::~queue() {
     clear();
 }
@@ -35,7 +38,7 @@ void queue<Item>::operator =(const queue<Item>& source) {
         return;
     clear();
     rear_ptr = NULL;
-    if(source->rear_ptr == NULL)
+    if(source.rear_ptr == NULL)
         return;
     rear_ptr = new node(Item());
     node* temp = source.rear_ptr->n;
@@ -43,7 +46,6 @@ void queue<Item>::operator =(const queue<Item>& source) {
         push(temp->d); //assumes add works with sentinel
         temp=temp->n;
     }
-    return this;
 }
 
 template <class Item>
