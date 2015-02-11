@@ -1,0 +1,117 @@
+//////////
+Stack   FILO
+Queue   FIFO
+deque   FIFO both ends
+
+queue -> data
+         priority
+        access the highest priority O(1)
+        insert O(n) <- O(logn)
+        remove O(1) -> O(logn)
+        
+Binary Tree
+    -Tree with at most 2 children
+    
+    Highest priority
+    
+                                        1
+                                    10            99
+                            12              50       199         120
+                        100     51      60      101 20  200
+                        
+                        add 7
+                        
+                        
+                        
+                        
+                                            1
+                                    7                   99
+                            10          50          199         120
+                        12      39  60      101   201   200
+                                            
+Complexity of insert: O(h) = O(logn)
+Min Heap ->highest priority on top
+can use array -> use indexes
+to get the child of a node:
+    2i+1 = LC
+    2i+2 = RC
+to get the parent of a child:
+    (int)(i-1)/2 = P
+    INTEGER DIVISION
+//////////          
+
+class pq {
+    private:
+        int *w;
+        int last; //last is the index of the last element
+        int cap;
+        int p2lc(int); //left child
+        int c2p(int);
+        void reheap_up(int);
+        void reheap_down();
+    public:
+        int pop(); //remove from front, reheap down
+        void push(int); //remove from back, reheap up
+        int size();
+        bool isEmpty();
+        
+};
+
+void pq::reheap_up(int i) {
+    while(w[c2p(i)]<w[i] && i>0) {
+        std::swap(w[c2p(i)], w[i])
+        i = c2p(i);
+    }
+}
+
+int pq::fsc(int i) {
+    lc = p2lc(i);
+    rc = lc+1;
+    if(w[lc]<w[rc] && w[lc] < w[rc])
+        return lc;
+    else
+        return rc;
+}
+void pq::reheap_down() {
+    inti=0;
+    while(p2lc(i)<=last && w[i] > w[fsc(i)] )
+        int sc = fsc(i);
+        swap(w[i], w[sc]);
+        i=sc;
+}
+
+int pq::pop() {
+    int temp = w[0];
+    w[0] = w[last];
+    last--;
+    reheap_down();
+    return temp;
+}
+
+//////////
+pq class
+1) template Treeint getPriority();
+2) T has to be derived from heap_element
+//////////
+
+class heap_element{
+    public:
+        public getPriority()=0;
+}
+
+What if the binary tree is unbalanced?
+
+class pq {
+    private:
+        class node {
+            public:
+                node(int, node*);
+                node* l;
+                node* r;
+                int d;
+                node* p;
+        };
+        node *r;
+        int size;
+        
+}
