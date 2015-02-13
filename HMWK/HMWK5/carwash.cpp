@@ -9,28 +9,28 @@ using namespace std;
 using namespace main_savitch_8A;
 
 void car_wash_simulate
-(unsigned int wash_time, double arrival_prob, unsigned int total_time);
+(unsigned int wash_time, double arrival_prob, unsigned int total_time, unsigned int maxLength);
 // Precondition: 0 <= arrival_prob <= 1.
 // Postcondition: The function has simulated a car wash where wash_time is the
 // number of seconds needed to wash one car, arrival_prob is the probability
-// of a customer arriving in any second, and total_time is the total number
-// of seconds for the simulation. Before the simulation, the function has
-// written its three parameters to cout. After the simulation, the function
-// has written two pieces of information to cout: (1) The number of
-// cars washed, and (2) The average waiting time of a customer.
+// of a customer arriving in any second, total_time is the total number
+// of seconds for the simulation and maxLength is max length of the queue before customer left.
+// Before the simulation, the function has written its three parameters to cout.
+// After the simulation, the function has written two pieces of information
+// to cout: (1) The number of cars washed, and (2) The average waiting time of a customer.
 
 int main( )
 {
-    // Wash takes 240 seconds
+    // Wash takes 500 seconds
     // Customers arrive on average once every 400 seconds
     // Total simulation time is 6000 seconds
-    car_wash_simulate(240, 1.0/400, 6000);
+    car_wash_simulate(500, 1.0/400, 6000, 5);
 
     return EXIT_SUCCESS;
 }
 
 void car_wash_simulate
-(unsigned int wash_time, double arrival_prob, unsigned int total_time)
+(unsigned int wash_time, double arrival_prob, unsigned int total_time, unsigned int maxLength)
 // Library facilities used: iostream, queue, washing.h
 {
     queue<unsigned int> arrival_times; // Waiting customer’s time stamps
@@ -39,6 +39,7 @@ void car_wash_simulate
     washer machine(wash_time);
     averager wait_times;
     unsigned int current_second;
+    unsigned int leftCustomers = 0;
 
     // Write the parameters to cout.
     cout << "Seconds to wash one car: " << wash_time << endl;
@@ -50,8 +51,14 @@ void car_wash_simulate
     {   // Simulate the passage of one second of time.
 
         // Check whether a new customer has arrived.
-        if (arrival.query( ))
-            arrival_times.push(current_second);
+        if (arrival.query( )) {
+            if (arrival_times.size() < maxLength)
+            {
+                arrival_times.push(current_second);
+            } else {
+                leftCustomers ++;
+            }
+        }
 
         // Check whether we can start washing another car.
         if ((!machine.is_busy( ))  &&  (!arrival_times.empty( )))
@@ -65,9 +72,26 @@ void car_wash_simulate
         // Tell the washer to simulate the passage of one second.
         machine.one_second( );
     }
+    
+    //Handle leftover cars.
+    while (!arrival_times.empty()) {
+        current_second ++;
+        // Check whether we can start washing another car.
+        if (!machine.is_busy( ))
+        {
+            next = arrival_times.front( );
+            arrival_times.pop( );
+            wait_times.next_number(current_second - next);
+            machine.start_washing( );
+        }
+
+        // Tell the washer to simulate the passage of one second.
+        machine.one_second( );
+    }
 
     // Write the summary information about the simulation.
     cout << "Customers served: " << wait_times.how_many_numbers( ) << endl;
+    cout << "Number of customers left due to the queue length: " << leftCustomers << endl;
     if (wait_times.how_many_numbers( ) > 0)
         cout << "Average wait: " << wait_times.average( ) << " sec" << endl;
 }
