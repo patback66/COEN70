@@ -1,0 +1,160 @@
+Feb 26 Midterm
+Starts with polymorphism
+
+template functions need the scope
+A<T> A<T>::operator= 
+if(this==&other)
+    //*this==other checks for equality of content
+    //so riskier bet
+    //need to allocate again after clear
+    
+//////////
+Priority queue
+contains() - O(n)
+insert() - O(1)
+remove() - O(n) for linked list, O(n) minimum for array
+array linked list
+need faster runtime
+
+so use a heap (binary tree)
+contains O(n)
+insert O(h) = O(log n)
+remove() 
+
+max(ltree)<=r<=max(rtree)
+
+//////////  
+
+template <typename T>
+class bst {
+    protected:
+        struct node {
+            node(T v = T(), node& l = NULL, node* r = NULL) : d(v), lc(l), rc(r) {}
+            T d;
+            node* lc;
+            node* rc;
+               
+        }
+    public:
+        BST() { r = NULL;}
+        BST(const BST& other) {r = NULL; *this = other;}
+        ~BST() { clear();}
+        BST& operator= (const BST& other);
+        bool insert(const T&);
+        bool remove(const T&);
+        bool contains(const T&);
+        int getSize() { return size;}
+        bool remove_all(const T&);
+        node* copy(node*);
+        
+};
+
+template <typename T>
+void BST<T>::clear(node *r) {
+    if(r==NULL)
+        return
+    clear(r->lc);
+    clear(r->rc);
+    delete r;
+    return;
+}
+
+template <typename T>
+void BST<T>::clear() {
+    clear(r);
+}
+//pre, post, in
+//part of DFS -> depth first search
+//can use a stack
+
+//BFS breadth first search
+//level order
+
+template <typename T>
+BST& BST<T>::operator= (const BST& other) {
+    if(this == &other) {
+        return *this;
+    }
+    clear();
+    r = copy(other.r);
+    size = other.size;
+    return *this;
+}
+
+typename BST<T>::node* BST<T>::copy(node* r) {
+    if(r == NULL)
+        return NULL;
+    return new node(r->d, copy(r->lc), copy(r->rc))
+}
+
+//prints tree rotated 90 degrees
+print(node* r, int depth) {
+    if(r!=NULL) {
+        print(r->rc, depth+1);
+        cout << setw(4*depth)<< " " << r->d << endl;;
+        print(r->lc, depth+1);
+    }
+}
+
+//builds from the inside out
+//((2 5 7)10(. 11 13)15(. 17 20))
+
+//(. 7 (. 6 ( . 5)))
+print(node* r) {
+    if(r==NULL)
+        cout << ".";
+    else {
+        cout<<"(";
+        print(r->lc);
+        cout<<r->d;
+        print(r->rc);
+        cout << ")";
+    }
+}
+template <typename T>
+BST<T>::insert(T x) {
+    node* t = r;
+    while(t!NULL) {
+        if(x< t->d) {
+            if(t->lc == NULL) {
+                t->lc = new node(x);
+                return true;
+            }
+            t = t->lc;
+        } else {
+            if(t->rc==NULL) {
+                t->rc = new node(x);
+                return true;
+            }
+            t = t->rc;
+        }
+    }
+    r = new node(x);
+    return true;
+}
+
+template <typename T>
+BST<T>::remove(T x) {
+    node* t = r;
+    while(t!=NULL && t->d !=X) {
+        if(t->d < x)
+            t=t->rc;
+        else
+            t = t->lc;
+    }
+    if(t==NULL)
+        return false;
+    node* p = predecessor(t);
+    t->d = p->d;
+    remove(p)
+}
+
+template <typename T>
+void BST<T>::remove(node*r) {
+    
+}
+
+//////////
+predecessor = max of left subtree
+successor = min of right subtree
+//////////
