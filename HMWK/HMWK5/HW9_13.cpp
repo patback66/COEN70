@@ -8,9 +8,11 @@ float pow(float x, int n)
     float temp;
     if( n == 0)
        return 1;
+   //need to calculate to reduce recursive iterations
     temp = pow(x, n/2);       
     if (n%2 == 0)
         return temp*temp;
+        //use formula to cut down recursions
     else
     {
         if(n > 0)
