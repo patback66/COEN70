@@ -3,14 +3,19 @@
 using namespace std;
 
 void producePattern(int step, int max) {
+	//Since the pattern is symmetrical
+	//We will stop at 2 * max instead of max
 	if (step < max * 2) {
+		//First Half
 		if (step <= max) {
+			//For line that only need on "*"
 			if (step % 2 != 0) {
 				for (int i = 1 ;i < step; i += 2) {
 					cout << "  ";
 				}
 				cout << "* " << endl;
 				producePattern(step + 1, max);
+			//For line that need 2 * i "*"
 			} else {
 				if (step % 4 == 0) {
 					for (int i = 1; i < step; i += 2) {
@@ -25,6 +30,7 @@ void producePattern(int step, int max) {
 				cout << endl;
 				producePattern(step + 1, max);
 			}
+		//Second Half
 		} else {
 			if (step % 2 != 0) {
 				for (int i = 1 ;i < step; i += 2) {
