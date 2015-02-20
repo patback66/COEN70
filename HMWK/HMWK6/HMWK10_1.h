@@ -11,9 +11,10 @@ class eTree : public BST {
 		~eTree(){ dealloc(r) };
 		eTree& operator= (const eTree&);
 
+		void build(String input)
 		bool insert(const T&);
 
 		double evaluate(node* n);
-		bool isOperator(node* n);
-		bool iseaf(const node& n);
+		bool isNonLeaf(const node& n);
+		bool isLeaf(const node& n);
 };
