@@ -113,6 +113,23 @@ ExpressionTree::ExpressionTree(const string& str) {
 	}
 }
 
+ExpressionTree::~ExpressionTree() {
+	if (root != NULL)
+	{
+		dealloc(root);
+		root = NULL;
+	}
+}
+
+void ExpressionTree::dealloc(node* n) {
+	if (n != NULL)
+	{
+		dealloc(n -> left);
+		dealloc(n -> right);
+		delete n;
+	}
+}
+
 double ExpressionTree::evaluateAtNode(node* n) {
 	if (n != NULL) {
 		if (n -> type == 0) {
