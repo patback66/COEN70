@@ -58,6 +58,28 @@ bool eTree<T>::insert(const T&) {
     
 }
 
+node* constructFromExpression(String str) {
+    int end = 0;
+    int left = 0;
+    int right = 0;
+    for(int i = 0; i < str.length; i++) {
+        if(str[i]=='(') {
+            left++;
+            continue;
+        }
+        if(str[i] == ')') {
+            right ++;
+            if(left == right) {
+                end = i;
+                l = constructFromExpression(str.substr(1, end-1));
+                break;
+            }
+        }
+    }
+    op = str[end+1];
+    r = constructFromExpression(str.substr(end+2, str.length-end-1));
+}
+
 
 int main() {
     String input = "3 + 7 * 10";
