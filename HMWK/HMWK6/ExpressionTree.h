@@ -18,8 +18,9 @@ class ExpressionTree {
 		node* constructTree(const std::string&);
 		double evaluateAtNode(node*);
 		string extractSubString(const string& str, int&);
+		void dealloc(node*);
 	public:
 		ExpressionTree(const std::string&);
-		
+		~ExpressionTree();
 		double evaluate();
 };
