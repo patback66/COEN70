@@ -131,3 +131,12 @@ bool set<Item>::erase(const Item& target)
     }
     return true;
 }
+
+template <class Item>
+boolean set<Item>::loose_erase(const Item& target) {
+    int fIndex = 0;
+    for(; data[fIndex] < target && fIndex < MAXIMUM; fIndex++){}
+    if(fIndex == MAXIMUM && data[fIndex]<=)
+        fIndex = data_count;
+    if()
+}
