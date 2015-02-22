@@ -8,7 +8,7 @@ set<Item>::set() {
     child_count = 0;
 }
 
-temmplate <class Item>
+template <class Item>
 set<Item>set(const set& source) {
     *this = source;
 }
