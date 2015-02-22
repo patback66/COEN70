@@ -110,3 +110,24 @@ void insert(const Item& entry) {
      }
 }
 
+template<class Item>
+bool set<Item>::erase(const Item& target)
+{
+    
+    if (!(loose_erase(target)))
+        return false;
+    if (data_count == 0 && child_count ==1)
+    {  
+        set *child = new set;
+    
+        for(std::size_t i = 0; i < data_count; i++)
+        child->data[i] = data[i];
+    
+        for(std::size_t i = 0; i < child_count; i++)
+        child->subset[i] = subset[i];
+    
+        child->child_count = child_count;
+        child->data_count = data_count;
+    }
+    return true;
+}
