@@ -1,0 +1,113 @@
+using namespace std;
+namespace main_savitch_11
+{
+    template<class Item>
+    set<Item>::set()
+    {
+
+    }
+    
+    template<class Item>
+    set<Item>::set(const set<Item>& source)
+    {
+
+    }
+
+    template<class Item>
+    set<Item>& set<Item>::operator =(const set<Item>& source)
+    {
+	return *this;
+    }
+    
+    template<class Item>
+    void set<Item>::clear( )
+    {
+
+    }
+
+    template<class Item>
+    bool set<Item>::empty( ) const
+    {
+	return true;
+    }
+
+    template<class Item>
+    bool set<Item>::insert(const Item& entry)
+    {
+	return true;
+    }
+
+    template<class Item>
+    bool set<Item>::erase(const Item& target)
+    {
+	return true;
+    }
+
+    template<class Item>
+    bool set<Item>::is_leaf() const
+    {
+	return true;
+    }
+
+    template<class Item>
+    bool set<Item>::contains(const Item& target) const
+    {
+	return true;
+    }
+
+    template<class Item>
+    void set<Item>::print(int depth) const
+    {
+	// indentation
+	if (data_count == 0)
+	    cout << setw(4*depth) << depth << ": " << "[Empty]" << endl;
+	else if (is_leaf())
+	{
+	    cout << setw(4*depth) << depth << ": ";
+	    for (size_t j = 0; j < data_count; ++j)
+		cout << data[j] << " ";
+	    cout << endl;
+	}
+	else
+	{
+	    for (size_t j = 0; j < child_count; ++j)
+	    {
+		subset[j]->print(depth + 1);
+		if (j < data_count)
+		    cout << setw(4*depth) << depth << ": " << data[j] << " " << endl;
+	    }
+	}
+    }
+
+    template<class Item>
+    bool set<Item>::loose_insert(const Item& entry)
+    {
+	return true;
+    }
+
+    template<class Item>
+    bool set<Item>::loose_erase(const Item& target)
+    {
+	return true;
+    }
+
+    template<class Item>
+    void set<Item>::remove_biggest(Item& removed_entry)
+    {
+
+    }
+    
+    template<class Item>
+    void set<Item>::fix_excess(std::size_t i)
+    {
+
+    }
+
+    
+    template<class Item>
+    void set<Item>::fix_shortage(std::size_t i)
+    {
+	
+    }
+    
+}
