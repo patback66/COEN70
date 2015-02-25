@@ -1,0 +1,6 @@
+COEN 70
+Jan 20
+==
+Template
+
+non-member: friend ostream& operator<< <>(ostream&, const set&);

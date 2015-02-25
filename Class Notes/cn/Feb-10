@@ -1,0 +1,105 @@
+Feb 10
+==
+
+Stack
+	FILO
+Queue
+	FIFO
+Deque
+	...
+Priority Queue
+	Queue sorted by priority
+		Insert - O(log n)
+			Binary tree
+				Min Heap
+					Insert O(log n)
+					Remove O(log n)
+					BFS //Avoid unnecessary search
+					Using Array
+						[0,1,2,3,4]
+						P -> C:
+							//2n+1 - Left
+							//2n+2 - Right
+						C -> P:
+							int((n-1)/2)
+;
+class PQ {
+	private:
+		int* w;
+		int  last; // -1 for empty
+		int  cap;
+		int p2lc(int);
+		int c2p(int);
+		void reHeapUp(int);
+		void reHeapDown();
+	public:
+		PQ();
+
+		void push(int);
+		int pop();
+		int size();
+		bool empty();
+};
+
+//reHeapUp(15)
+void PQ::reHeapUp(int n) {
+	while(n > 0 && w[c2p(n)] > w[n]) {
+		swap(w[c2p(n)],w[n]);
+		n = c2p(n);
+	}
+}
+
+//Find index of smaller child
+int PQ::findSmallerChild(int i) {
+	int lc = p2lc(i);
+	int rc = lc + 1;
+
+	if (rc <= last && w[lc] > w[rc])
+	{
+		return rc;
+	}
+
+	return lc;
+}
+
+void PQ::reHeapDown() {
+	int i = 0;
+	while( (p2lc(i) <= last) && (w[i] > w[findSmallerChild(i)]) ) {
+		int ti = findSmallerChild(i);
+		swap(w[i], w[ti]);
+		i = ti;
+	}
+}
+
+int PQ::pop() {
+	int val = w[0];
+	w[0] = w[last];
+	last --;
+	reHeapDown();
+	return val;
+}
+
+class heapElement{
+public:
+	virtual int getPriority() = 0;
+};
+
+//template T
+//T has to be heapElement subclass
+
+class PQ {
+private:
+	class node{
+	public:
+		//D,P,L,R
+		node(int,node*,node* = NULL, node* = NULL);
+		node* l;
+		node* r;
+		node* p;
+		int d;
+		int s; //side of sub nodes
+	};
+	node* r;
+	int size;
+
+}

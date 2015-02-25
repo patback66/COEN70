@@ -1,0 +1,35 @@
+COEN 70
+Jan 13
+==
+
+Bag ADT
+
+Float
+No limit
+Allow duplicates
+
+--
+add
+remove_one
+remove_all
+contains
+size
+size_one
++ // Union
+- // Intercetion
+constructor
+destructor
+=
+<<
+--
+
+Dynamic Array
+
+class Bag {
+	private:
+		int _cap;
+		int _size;
+		float* _p;
+	public:
+		Bag(int cap = 10);	
+};

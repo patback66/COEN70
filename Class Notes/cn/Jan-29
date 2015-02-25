@@ -1,0 +1,111 @@
+Jan 29
+==
+
+//Polymorphism class
+class Human {
+	virtual void f();	
+};
+
+class Student: public Human {
+	virtual void f();
+};
+
+**Virtual all destructors
+
+------------------------------
+Data Structures~
+
+deque
+	push/pop front/back
+
+	double link list
+	array (start from middle) circular array
+;
+Circular array imp:
+	int front;
+	int back;
+
+	int getNext(int ind) {
+		return (ind+1) % cap;
+	}
+
+	void deque::push_back(int x) {
+		if (size >= cap)
+		{
+			//Increase
+			//Copy by using getNext()
+		}
+		back = getNext(back);
+		data[back] = x;
+		size ++;
+	}
+--
+Copy double link list
+	other
+	this
+	node* po = other.head;
+	while(po != NULL) {
+		node* nNode = new node(po -> d, NULL, tail);
+		if (tail != NULL)
+		{
+			tail -> n = nNode;
+		}
+		
+		tail = nNode;
+
+		if(this -> head == NULL) {
+			head = tail;
+		}
+
+		size++;
+		po = po -> n;
+	}
+--
+#include <stack>
+#include <queue>
+
+bool Palindrome(istream& ins) {
+	std::stack<char> s;
+	std::queue<char> q;
+	char temp;
+	while(ins && ins.peek() != '\n') {
+		ins >> temp;
+		s.push(temp);
+		q.push(temp);
+	}
+	while(!s.empty()){
+		char a = s.top();s.pop();
+		char b = q.front();q.pop();
+		if (a != b)
+		{
+			return false;
+		}
+	}
+	return true;
+};
+--
+#include <stack>
+
+bool isBalanced(const string& str) {
+	std::stack<char> k;
+	for (std::string::size_type i = 0; i < str.length(); i++)
+	{
+		if (str[i] == '(')
+		{
+			k.push('(');
+			continue;
+		}
+		if (str[i] == ')')
+		{
+			if (!k.empty())
+			{
+				k.pop();
+			} else {
+				return false;
+			}
+		}
+	}
+	return k.empty();
+}
+
+//strchr

@@ -1,0 +1,24 @@
+Feb 3
+==
+Review
+	class/struct
+	private/public/protected
+	member functions(constructors, destructor, operators, etc)
+	template
+	inheritance
+
+	Data Structure
+		array (static)
+		dynamic array
+		linked list
+			single
+			double
+
+	ADT
+		*Bag
+		Sequence
+		*Stack
+		*Queue
+		Set
+		OrderedSet
+		Keyed Bag (Hashtable)

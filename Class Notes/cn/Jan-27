@@ -1,0 +1,123 @@
+Jan 27
+==
+Inheritance in C++
+
+class bag {
+	//Everyone
+	public:
+
+	//Only yourself
+	private:
+
+	//Only yourself and your subclasses
+	protected:
+};
+
+class set: public bag {
+	
+};
+
+class base {
+	private:
+		int x;
+	protected:
+		float y;
+	public:
+		char z;
+};
+
+class derive: public base {
+	private:
+		int a;
+	public:
+		char b;	
+		int f();
+		char g();
+		//we can access a,b,y,z;
+		//base::z
+};
+
+int main () {
+	base o1;
+	derive o2;
+	//We can access o2.z,o2.b
+}
+
+class set: public bag {
+	private:
+		int y;
+	public:
+		set();
+		~set();
+		set(const set&);
+		set& operator= (const set&);
+		void add(int);
+};
+
+fraction::fraction(int n, int d): n(n), d(d) {
+
+}
+
+void set::add(int x) {
+	if (!constains(x))
+		bag::add(x);
+}
+
+set::set() : bag(), y(-999) {
+	
+}
+
+set::~set() {
+	//...
+	~bag();
+}
+
+//Polymorphism
+set::set(const set& rhs) : bag(rhs) {
+
+}
+
+set& set::operator= (const set& rhs) {
+	bag::operator=(rhs);
+	return *this;
+}
+
+bag<T>
+
+template <class J>
+class set : public bag<J> {
+	...
+};
+
+class Human {
+
+};
+
+class Student: public virtual Human {
+
+};
+
+class Teacher: virtual public Human {
+
+};
+
+// virtual needed to be unique
+
+class TA: public Student, public Teacher {
+
+};
+
+Factoring
+...
+
+//Abstract class (Interface) - if there is at least a Pure Virtual Function
+class M {
+	public:
+		virtual int f() = 0; //Pure Virtual Function
+		virtual int g(int); //Virtual function
+};
+
+class N: public M{
+	public:
+
+};

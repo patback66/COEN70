@@ -1,0 +1,62 @@
+//////////
+Test:
+up to AVL trees
+
+Inheritance/Polymorphism
+    no syntax related (directly)
+stack
+queue
+deque
+heap (priority queue)
+    array, binary tree version
+    array is better
+binary trees
+BST
+"AVL"
+    -how to do rotations
+speeds for operations - why you choose one
+
+Cheat sheet
+    handwritten
+    8.5*11 1 sheet
+        anything you want
+    
+        
+
+//////////
+
+class A {
+    protected:
+        int A;
+    public:
+        virtual void f();
+        //f1
+}
+
+class B : public A {
+    //A is a scene
+    void f(); //f2
+}
+
+int main() {
+    return 0;
+}
+
+
+
+
+A   p1  |   p1.f()  |   f1
+B   p2  |   p2.f()  |   f2
+A*  p3  |   p3->f() |   f1
+B*  p4  |   p4->f() |   f2
+A&  p5  |   p5.f()  |   f1
+B&  p6  |   p6.f()  |   f2
+
+f2  |   f3 = &p2    p3=&p1
+    |               p4=&p2
+f2  |   p5 =p2      p5=p1
+    |               p6=p2
+    
+bag = 
+set = 
+bag::operator(rhs)

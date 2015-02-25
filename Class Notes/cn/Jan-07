@@ -1,0 +1,87 @@
+COEN 70
+Jan 7
+==
+
+cin >>
+
+cout <<
+
+#include <fstream>
+
+ifstream in_stream;
+ofstream out_stream;
+
+in_stream.open("infile.dat");
+out_stream.open("outfile.dat");
+
+int first;
+in_stream >> first;
+out_stream << "xxx";
+
+in_stream.close();
+out_stream.close();
+
+--
+End of the file
+
+boolean (in_stream >> next) //Numbers ...
+
+or
+
+in_stream.eof() -> boolean //Texts
+--
+Program Errors
+	Syntax Errors
+
+	Run-time errors
+
+	Logic Errors
+--
+Standard string Class
+
+#include <string>
+
+string s1;
+
+append strings (concatenated)
+
+s3 = s1 + s2;
+
+operator overload
+
+compare strings
+--
+
+string phrase;
+string noun(ants);
+
+--
+Mixing strings and C-strigns
+
+...
+--
+string.length();
+
+string can be accessed as array or .at();
+
+
+manipulator
+//<iomanip>
+
+--
+Character Functions
+
+cctype library
+
+toupper()
+...
+
+--
+#include <cstdlib>
+#include <ctime>
+srand(time(0));
+
+rand();
+
+rand()%11 + 10;
+--
