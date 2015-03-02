@@ -1,19 +1,44 @@
+#ifndef BSTREE_H
+#define BSTREE_H
+
+#include <iostream>
+
+using namespace std;
 
 class BST {
-    protected:
-        class node {
-            node* left;
-            node* right;
-            T data;
-            node(int d, node* lc = NULL, node* rc = NULL) { data(d), left(lc), right(rc);}
-        };
-        node* r;
-    public:
-        BST() {
-            root = NULL;
-        }
-        bool isEmpty() const {return r==NULL;}
-        void insert(int);
-        void remove(int);
+protected:
+	class Node{
+	public:
+		Node(int d = 0){ data = d;left = NULL;right = NULL;parent = NULL;weight = 1;}
+		int data;
+		Node* left;
+		Node* right;
+		Node* parent;
+		int weight;
+	};
 
+	Node* root;
+	int items;
+
+	void print(Node*, int);
+	Node* predecessor(Node* n);
+	bool isLeaf(Node*);
+	void dealloc(Node*);
+	Node* insert(Node*, const int&);
+	Node* _insert(const int&);
+	bool contains(Node*, const int&);
+	Node* remove(Node*&, const int&);
+	Node* _remove(const int&);
+public:
+	BST();
+	~BST();
+
+	void insert(const int&);
+	void remove(const int&);
+	bool contains(const int&);
+	bool empty();
+	int size();
+	void printTree();
 };
+
+#endif
