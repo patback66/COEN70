@@ -140,22 +140,60 @@ void AVLTree::fixTree(Node* n) {
 		}
 		if (leftW - rightW >= 2)
 		{
-			rotateLeft(n);
-			rotateRight(n);
+			if (n -> left && n-> right && n -> left -> right) {
+				Node* parent = n;
+				Node* left = n -> left;
+				Node* lRight = left -> right;
+				left -> right = parent;
+				parent -> left = lRight;
+				if (parent -> parent) {
+					if (parent -> parent -> left == parent) {
+						parent -> parent -> left = left;
+					} else {
+						parent -> parent -> right = left;
+					}
+					left -> parent = parent -> parent;
+					parent -> parent = left;
+				} else {
+					root = left;
+					left -> parent = NULL;
+					parent -> parent = left;
+				}
+				fixWeight(n -> parent);
+			} else {
+				rotateLeft(n);
+				rotateRight(n);
+			}
 		}
 		if (rightW - leftW >= 2)
 		{
-			rotateRight2(n);
-			rotateLeft2(n);
+			if (n -> left && n-> right && n -> right -> left) {
+				Node* parent = n;
+				Node* right = n -> right;
+				Node* rLeft = right -> left;
+				right -> left = parent;
+				parent -> right = rLeft;
+				if (parent -> parent) {
+					if (parent -> parent -> left == parent) {
+						parent -> parent -> left = right;
+					} else {
+						parent -> parent -> right = right;
+					}
+					right -> parent = parent -> parent;
+					parent -> parent = right;
+				} else {
+					root = right;
+					right -> parent = NULL;
+					parent -> parent = right;
+				}
+				fixWeight(n -> parent);
+			} else {
+				rotateRight2(n);
+				rotateLeft2(n);
+			}
 		}
 		fixTree(n -> parent);
 	}
-	/*cout << "N - " << n -> data << endl;
-	cout << "P - " << n -> parent << endl;
-	if (n -> parent)
-	{
-		cout << "PD - " << n -> parent -> data << endl;
-	}*/
 }
 
 void AVLTree::insert(const int& value) {
