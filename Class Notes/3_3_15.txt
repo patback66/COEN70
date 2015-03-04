@@ -1,0 +1,110 @@
+3/3/15
+
+void insert(node*& p) {
+    if(p==NULL) {
+        p = new node(x);
+        return;
+    }
+    if(x>p->d)
+        insert(x, p->rc);
+    if(x<p->d)
+        insert(x, p->lc);
+    return;
+}
+
+void remove(int x, node*& p) {
+    if(p--NULL)
+        return;
+    if(p->d > x)
+        remove(x, p->lc);
+    else if(p->d<x)
+        remove (x, p->rc);
+    else if(p->lc != NULL && p->rc != NULL) {
+        p->d = findMax(p->lc);
+        remove(p->d), p->lc);
+    } 
+    else {
+        node* temp = p;
+        p=(p->lc!=NULL) ? p->lc : p->rc;
+        delete temp;
+    }
+}
+
+///////////////////
+Induction
+///////////////////
+
+Sum(i, i=1, N) = [(n+1)n]/2
+1+2+3+...+(n-1)+n
+n+(n-1)+...+2+1
+2s =(n+1)+(n+1)
+
+Proof by induction:
+Base case:
+    N = 1
+    1 = (1+1)*1/2 = 1     /
+                        \/
+Assume for N=k that sum(i, i=1, k) = (k+1)k/2
+prove that this is true for N=K+1
+                    sum(i, i = 1, K+1) = (K+1+1)(K+1)/2 = (K+2)(K+1)/2
+                    
+                    (K+1)K/2 + K + 1 = (K+1)K+2k+2/2 = k^2+k+2k+2/2
+                    =(K+2)(k+1)/2
+                    
+int size (node* p) {
+    if(p==NULL)
+        return 0;
+    else
+        return 1+size(p->lc)+size(p->rc);
+}
+subtrees x and y
+from root d,
+size = 1 + x + y
+
+
+Binary tree has N leaves, then there are 2n-1 nodes //must be complete, full
+base case:
+    1 node
+    2(1)-1 = 1
+assume tree L & R subtrees
+    L-> x leaves -> 2x-1 nodes
+    R-> y leaves -> 2y-1 nodes
+    2(x+y)-1 -> nodes in T
+    
+    nodes in T = nodes in L + nodes in R + 1 = 2x-1+2y-1 + 1 = 2x+2y-1 = 2(x+y)-1
+    
+nodes = edges + 1
+    Base case:
+        1 node, 0 edges
+        1 = 0+1
+    
+    inductive hypothesis:
+        L->x edges -> x+1 nodes
+        R->y edges-> y+1 nodes
+        
+        nodes = x+y+2+1     (x+1)+(y+1)+1
+                        =    x+y+3
+
+
+complete binary tree of height h
+    there are 2^(h+1)-1 nodes
+    
+    base:
+        1 node, 0 height
+        2^(0+1)-1 = 1
+    inductive hypothesis:
+        L->x height -> 2^(x+1)-1 nodes
+        R->y height -> 2^(y+1)-1 nodes
+        
+        Tree t: 2^(X+1+1)-1
+        
+        nL + nR + 1
+        [2^(x+1)-1] + [2^(y+1)-1] +1
+        x=y so
+        2*2^(x+1)-1
+        2&(x+2)-1
+
+//in this class, full is a triabgular looking tree        
+
+1. Prove base case
+2. assume statements for left and right are true, prove that they match
