@@ -31,7 +31,6 @@ BST::Node* BST::_insert(const int& value) {
 	if (root == NULL)
 	{
 		root = new Node(value);
-		root -> weight = 1;
 		items ++;
 		return root;
 	} else {
@@ -47,11 +46,9 @@ BST::Node* BST::insert(Node* n, const int& value) {
 			Node* t = new Node(value);
 			t -> parent = n;
 			n -> left = t;
-			n -> weight ++;
 			items ++;
 			return t;
 		} else {
-			n -> weight ++;
 			return insert(n -> left, value);
 		}
 	} else {
@@ -60,11 +57,9 @@ BST::Node* BST::insert(Node* n, const int& value) {
 			Node* t = new Node(value);
 			t -> parent = n;
 			n -> right = t;
-			n -> weight ++;
 			items ++;
 			return t;
 		} else {
-			n -> weight ++;
 			return insert(n -> right, value);
 		}
 	}
@@ -112,7 +107,7 @@ void BST::print(Node* r, int depth) {
 	if (r != NULL)
 	{
 		print(r -> right, depth + 1);
-		cout << setw(4*depth) << "" << r -> data << "(" << r -> weight << ")" << endl;
+		cout << setw(4*depth) << "" << r -> data << "(" << r -> height << ")" << endl;
 		print(r -> left, depth + 1);
 	}
 }
@@ -166,7 +161,6 @@ BST::Node* BST::remove(Node*& n, const int& v) {
 	{
 		Node* p = n -> parent;
 		while(p != NULL) {
-			p -> weight --;
 			p = p -> parent;
 		}
 
@@ -217,7 +211,6 @@ BST::Node* BST::remove(Node*& n, const int& v) {
 			return remove(t, t -> data);
 		} else {
 			t -> data = t -> right -> data;
-			t -> weight --;
 			items --;
 			Node* trc = t -> right;
 			t -> left = trc -> left;

@@ -9,199 +9,176 @@ AVLTree::~AVLTree() {
 	//Do nothing
 }
 
-void AVLTree::rotateLeft(Node* n) {
+AVLTree::Node* AVLTree::rotateLeft(Node* n) {
 	if(n == NULL) {
-		return;
+		return NULL;
 	}
 
-	Node* left = n -> left;
-	if (left)
-	{
-		Node* lRight = left -> right;
-		if (lRight)
-		{
-			int temp = left -> data;
-			left -> data = lRight -> data;
-			lRight -> data = temp;
-			left -> left = lRight;
-			left -> right = lRight -> right;
-		}
-	}
-}
-
-void AVLTree::rotateRight(Node* n) {
-	if (n == NULL)
-	{
-		return;
-	}
-	Node* left = n -> left;
-	if (left)
-	{
-		Node* leftL = left -> left;
-		Node* leftR = left -> right;
-		n -> left = leftR;
-		left -> right = n;
-		left -> parent = n -> parent;
-		if (n -> parent)
-		{
-			if (n -> parent -> left == n)
-			{
-				n -> parent -> left = left;
-			} else {
-				n -> parent -> right = left;
-			}
-			n -> parent = left;
-		} else {
-			root = left;
-			n -> parent = left;
-		}
-		fixWeight(left);
-	}
-}
-
-void AVLTree::rotateLeft2(Node* n) {
-	if(n == NULL) {
-		return;
-	}
-
-	Node* right = n -> right;
-	if (right)
-	{
-		Node* rightL = right -> left;
-		Node* rightR = right -> right;
-		n -> right = rightL;
-		right -> left = n;
-		right -> parent = n -> parent;
-		if (n -> parent)
-		{
-			if (n -> parent -> left == n)
-			{
-				n -> parent -> left = right;
-			} else {
-				n -> parent -> right = right;
-			}
-			n -> parent = right;
-		} else {
-			root = right;
-			n -> parent = right;
-		}
-		fixWeight(right);
-	}
-}
-
-void AVLTree::rotateRight2(Node* n) {
-	if (n == NULL)
-	{
-		return;
-	}
 	Node* right = n -> right;
 	if (right)
 	{
 		Node* rLeft = right -> left;
-		if (rLeft)
-		{
-			int temp = right -> data;
-			right -> data = rLeft -> data;
-			rLeft -> data = temp;
-			right -> left = rLeft -> left;
-			right -> right = rLeft;
+		right -> left = n;
+		n -> right = rLeft;
+		right -> parent = n -> parent;
+		n -> parent = right;
+		if (rLeft) {
+			rLeft -> parent = n;
 		}
+		
+		n -> height = max(height(n->left),height(n->right)) + 1;
+		right -> height = max(height(right->left),height(right->right)) + 1;
+		
+		return right;
 	}
+	return NULL;
 }
 
-int AVLTree::fixWeight(Node* n) {
+AVLTree::Node* AVLTree::rotateRight(Node* n) {
+	if (n == NULL)
+	{
+		return NULL;
+	}
+	Node* left = n -> left;
+	if (left)
+	{
+		Node* lRight = left -> right;
+		left -> right = n;
+		n -> left = lRight;
+		left -> parent = n -> parent;
+		n -> parent = left;
+		if (lRight) {
+			lRight -> parent = n;
+		}
+		
+		n -> height = max(height(n->left),height(n->right)) + 1;
+		left -> height = max(height(left->left),height(left->right)) + 1;
+		
+		return left;
+	}
+	return NULL;
+}
+
+int AVLTree::height(Node* n) {
 	if (n == NULL)
 	{
 		return 0;
 	}
-	n -> weight = max(fixWeight(n -> left),fixWeight(n -> right)) + 1;
-	return n -> weight;
+	return n -> height;
 }
 
-void AVLTree::fixTree(Node* n) {
-	if (n == NULL)
-	{
-		return;
+int AVLTree::balance(Node* n) {
+	if (n == NULL) {
+		return 0;
 	}
+	
+	return height(n -> left) - height(n -> right);
+}
 
-	if (isLeaf(n))
-	{
-		fixTree(n -> parent);
-	} else {
-		int leftW = 0;
-		int rightW = 0;
-		if (n -> left)
-		{
-			leftW = n -> left -> weight;
-		}
-		if (n -> right)
-		{
-			rightW = n -> right -> weight;
-		}
-		if (leftW - rightW >= 2)
-		{
-			if (n -> left && n-> right && n -> left -> right) {
-				Node* parent = n;
-				Node* left = n -> left;
-				Node* lRight = left -> right;
-				left -> right = parent;
-				parent -> left = lRight;
-				if (parent -> parent) {
-					if (parent -> parent -> left == parent) {
-						parent -> parent -> left = left;
-					} else {
-						parent -> parent -> right = left;
-					}
-					left -> parent = parent -> parent;
-					parent -> parent = left;
-				} else {
-					root = left;
-					left -> parent = NULL;
-					parent -> parent = left;
-				}
-				fixWeight(n -> parent);
-			} else {
-				rotateLeft(n);
-				rotateRight(n);
-			}
-		}
-		if (rightW - leftW >= 2)
-		{
-			if (n -> left && n-> right && n -> right -> left) {
-				Node* parent = n;
-				Node* right = n -> right;
-				Node* rLeft = right -> left;
-				right -> left = parent;
-				parent -> right = rLeft;
-				if (parent -> parent) {
-					if (parent -> parent -> left == parent) {
-						parent -> parent -> left = right;
-					} else {
-						parent -> parent -> right = right;
-					}
-					right -> parent = parent -> parent;
-					parent -> parent = right;
-				} else {
-					root = right;
-					right -> parent = NULL;
-					parent -> parent = right;
-				}
-				fixWeight(n -> parent);
-			} else {
-				rotateRight2(n);
-				rotateLeft2(n);
-			}
-		}
-		fixTree(n -> parent);
+AVLTree::Node* AVLTree::insert(Node* n, const int& value) {
+	if (n == NULL) {
+		Node* n1 = new Node(value);
+		return n1;
 	}
+	
+	if (value < n -> data) {
+		n -> left = insert(n -> left, value);
+	} else {
+		n -> right = insert(n -> right, value);
+	}
+	
+	n -> height = max(height(n->left),height(n->right)) + 1;
+	
+	int bal = balance(n);
+	if (bal > 1 && value < n -> left -> data) {
+		return rotateRight(n);
+	}
+	
+	if (bal < -1 && value >= n -> right -> data) {
+		return rotateLeft(n);
+	}
+	
+	if (bal > 1 && value >= n -> left -> data) {
+		n -> left = rotateLeft(n -> left);
+		return rotateRight(n);
+	}
+	
+	if (bal < -1 && value < n -> right -> data) {
+		n -> right = rotateRight(n -> right);
+		return rotateLeft(n);
+	}
+	
+	return n;
 }
 
 void AVLTree::insert(const int& value) {
-	Node* t = BST::_insert(value);
-	fixTree(t);
+	root = insert(root,value);
+	items ++;
+}
+
+AVLTree::Node* AVLTree::remove(Node* n, const int& value) {
+	if(n == NULL){
+		return NULL;
+	}
+	
+	if(value < n -> data) {
+		n -> left = remove(n -> left, value);
+	} else if (value > n -> data) {
+		n -> right = remove(n -> right, value);
+	} else {
+		if (n -> left == NULL || n -> right == NULL) {
+			Node* t = (n -> left)?n->left:n->right;
+			if(t == NULL) {
+				t = n;
+				n = NULL;
+			} else {
+				n -> data = t -> data;
+				n -> left = t -> left;
+				if( t -> left ) {
+					t -> left -> parent = n;
+				}
+				n -> right = t -> right;
+				if( t -> right ) {
+					t -> right -> parent = n;
+				}
+				n -> height = t -> height;
+			}
+			delete t;
+		} else {
+			Node* p = predecessor(n -> left);
+			n -> data = p -> data;
+			n -> left = remove(n -> left, p -> data);
+		}
+	}
+	
+	if (n == NULL) {
+		return NULL;
+	}
+	
+	int bal = balance(n);
+	
+	if (bal > 1 && balance(n -> left) >= 0) {
+		return rotateRight(n);
+	}
+	
+	if (bal > 1 && balance(n -> left) < 0) {
+		n -> left = rotateLeft(n -> left);
+		return rotateRight(n);
+	}
+	
+	if (bal < -1 && balance(n -> right) <= 0) {
+		return rotateLeft(n);
+	}
+	
+	if (bal < -1 && balance(n -> right) > 0) {
+		n -> right = rotateRight(n -> right);
+		return rotateLeft(n);
+	}
+	
+	return n;
 }
 
 void AVLTree::remove(const int& value) {
-	Node* t = BST::_remove(value);
-	fixTree(t);
+	root = remove(root, value);
+	items --;
 }

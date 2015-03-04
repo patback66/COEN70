@@ -5,14 +5,13 @@
 
 class AVLTree: public BST {
 protected:
-	void fixTree(Node*);
-	void rotateLeft(Node*);
-	void rotateRight(Node*);
+	AVLTree::Node* rotateLeft(Node*);
+	AVLTree::Node* rotateRight(Node*);
 
-	void rotateLeft2(Node*);
-	void rotateRight2(Node*);
-
-	int fixWeight(Node*);
+	int height(Node*);
+	int balance(Node*);
+	AVLTree::Node* insert(Node*, const int&);
+	AVLTree::Node* remove(Node*, const int&);
 public:
 	AVLTree();
 	~AVLTree();

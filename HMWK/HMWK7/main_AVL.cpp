@@ -4,14 +4,9 @@
 using namespace std;
 int main(int argc, char *argv[]) {
 	AVLTree tree;
-	tree.insert(5);
-	tree.insert(3);
-	tree.insert(4);
-	tree.insert(1);
-	tree.insert(2);
-	tree.insert(8);
-	tree.insert(6);
-	tree.insert(7);
+	for (int i = 0;i < 10;i ++) {
+		tree.insert(i);
+	}
 	
 	tree.printTree();	
 	
@@ -19,10 +14,8 @@ int main(int argc, char *argv[]) {
 	cout << tree.contains(5) << endl;
 	tree.remove(5);
 	tree.remove(8);
-	tree.remove(2);
 	
 	cout << tree.contains(5) << endl;
-	//cout << tree.contains(8) << endl;
 	cout << tree.size() << endl;
 	
 	cout << "\n\n\n" << endl;

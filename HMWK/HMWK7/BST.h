@@ -9,12 +9,12 @@ class BST {
 protected:
 	class Node{
 	public:
-		Node(int d = 0){ data = d;left = NULL;right = NULL;parent = NULL;weight = 1;}
+		Node(int d = 0){ data = d;left = NULL;right = NULL;parent = NULL;height = 1;}
 		int data;
 		Node* left;
 		Node* right;
 		Node* parent;
-		int weight;
+		int height;
 	};
 
 	Node* root;
