@@ -1,0 +1,66 @@
+BST 1-2 Tree
+B-Tree 2-3 Tree 
+
+every node will have 2 keys
+
+        [||x| |y||]
+        /    |   \
+    z<x<y  x<z<y  x<y<z
+    
+bottom up tree
+
+red child can't have a red parent
+
+3) if you are red and your right child is red -> RL
+2) if you are red and your left child is red -> RR
+
+//fc
+p>setColor(R)
+p->rc->setColor(B)
+p->lc->setColor(B)
+
+//RL
+Node*x = p->rc;
+p->rc = x->lc;
+x->lc = p;
+x->setColor(p->color);
+p->setColor(R);
+p=x;
+
+//RR
+x=p->lc;
+p->lc=x->rc;
+x->rc=p;
+x->setColor(p->color);
+p->setColor(R);
+
+INSERT AS A RED NODE
+ALWAYS MAKE THE ROOT NODE BLACK
+
+Tree Traversal
+BFS
+add to queue LC and RC
+
+queue<node*> Q;
+Q.push(p);
+while(!Q.isEmpty()) {
+    node* t = Q.pop();
+    if(t!=NULL) {
+        //proccess
+        Q.push(t->LC);
+        Q.push(t->RC);
+    }
+}
+
+void yourp(int d) {
+    cou <<d;
+
+
+template<class P>
+void inorder(P myp, node* n) {
+    if(n!=NULL) {
+        inorder(myp, n->lc);
+        myp(n->d);
+        inorder(myp, n->rc);
+    }
+}
