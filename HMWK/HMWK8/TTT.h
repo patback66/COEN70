@@ -9,10 +9,11 @@ class TTT {
 protected:
 	class Node{
 	public:
-		Node(int d = 0){ data = d;left = NULL;right = NULL;color = 'R';}
+		Node(int d = 0){ data = d;left = NULL;right = NULL;parent = NULL;color = 'R';}
 		int data;
 		Node* left;
 		Node* right;
+		Node* parent;
 		char color;
 	};
 

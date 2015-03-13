@@ -44,16 +44,27 @@ void TTT::rotateLeft(Node*& p) {
 	x -> left = p;
 	x -> color = p -> color;
 	p -> color = 'R';
+	
+	p -> parent = x -> parent;
+	x -> parent = p;
+	
 	p = x;
 }
 
-void TTT::rotateRight(Node*& p) {
-	Node* x = p -> left;
-	p -> left = x -> right;
-	x -> right = p;
-	x -> color = p -> color;
-	p -> color = 'R';
-	p = x;
+void TTT::rotateRight(Node*& p) {	
+	Node* y = p -> parent;
+	int data = y -> data;
+	y -> data = p -> data;
+	
+	y -> left = p -> left;
+	if (p -> left) {
+		p -> left -> parent = y;
+	}
+	
+	y -> right = p;
+	p -> data = y -> data;
+	
+	p = y;
 }
 
 void TTT::insert(const int& value) {
@@ -72,10 +83,12 @@ TTT::Node* TTT::insert(Node* n, const int& value) {
 	if (value < n -> data)
 	{
 		n -> left = insert(n -> left, value);
+		n -> left -> parent = n;
 	} else {
 		n -> right = insert(n -> right, value);
+		n -> right -> parent = n;
 	}
-
+	
 	if (n -> color == 'R' && n -> right && n -> right -> color == 'R')
 	{
 		rotateLeft(n);
@@ -86,16 +99,9 @@ TTT::Node* TTT::insert(Node* n, const int& value) {
 		rotateRight(n);
 	}
 
-	if (n -> left || n -> right)
+	if (n -> left && n -> right && n -> left -> color == 'R' && n -> right -> color == 'R')
 	{
-		if (n -> left && n -> right && n -> left -> color == 'R' && n -> right -> color == 'R')
-		{
-			flipColor(n);
-		} else if (n -> left && !(n -> right) && n -> left -> color == 'R') {
-			flipColor(n);
-		} else if (n -> right && !(n -> left) && n -> right -> color == 'R') {
-			flipColor(n);
-		}
+		flipColor(n);
 	}
 
 	return n;
