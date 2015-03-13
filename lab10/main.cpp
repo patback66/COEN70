@@ -12,7 +12,7 @@
 int main(int argc, const char * argv[])
 {
 
-    graph *maze = new graph(5);
+    graph maze = *new graph(3, 3);
     // insert code here...
     std::cout << "Hello, World!\n";
     return 0;

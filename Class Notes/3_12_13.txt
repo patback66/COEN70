@@ -1,0 +1,77 @@
+Graphs: know the data structure used to implement
+    accessor/mutator
+    
+Trees:
+    know how to traverse
+    check to see if it is a red-black, avl, bst 
+
+Class/Struct
+    ctors(default, non-default, and copy)
+    destructor
+    operators (=, +, -, *, /, <, >, ..., ++, --, >>, <<)
+    methods
+    public, private, protected
+    friend
+    inheritance************
+        diamond
+        virtual
+            polymorphism
+class structure
+    array (static and dynamic)
+        +quick access O(1) if you now the index, else O(n)
+        -size change
+    linked list (double, circular, single, 
+        +size change
+        -searching/quick access -> no quick access
+    trees (binary, 2-3, BST, heap, rb)
+        +access O(logn)
+        +size change-implementation complexity
+    
+ADT
+    bag (key, set)
+    list (ordered list)
+    given this class, make changes to make it do something
+    BST (binary tree)
+    AVL (BST)
+    2-3 (RB)
+    
+    KNOW HOW TO PRINT LEVEL ORDER
+    IF ASKED FOR AND ADT, GIVE FULL IMPLEMENTATION
+    
+Things you can assume the code exists
+    SO YOU CAN USE IT
+    BASIC ADTs
+    
+Templates
+    
+Full Tree
+    Always a complete tree
+    Use BFS to check
+    Look for first node that doesn't have two children, check if it has a left child,
+        then all remaining MUST be left children
+    
+
+Induction
+    Will ask at least 1/2 questions
+    
+3 step process for virtual
+    
+Monday, 6 O'clock office hours
+    
+Structural induction
+    
+    |E| = (v)+1
+    |v} <= 2^h
+    
+    Base case:
+        |E| = 0 -> |v| = 1
+        single node, has 1 vertex
+        
+    I H:
+        true for |E| = k -> |v| = k+1
+        need to prove for |E| = k+1
+        |v| k+1+1 = k+2
+        
+        |E| = k
+        |v| = k + 1 + 1
+            = K + 2 

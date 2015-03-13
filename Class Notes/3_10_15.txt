@@ -1,0 +1,128 @@
+Midertm Returned:
+Med 75
+Mean 75.2
+Std 12.1
+Max 96
+Min 46
+
+Curve: +10 points
+class X : public stack {
+    int x;
+    int size;
+}
+
+#3 int 0 = no, 1 = min, 2 = max
+
+implement checkMin, checkMax;
+check if root is bigger or smaller then child
+depending on result, checkMin or checkMax
+else false
+
+Maxe sure to return false immediately, or return bool of check left or check right
+
+FINAL IS IN DALY SCIENCE 206/207
+
+Open Note
+
+~1hr 15 min
+
+preorder
+queue Q;
+Q.push(r);
+while(!Q.IsEmpty()) {
+    node*p = Q.pop();
+    if(p!=NULL) {
+        //do stuff
+        Q.push(p->lc);
+        Q.push(p->rc);
+    }
+}
+postorder: use a stack instead
+
+void preorder(node* r) {
+    stack Q;
+    node *p = r;
+    while(!Q.isEmpty()||p!=NULL) {
+        if(p!=NULL) {
+            //process
+            Q.push(p);
+            p=p->lc;
+        } else {
+            p=Q.pop();
+            p=p->rc;
+        }
+    }
+}
+
+void inorder
+//rest is the same
+    if(p!=NULL) {
+        Q.push(p);
+        p=p->lc;
+    } else {
+        p=Q.pop();
+        //process
+        p=p->rc;
+    }
+}
+
+void postorder
+    } else {
+        while(!Q.isEmpty() && p==Q.top()->rc) {
+            Q.pop();
+            //process
+        }
+        p=Q.isEmpty()?NULL:Q.top()->rc;
+    }
+
+
+Graphs
+    nodes connected to nodes 
+    2 ways to implement of graph
+    array of vertices -> Adjacency matrix
+    Adjacency List
+    
+vector<vector<int>>
+
+void Graph<vector>::getNeigbors(const vertex& v, queue<vertex>& adjVertices) {
+    int fromIndex = indexIs(v);
+    for(in toIndex = 0; toIndex < numVerices; toIndex++) {
+        if(edges[fromIndex][toIndex]!=0)
+            adjVertices.push(verices[toIndex]);
+}
+
+void printDFS(Const vector& u, const vertex& v) {
+    stack<vertex> S;
+    queue<vertex> N;
+    bool found = false;
+    vertex a;
+    vertex b;
+    this->clearMatrix();
+    s.push(u);
+    cout << "DFS(" << u << "," << v <<")";
+    do{
+        a=s.pop();
+        if(a==v) {
+            cout << "->" < a;
+            found = true
+        } else {
+            if(!this->isMarked(a)) {
+                this->markedVertex(a);
+                cout<<"-"<<a;
+                this->getNeigbors(a, N);
+                while(!N.isEmpty()) {
+                    b=N.pop();
+                    if(!this->marked(b))
+                        s.push(b);
+                }
+            }
+        }
+    } while(!s.isEmpty())
+}Tf
+        }
+    }
+}
+    }
+}
+            
+
