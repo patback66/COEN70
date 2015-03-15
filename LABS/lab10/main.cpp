@@ -12,9 +12,8 @@
 int main(int argc, const char * argv[])
 {
 
-    graph *maze = new graph(5);
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    graph *maze = new graph(10);
+    maze->solve();
     return 0;
 }
 

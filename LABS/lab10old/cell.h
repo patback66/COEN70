@@ -24,6 +24,8 @@ public:
     Cell *left;
     Cell *right;
     int color; //0 if untouched, 1 if visited
+    int visitOrder;
+    bool shortest;
     Cell * parent;
     //add if necessary
     int visited() {
