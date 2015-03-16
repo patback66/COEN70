@@ -1,0 +1,61 @@
+COEN 70
+Mar 5
+==
+
+BST
+
+2 - 3 Tree (Like B-Tree)
+	Two values
+		x, y (x < y)
+	Three Links
+		left < x, x <= middle < y, y < right
+	[REF:OneNote - Mar 5]
+
+	RBTree
+		1. All the path need to have same number of black tree
+		2. No two red links connected
+
+	Insert Cases
+		C3: If you are red and your rc is red
+			 	RL
+		C2: If you are red and your lc is red
+				RR
+		C1: If your children are red
+				FC
+		//Fix root
+
+	FC(p) {
+		p -> setColor(R);
+		p -> lc -> setColor(B);
+		p -> rc -> setColor(B);
+	}
+
+	//Pass by ref or return value
+	RL(p) {
+		node* x = p -> rc;
+		p -> rc = x -> lc;
+		x -> lc = p;
+		x -> setColor(p -> color);
+		p -> setColor(R);
+		//Ref: p = x;
+	}
+
+	RR(p) {
+		node* x = p -> lc;
+		p -> lc = x -> rc;
+		x -> rc = p;
+		x -> setColor(p -> color);
+		p -> setColor(R);
+		//Ref: p = x;
+	}
+========
+	BFS
+
+	template<typename P>
+	void inOrder(P myP, node* n) {
+		if(n != NULL) {
+			inOrder(myP, n -> lc);
+			myP(n -> d);
+			inOrder(myP, n -> rc);
+		}
+	}

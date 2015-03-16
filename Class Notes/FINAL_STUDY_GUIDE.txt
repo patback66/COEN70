@@ -1,0 +1,1363 @@
+Quick Overview: What do I need to know?
+  Class, Struct
+  	Templates
+  	Constructors(default, non_default, copy)
+  	Destructor
+  	operators +,-,*,/,<,>,==,++,--,<<,>>
+  	public/private/protected
+
+  	Inheritance
+  	Virtual
+  	Polymorphism
+  		Destructor must be virtual
+  Data Structure
+  	Array (static,dynamic)
+  		+ Quick Access O(1) if you know the index, search O(n)
+  		- size change O(n)
+  	Link-list (Single, Double, Circular)
+  		+ size change O(1)
+  		- No Quick Access, Search O(n)
+  	Tree (Binary, BST, 2 - 3, heap, rb)
+  		+ Access/Search O(log n)
+
+  	ADT (Assume exists)
+  		Bag (Keyed, Set)
+  		List (Ordered)
+  			Iterators
+  		BST (binary tree)
+  		AVL (bst)
+
+  		2-3 (rb)
+  			Rotation is easier
+  			//Implementation easier
+  			A little bit faster
+
+  	BFS
+  	DFS
+
+  	Advantage of ADT
+  	Disadvantage of ADT
+
+  	**Full ADT implementation
+  		*Consider subclass or wrapper of exist class
+
+  	You can say call left rotate
+  	Call AVL Rotation
+
+  	Check completeness
+  		by default assume all the node is full
+  		when encounter a node with only left node,
+  		keep going and check if all the rest nodes are leaf
+  Induction Prove
+  	|V| = |E| + 1
+  	Base Case
+  		E = 0, V = 1
+  	Induction
+  		True for some |E| = k
+  			|V| = k + 1
+  		then for |E| = k + 1
+  			LHS: from statement we get |V| = (k + 1) + 1 = K + 2
+  			RHS: from k, |V| = k + 1 + 1 = K + 2
+
+Ctor/Dtor/ Copy constructors
+/////////////
+  class fraction {
+      public:
+          fraction (const fraction&);
+          fractoin& operator= (const fraction&);
+          ~ fraction(); //destructor - no return, parameters
+
+  };
+
+  fraction:: fraction(const fraction& other) {
+      this->n = other n;  //*this=other; <- be lazy and do this, works the same
+      d = other.d;
+  }
+
+  operator= (const fraction&);
+
+  fraction& fraction::operator= (const fraction& other) {
+      this->n = other.n;
+      this->d = other.d;
+      return *this;
+  }
+
+  fraction::~fraction() {}
+
+Friend
+/////////////
+  template<class T>
+  class set;
+
+  //need to make a function prototype
+  template <class T>
+  ostream& operator<< (ostrem &, const set<T>&);
+
+  template <class T>
+  class set{
+      public:
+          friend ostream& operator<< < >(ostream& out, const set &);
+  }
+
+Polymorphism
+/////////////
+  CALL THE BASE CLASS CONSTRUCTOR ON THE LIST, NOT INSIDE
+  fraction::fraction(int n, int d) {
+      this->n=n;
+      this->d = d;
+  }
+  fraction::fraction(int n, int d) : n(n), d(d) {
+
+  }
+  //////////
+
+  set::~set() {
+      //to do
+      ~bag();
+  }
+
+  set::set(const set& rhs): bag(rhs) {
+      //this is polymorphic
+  }
+
+  set& set::operator= (const set& rhs) {
+      bag::operator= (rhs);
+      return *this;
+  }
+
+  class A {
+    protected:
+        int A;
+    public:
+        virtual void f();
+        //f1
+  }
+
+  class B : public A {
+      //A is a scene
+      void f(); //f2
+  }
+
+  int main() {
+      return 0;
+  }
+
+  A   p1  |   p1.f()  |   f1
+  B   p2  |   p2.f()  |   f2
+  A*  p3  |   p3->f() |   f1
+  B*  p4  |   p4->f() |   f2
+  A&  p5  |   p5.f()  |   f1
+  B&  p6  |   p6.f()  |   f2
+
+  f2  |   f3 = &p2    p3=&p1
+      |               p4=&p2
+  f2  |   p5 =p2      p5=p1
+      |               p6=p2
+
+Induction
+/////////////
+  1. Prove base case
+  2. assume statements for left and right are true, prove that they match
+
+  Sum(i, i=1, N) = [(n+1)n]/2
+  1+2+3+...+(n-1)+n
+  n+(n-1)+...+2+1
+  2s =(n+1)+(n+1)
+
+  Proof by induction:
+  Base case:
+      N = 1
+      1 = (1+1)*1/2 = 1     /
+                          \/
+  Assume for N=k that sum(i, i=1, k) = (k+1)k/2
+  prove that this is true for N=K+1
+                      sum(i, i = 1, K+1) = (K+1+1)(K+1)/2 = (K+2)(K+1)/2
+
+                      (K+1)K/2 + K + 1 = (K+1)K+2k+2/2 = k^2+k+2k+2/2
+                      =(K+2)(k+1)/2
+
+  complete binary tree of height h
+      there are 2^(h+1)-1 nodes
+
+      base:
+          1 node, 0 height
+          2^(0+1)-1 = 1
+      inductive hypothesis:
+          L->x height -> 2^(x+1)-1 nodes
+          R->y height -> 2^(y+1)-1 nodes
+
+          Tree t: 2^(X+1+1)-1
+
+          nL + nR + 1
+          [2^(x+1)-1] + [2^(y+1)-1] +1
+          x=y so
+          2*2^(x+1)-1
+          2&(x+2)-1
+
+RB/2-3 Trees
+/////////////
+  Two values
+    x, y (x < y)
+  Three Links
+    left < x, x <= middle < y, y < right
+  [REF:OneNote - Mar 5]
+
+  RBTree
+    1. All the path need to have same number of black tree
+    2. No two red links connected
+
+  Insert Cases
+    C3: If you are red and your rc is red
+         RL
+    C2: If you are red and your lc is red
+        RR
+    C1: If your children are red
+        FC
+    //Fix root
+
+  FC(p) {
+    p -> setColor(R);
+    p -> lc -> setColor(B);
+    p -> rc -> setColor(B);
+  }
+
+  //Pass by ref or return value
+  RL(p) {
+    node* x = p -> rc;
+    p -> rc = x -> lc;
+    x -> lc = p;
+    x -> setColor(p -> color);
+    p -> setColor(R);
+    //Ref: p = x;
+  }
+
+  RR(p) {
+    node* x = p -> lc;
+    p -> lc = x -> rc;
+    x -> rc = p;
+    x -> setColor(p -> color);
+    p -> setColor(R);
+    //Ref: p = x;
+  }
+  ========
+  BFS
+
+  template<typename P>
+  void inOrder(P myP, node* n) {
+    if(n != NULL) {
+      inOrder(myP, n -> lc);
+      myP(n -> d);
+      inOrder(myP, n -> rc);
+    }
+  }
+
+Traversals
+/////////////
+-----------
+BFS
+
+queue q;
+q.push(r);
+while(!q.empty()) {
+	node* p = q.top();
+	q.pop();
+
+	if (p != NULL) {
+		//Do STH
+		q.push(p -> lc);
+		q.push(p -> rc);
+	}
+}
+---
+DFS
+
+1.
+stack s;
+s.push(r);
+while(!s.empty()) {
+	node* p = s.top();
+	s.pop();
+	if(p!=NULL) {
+		s.push(p -> rc);
+		s.push(p -> lc);
+	}
+}
+
+pre-order
+
+//Back Tracking
+  void preOrder(node* r) {
+  	stack s;
+  	node* p = r;
+  	while(!s.empty() || p != NULL) {
+  		if(p!=NULL) {
+  			//DO STH
+  			s.push(p);
+  			p = p -> lc;
+  		} else {
+  			p = p.pop();
+  			s.top();
+  			p = p -> rc;
+  		}
+  	}
+  }
+
+  void inOrder(node* r) {
+  	stack s;
+  	node* p = r;
+  	while(!s.empty() || p != NULL) {
+  		if(p != NULL) {
+  			s.push(p);
+  			p = p -> lc;
+  		} else {
+  			p = p.pop();
+  			s.top();
+  			//DO STH
+  			p = p -> rc;
+  		}
+  	}
+  }
+
+  void postOrder(node* r) {
+  	stack s;
+  	node* p = r;
+  	while(!s.empty() || p != NULL) {
+  		if(p != NULL) {
+  			s.push(p);
+  			p = p -> lc;
+  		} else {
+  			while(!s.empty() && p == s.top() -> rc) {
+  				p = s.top();
+  				s.pop();
+  				//Do STH
+  			}
+  			p = s.empty()?NULL:s.top()->rc;
+  		}
+  	}
+  }
+
+  //Graphs
+  printDFS(const vertex& u, const vertex& v) {
+  	stack<vertex> s;
+  	queue<vertex> n;
+
+  	bool found = false;
+
+  	vertex a;
+  	vertex b;
+
+  	this -> clearVisited(); //Help
+  	s.push(u);
+  	cout << "DFS(" << u << "," << v << ")";
+  	do {
+  		a = s.pop();
+  		if (a == v) {
+  			cout << " -> " << a;
+  			found = true;
+  		} else {
+  			if (!(this -> isVisited(a)))
+  			{
+  				this -> visited(a);
+  				cout << " - " << a;
+  				this -> getNeighbors(a, n);
+  				while(!n.empty()) {
+  					b = n.pop();
+  					if (!(this -> isVisited(b)))
+  					{
+  						s.push(b);
+  					}
+  				}
+  			}
+  		}
+  	} while (!s.empty());
+  }
+
+ADT: queue
+/////////////
+  template <class L>
+  class queue {
+      private:
+          class node {
+              public:
+                  L d;
+                  node* n;
+                  node(const L& x = L(), node* y = NULL) : d(x), n(y) {};
+                  //queue<L>::node<L>::node(...)
+          };
+          //add from tail, remove from head
+          node* head;
+          node* tail;
+          int size;
+      public:
+          queue();
+          ~queue();
+          queue(const queue&);
+          queue& operator= (const queue&);
+          L pop();
+          void push(const L&);
+          bool isEmpty();
+          queue();
+          int size();
+  };
+
+  template<class L>
+  int queue<L>::size() {
+      return size;
+  }
+
+  template <class L>
+  bool queue<L>::isEmpty() {
+      return !size();
+  }
+
+  template <class L>
+  void queue<L>::push(const L& x) {
+      if(size==0)
+          head = teal = new node(x);
+      else {
+          tail->n = new node(x);
+          tail = tail->n;
+      }
+      size++;
+  }
+
+  template <class L>
+  L queue<L>::pop() {
+      if(size()==0)
+          assert();
+      else {
+          L t = head->d;
+          node* p = head;
+          head = head->n;
+          delete p;
+          size--;
+          return t;
+      }
+  }
+
+  template <class L>
+  queue<L>::queue() {
+      size = 0;
+  }
+
+  template <class L>
+  queue<L>::queue(const queue& other) {
+  	head = NULL;
+  	*this = other;
+  }
+
+  template <class L>
+  queue<L>::~queue() {
+  	clear();
+  }
+
+  template <class L>
+  queue<L>::clear() {
+  	while(head!=NULL){
+  		node* t = head;
+  		head = head->n;
+  		delete t;
+  	}
+  }
+
+  template <class L>
+  queue<L>::operator= (const queue& other) {
+  	if(*this == other)
+  		return this;
+  	else {
+  		clear();
+  		node* t = other.head;
+  		while(t!=NULL) {
+  			this->push(t->d);
+  			t=t->n;
+  	}
+  }
+
+ADT: Priority Queue
+/////////////
+  contains() - O(n)
+  insert() - O(1)
+  remove() - O(n) for linked list, O(n) minimum for array
+  array linked list
+  need faster runtime
+
+  so use a heap (binary tree)
+  contains O(n)
+  insert O(h) = O(log n)
+  remove()
+  class pq {
+      private:
+          int *w;
+          int last; //last is the index of the last element
+          int cap;
+          int p2lc(int); //left child
+          int c2p(int);
+          void reheap_up(int);
+          void reheap_down();
+      public:
+          int pop(); //remove from front, reheap down
+          void push(int); //remove from back, reheap up
+          int size();
+          bool isEmpty();
+
+  };
+
+  void pq::reheap_up(int i) {
+      while(w[c2p(i)]<w[i] && i>0) {
+          std::swap(w[c2p(i)], w[i])
+          i = c2p(i);
+      }
+  }
+
+  int pq::fsc(int i) {
+      lc = p2lc(i);
+      rc = lc+1;
+      if(w[lc]<w[rc] && w[lc] < w[rc])
+          return lc;
+      else
+          return rc;
+  }
+  void pq::reheap_down() {
+      inti=0;
+      while(p2lc(i)<=last && w[i] > w[fsc(i)] )
+          int sc = fsc(i);
+          swap(w[i], w[sc]);
+          i=sc;
+  }
+
+  int pq::pop() {
+      int temp = w[0];
+      w[0] = w[last];
+      last--;
+      reheap_down();
+      return temp;
+  }
+
+ADT: BST
+/////////////
+  BST::BST() {
+  	root = NULL;
+  	items = 0;
+  }
+
+  BST::~BST() {
+  	if (root)
+  	{
+  		dealloc(root);
+  		root = NULL;
+  	}
+  }
+
+  void BST::dealloc(Node* n) {
+  	if (n)
+  	{
+  		dealloc(n -> left);
+  		dealloc(n -> right);
+  		delete n;
+  	}
+  }
+
+  void BST::insert(const int& value) {
+  	_insert(value);
+  }
+
+  BST::Node* BST::_insert(const int& value) {
+  	if (root == NULL)
+  	{
+  		root = new Node(value);
+  		items ++;
+  		return root;
+  	} else {
+  		return insert(root, value);
+  	}
+  }
+
+  BST::Node* BST::insert(Node* n, const int& value) {
+  	if (n -> data >= value)
+  	{
+  		if (n -> left == NULL)
+  		{
+  			Node* t = new Node(value);
+  			t -> parent = n;
+  			n -> left = t;
+  			items ++;
+  			return t;
+  		} else {
+  			return insert(n -> left, value);
+  		}
+  	} else {
+  		if (n -> right == NULL)
+  		{
+  			Node* t = new Node(value);
+  			t -> parent = n;
+  			n -> right = t;
+  			items ++;
+  			return t;
+  		} else {
+  			return insert(n -> right, value);
+  		}
+  	}
+  }
+
+  bool BST::contains(const int& value) {
+  	if (root == NULL)
+  	{
+  		return false;
+  	}
+
+  	if (root -> data == value)
+  	{
+  		return true;
+  	} else {
+  		if (root -> data > value)
+  		{
+  			return contains(root -> left, value);
+  		} else {
+  			return contains(root -> right, value);
+  		}
+  	}
+  }
+
+  bool BST::contains(Node* n, const int& value) {
+  	if (n == NULL)
+  	{
+  		return false;
+  	}
+
+  	if (n -> data == value)
+  	{
+  		return true;
+  	} else {
+  		if (n -> data > value)
+  		{
+  			return contains(n -> left, value);
+  		} else {
+  			return contains(n -> right, value);
+  		}
+  	}
+  }
+
+  void BST::print(Node* r, int depth) {
+  	if (r != NULL)
+  	{
+  		print(r -> right, depth + 1);
+  		cout << setw(4*depth) << "" << r -> data << "(" << r -> height << ")" << endl;
+  		print(r -> left, depth + 1);
+  	}
+  }
+
+  void BST::printTree() {
+  	print(root, 0);
+  }
+
+  bool BST::empty() {
+  	return (items == 0);
+  }
+
+  int BST::size() {
+  	return items;
+  }
+
+  bool BST::isLeaf(Node* n) {
+  	return ((n -> left == NULL) && (n -> right == NULL));
+  }
+
+  BST::Node* BST::predecessor(Node* n) {
+  	if (n == NULL)
+  	{
+  		return NULL;
+  	}
+  	Node* t = n;
+  	while(t -> right != NULL) {
+  		t = t -> right;
+  	}
+  	return t;
+  }
+
+  void BST::remove(const int& value) {
+  	_remove(value);
+  }
+
+  BST::Node* BST::_remove(const int& value) {
+  	if (root != NULL)
+  	{
+  		return remove(root, value);
+  	}
+  	return NULL;
+  }
+
+  BST::Node* BST::remove(Node*& n, const int& v) {
+  	if (n == NULL)
+  	{
+  		return NULL;
+  	}
+  	if (isLeaf(n) && n -> data == v)
+  	{
+  		Node* p = n -> parent;
+  		while(p != NULL) {
+  			p = p -> parent;
+  		}
+
+  		if (n -> parent)
+  		{
+  			if (n -> parent -> left == n)
+  			{
+  				n -> parent -> left = NULL;
+  			} else {
+  				n -> parent -> right = NULL;
+  			}
+  		}
+
+  		if (n == root)
+  		{
+  			root = NULL;
+  		}
+
+  		items --;
+  		Node* parent = n -> parent;
+
+  		delete n;
+  		n = NULL;
+
+  		return parent;
+  	}
+
+  	Node* t = n;
+  	while(t != NULL && t -> data != v) {
+  		if (t -> data < v)
+  		{
+  			t = t -> right;
+  		} else {
+  			t = t -> left;
+  		}
+  	}
+
+  	if (t == NULL)
+  	{
+  		return NULL;
+  	}
+
+  	Node* f = predecessor(t -> left);
+  	if (f == NULL)
+  	{
+  		if (isLeaf(t))
+  		{
+  			return remove(t, t -> data);
+  		} else {
+  			t -> data = t -> right -> data;
+  			items --;
+  			Node* trc = t -> right;
+  			t -> left = trc -> left;
+  			if (trc -> left)
+  			{
+  				trc -> left -> parent = t;
+  			}
+  			t -> right = trc -> right;
+  			if (trc -> right)
+  			{
+  				trc -> right -> parent = t;
+  			}
+  			delete trc;
+  			return t -> parent;
+  		}
+  	} else {
+  		t -> data = f -> data;
+  		return remove(f, f -> data);
+  	}
+  }
+
+ADT: AVL
+/////////////
+  class AVLTree: public BST {
+  protected:
+  	AVLTree::Node* rotateLeft(Node*);
+  	AVLTree::Node* rotateRight(Node*);
+
+  	int height(Node*);
+  	int balance(Node*);
+  	AVLTree::Node* insert(Node*, const int&);
+  	AVLTree::Node* remove(Node*, const int&);
+  public:
+  	AVLTree();
+  	~AVLTree();
+
+  	void insert(const int&);
+  	void remove(const int&);
+  };
+
+  AVLTree::AVLTree() {
+  	//No new variable need to initialize
+  }
+
+  AVLTree::~AVLTree() {
+  	//No new local allocations
+  	//Do nothing
+  }
+
+  AVLTree::Node* AVLTree::rotateLeft(Node* n) {
+  	if(n == NULL) {
+  		return NULL;
+  	}
+
+  	Node* right = n -> right;
+  	if (right)
+  	{
+  		Node* rLeft = right -> left;
+  		right -> left = n;
+  		n -> right = rLeft;
+  		right -> parent = n -> parent;
+  		n -> parent = right;
+  		if (rLeft) {
+  			rLeft -> parent = n;
+  		}
+
+  		n -> height = max(height(n->left),height(n->right)) + 1;
+  		right -> height = max(height(right->left),height(right->right)) + 1;
+
+  		return right;
+  	}
+  	return NULL;
+  }
+
+  AVLTree::Node* AVLTree::rotateRight(Node* n) {
+  	if (n == NULL)
+  	{
+  		return NULL;
+  	}
+  	Node* left = n -> left;
+  	if (left)
+  	{
+  		Node* lRight = left -> right;
+  		left -> right = n;
+  		n -> left = lRight;
+  		left -> parent = n -> parent;
+  		n -> parent = left;
+  		if (lRight) {
+  			lRight -> parent = n;
+  		}
+
+  		n -> height = max(height(n->left),height(n->right)) + 1;
+  		left -> height = max(height(left->left),height(left->right)) + 1;
+
+  		return left;
+  	}
+  	return NULL;
+  }
+
+  int AVLTree::height(Node* n) {
+  	if (n == NULL)
+  	{
+  		return 0;
+  	}
+  	return n -> height;
+  }
+
+  int AVLTree::balance(Node* n) {
+  	if (n == NULL) {
+  		return 0;
+  	}
+
+  	return height(n -> left) - height(n -> right);
+  }
+
+  AVLTree::Node* AVLTree::insert(Node* n, const int& value) {
+  	if (n == NULL) {
+  		Node* n1 = new Node(value);
+  		return n1;
+  	}
+
+  	if (value < n -> data) {
+  		n -> left = insert(n -> left, value);
+  	} else {
+  		n -> right = insert(n -> right, value);
+  	}
+
+  	n -> height = max(height(n->left),height(n->right)) + 1;
+
+  	int bal = balance(n);
+  	if (bal > 1 && value < n -> left -> data) {
+  		return rotateRight(n);
+  	}
+
+  	if (bal < -1 && value >= n -> right -> data) {
+  		return rotateLeft(n);
+  	}
+
+  	if (bal > 1 && value >= n -> left -> data) {
+  		n -> left = rotateLeft(n -> left);
+  		return rotateRight(n);
+  	}
+
+  	if (bal < -1 && value < n -> right -> data) {
+  		n -> right = rotateRight(n -> right);
+  		return rotateLeft(n);
+  	}
+
+  	return n;
+  }
+
+  void AVLTree::insert(const int& value) {
+  	root = insert(root,value);
+  	items ++;
+  }
+
+  AVLTree::Node* AVLTree::remove(Node* n, const int& value) {
+  	if(n == NULL){
+  		return NULL;
+  	}
+
+  	if(value < n -> data) {
+  		n -> left = remove(n -> left, value);
+  	} else if (value > n -> data) {
+  		n -> right = remove(n -> right, value);
+  	} else {
+  		if (n -> left == NULL || n -> right == NULL) {
+  			Node* t = (n -> left)?n->left:n->right;
+  			if(t == NULL) {
+  				t = n;
+  				n = NULL;
+  			} else {
+  				n -> data = t -> data;
+  				n -> left = t -> left;
+  				if( t -> left ) {
+  					t -> left -> parent = n;
+  				}
+  				n -> right = t -> right;
+  				if( t -> right ) {
+  					t -> right -> parent = n;
+  				}
+  				n -> height = t -> height;
+  			}
+  			delete t;
+  		} else {
+  			Node* p = predecessor(n -> left);
+  			n -> data = p -> data;
+  			n -> left = remove(n -> left, p -> data);
+  		}
+  	}
+
+  	if (n == NULL) {
+  		return NULL;
+  	}
+
+  	int bal = balance(n);
+
+  	if (bal > 1 && balance(n -> left) >= 0) {
+  		return rotateRight(n);
+  	}
+
+  	if (bal > 1 && balance(n -> left) < 0) {
+  		n -> left = rotateLeft(n -> left);
+  		return rotateRight(n);
+  	}
+
+  	if (bal < -1 && balance(n -> right) <= 0) {
+  		return rotateLeft(n);
+  	}
+
+  	if (bal < -1 && balance(n -> right) > 0) {
+  		n -> right = rotateRight(n -> right);
+  		return rotateLeft(n);
+  	}
+
+  	return n;
+  }
+
+  void AVLTree::remove(const int& value) {
+  	root = remove(root, value);
+  	items --;
+  }
+
+ADT: RB Tree
+/////////////
+  template<class Item>
+  class RBNode {
+  protected:
+  	Item data_field;
+  	RBNode* left_field;
+  	RBNode* right_field;
+  	RBNode* parent_field;
+  	enum Color { RED, BLACK };
+  	Color color_field;
+  public:
+  	RBNode(const Item& init_data = Item(), RBNode* init_left = NULL,
+  			RBNode* init_right = NULL, Color init_color = RED, RBNode* init_parent = NULL) {
+  		data_field = init_data;
+  		left_field = init_left;
+  		right_field = init_right;
+  		color_field = init_color;
+  		parent_field = init_parent;
+  	}
+  	// ACCESSOR & MUTATOR
+  	Item& data();
+  	RBNode*& left();
+  	RBNode*& right();
+  	Color color();
+  	RBNode*& parent();
+  	void set_data(const Item& new_data);
+  	void set_left(RBNode* new_left);
+  	void set_right(RBNode* new_right);
+  	void set_color(Color new_color);
+  	void set_parent(RBNode* new_parent);
+  	const Item& data() const;
+  	const RBNode* left() const;
+  	const RBNode* right() const;
+  	const Color color() const;
+  	const RBNode* parent() const;
+  	bool is_leaf() const;
+  	friend class RBTree;
+  };
+  template<class Item>
+  bool RBNode<Item>::is_leaf() const {
+  	return (left_field == NULL) && (right_field == NULL);
+  }
+
+  RBTree::RBTree() {
+  	root = NULL;
+  	items = 0;
+  	//Setup "NIL" node
+  	NIL = new RBNode<int>();
+  	NIL -> set_color(RBNode<int>::BLACK);
+  }
+
+  RBTree::~RBTree() {
+  	//Free memory of nodes
+  	if (root != NULL)
+  	{
+  		dealloc(root);
+  		root = NULL;
+  	}
+  	//Free "NIL" node
+  	if (NIL != NULL)
+  	{
+  		delete NIL;
+  		NIL = NULL;
+  	}
+  }
+
+  void RBTree::dealloc(RBNode<int>* n) {
+  	if (n != NULL && n != NIL)
+  	{
+  		dealloc(n -> left());
+  		dealloc(n -> right());
+  		delete n;
+  	}
+  }
+
+  void RBTree::printNode(ostream& out, RBNode<int>* r, int depth) {
+  	if (r != NULL && r != NIL)
+  	{
+  		printNode(out, r -> right(), depth + 1);
+  		cout << setw(4*depth) << "" << r -> data() << "(" << r -> color() << ")" << endl;
+  		printNode(out, r -> left(), depth + 1);
+  	}
+  }
+
+  void RBTree::printTree() {
+  	printNode(cout, root, 0);
+  	cout << endl;
+  }
+
+  RBNode<int>* RBTree::getSibling(RBNode<int>* n) {
+  	//Return the sibling node of current node
+  	if (n -> parent())
+  	{
+  		if (n == (n -> parent() -> left()))
+  		{
+  			return (n -> parent() -> right());
+  		} else {
+  			return (n -> parent() -> left());
+  		}
+  	}
+  	return NULL;
+  }
+
+  RBNode<int>* RBTree::getAunt(RBNode<int>* n) {
+  	//Return Aunt (Sibling of n's parent node)
+  	return getSibling(n -> parent());
+  }
+
+  RBNode<int>* RBTree::getGrandparent(RBNode<int>* n) {
+  	//Return Grandparent of current node
+  	if (n -> parent())
+  	{
+  		return (n -> parent() -> parent());
+  	}
+  	return NULL;
+  }
+
+  void RBTree::rotateLeft(RBNode<int>* n) {
+  	//Check if it's top node
+  	if (n -> parent() == NULL)
+  	{
+  		root = n;
+  		return;
+  	}
+
+  	RBNode<int>* grandParent = getGrandparent(n);
+  	RBNode<int>* parent = n -> parent();
+  	RBNode<int>* y = n -> left();
+
+  	//Set parent's right node to be your left node (Rotate left)
+  	parent -> set_right(y);
+
+  	//Update y's parent
+  	if (y != NIL)
+  	{
+  		y -> set_parent(parent);
+  	}
+
+  	//Switch parent
+  	n -> set_left(parent);
+  	parent -> set_parent(n);
+
+  	//Update root if necessary
+  	if (root == parent)
+  	{
+  		root = n;
+  	}
+  	//Fix grandParent relationship
+  	n -> set_parent(grandParent);
+  	if (grandParent != NULL)
+  	{
+  		if (grandParent -> left() == parent)
+  		{
+  			grandParent -> set_left(n);
+  		} else {
+  			grandParent -> set_right(n);
+  		}
+  	}
+  }
+
+  void RBTree::rotateRight(RBNode<int>* n) {
+  	RBNode<int>* grandParent = getGrandparent(n);
+  	RBNode<int>* parent = n -> parent();
+  	RBNode<int>* y = n -> right();
+
+  	//Set parent's left to be your right node (Rotate Right)
+  	parent -> set_left(y);
+
+  	//Adjust parent
+  	if (y != NIL)
+  	{
+  		y -> set_parent(parent);
+  	}
+
+  	//Swap n's position with parent
+  	n -> set_right(parent);
+  	parent -> set_parent(n);
+
+  	//Adjust root if needed
+  	if (root == parent)
+  	{
+  		root = n;
+  	}
+
+  	//Adjust grandparent relationship
+  	n -> set_parent(grandParent);
+  	if (grandParent != NULL)
+  	{
+  		if (grandParent -> left() == parent)
+  		{
+  			grandParent -> set_left(n);
+  		} else {
+  			grandParent -> set_right(n);
+  		}
+  	}
+  }
+
+  void RBTree::insert(int value) {
+  	//Insert as root
+  	if (root == NULL)
+  	{
+  		root = new RBNode<int>(value);
+  		//Mark as "Black" to match the Red Black Tree Requirement
+  		root -> set_color(RBNode<int>::BLACK);
+  		root -> set_left(NIL);
+  		root -> set_right(NIL);
+  	} else {
+  	//Insert as sub node
+  		insert(root,value);
+  	}
+  	items++;
+  }
+
+  void RBTree::insert(RBNode<int>* n, int value) {
+  	//Find the place to insert using binary search
+  	if (n -> data() >= value)
+  	{
+  		if (n -> left() != NIL)
+  		{
+  			//Go to next node
+  			insert(n -> left(), value);
+  		} else {
+  			//Insert at current location
+  			//Default RED
+  			RBNode<int>* t = new RBNode<int>(value);
+  			t -> set_data(value);
+  			t -> set_parent(n);
+  			t -> set_left(NIL);
+  			t -> set_right(NIL);
+  			n -> set_left(t);
+  			//Fix the tree color and places
+  			fixTree(t);
+  		}
+  	} else {
+  		if (n -> right() != NIL)
+  		{
+  			insert(n -> right(), value);
+  		} else {
+  			//Insert at current location
+  			//Default RED
+  			RBNode<int>* t = new RBNode<int>(value);
+  			t -> set_data(value);
+  			t -> set_parent(n);
+  			t -> set_left(NIL);
+  			t -> set_right(NIL);
+  			n -> set_right(t);
+  			fixTree(t);
+  		}
+  	}
+  }
+
+  void RBTree::fixTree(RBNode<int>* n) {
+  	//n is root
+  	//Update color and root pointer
+  	if (n -> parent() == NULL)
+  	{
+  		root = n;
+  		n -> set_color(RBNode<int>::BLACK);
+  		return;
+  	}
+
+  	//Parent is RED
+  	if (n -> parent() -> color() == RBNode<int>::RED)
+  	{
+  		RBNode<int>* aunt = getAunt(n);
+  		if (aunt != NULL)
+  		{
+  			//Aunt is also RED
+  			if (aunt -> color() == RBNode<int>::RED)
+  			{
+  				//Adjust parent's color to BLACK
+  				n -> parent() -> set_color(RBNode<int>::BLACK);
+  				//Adjust aunt's color to BLACK
+  				aunt -> set_color(RBNode<int>::BLACK);
+
+  				//Adjust grandparent's color to RED
+  				RBNode<int>* grandParent = getGrandparent(n);
+  				if (grandParent)
+  				{
+  					grandParent -> set_color(RBNode<int>::RED);
+  					//Fix tree upward
+  					fixTree(grandParent);
+  				}
+  			} else {
+  				//Aunt is BLACK
+  				if (n -> parent() -> right() == n && getGrandparent(n) -> left() == n -> parent())
+  				{
+  					//n is the right node and n's parent is grandparent's left node
+  					//Perform rotation
+  					rotateLeft(n);
+  					rotateRight(n);
+  					//Adjust n's color to BLACK
+  					n -> set_color(RBNode<int>::BLACK);
+  					//Flip sub nodes' color to RED
+  					n -> left() -> set_color(RBNode<int>::RED);
+  					n -> right() -> set_color(RBNode<int>::RED);
+  				} else if (n -> parent() -> left() == n && getGrandparent(n) -> right() == n -> parent()) {
+  					//n is the right node and n's parent is grandparent's right node
+  					//Rotate right first and then rotate the branch to left
+  					rotateRight(n);
+  					rotateLeft(n);
+
+  					//Adjust colors
+  					n -> set_color(RBNode<int>::BLACK);
+  					n -> left() -> set_color(RBNode<int>::RED);
+  					n -> right() -> set_color(RBNode<int>::RED);
+  				} else if (n -> parent() -> left() == n && getGrandparent(n) -> left() == n -> parent()) {
+  					//n is parent's left node and parent is grandparent's left node
+  					//adjust parent's color to BLACK and grandparent's Color to RED
+  					n -> parent() -> set_color(RBNode<int>::BLACK);
+  					getGrandparent(n) -> set_color(RBNode<int>::RED);
+  					//Perform the rotation on n's parent
+  					rotateRight(n -> parent());
+  				} else if (n -> parent() -> right() == n && getGrandparent(n) -> right() == n -> parent()) {
+  					//n is parent's right node and parent is grandparent's right node
+  					//adjust parent's color to BLACK and grandparent's Color to RED
+  					n -> parent() -> set_color(RBNode<int>::BLACK);
+  					getGrandparent(n) -> set_color(RBNode<int>::RED);
+
+  					//Since parent is on the right, we perform left rotation
+  					rotateLeft(n -> parent());
+  				}
+  			}
+  		}
+  	}
+  }
+
+  bool RBTree::contains(const int& value) {
+  	if (root == NULL)
+  	{
+  		return false;
+  	}
+
+  	if (root -> data() == value)
+  	{
+  		return true;
+  	} else {
+  		if (root -> data() > value)
+  		{
+  			return contains(root -> left(), value);
+  		} else {
+  			return contains(root -> right(), value);
+  		}
+  	}
+  }
+
+  bool RBTree::contains(RBNode<int>* n, const int& value) {
+  	if (n == NULL)
+  	{
+  		return false;
+  	}
+
+  	if (n -> data() == value)
+  	{
+  		return true;
+  	} else {
+  		if (n -> data() > value)
+  		{
+  			return contains(n -> left(), value);
+  		} else {
+  			return contains(n -> right(), value);
+  		}
+  	}
+  }
+
+  bool RBTree::empty() {
+  	return (items == 0);
+  }
+
+  int RBTree::size() {
+  	return items;
+  }
+
+  int RBTree::height() {
+  	return height(root,false);
+  }
+
+  int RBTree::black_height() {
+  	return height(root,true);
+  }
+
+  int RBTree::height(RBNode<int>* n, bool blackOnly) {
+  	if (!n)
+  	{
+  		return 0;
+  	}
+  	if (blackOnly && n -> color() != RBNode<int>::BLACK)
+  	{
+  		return max(height(n->left(), blackOnly),height(n->right(), blackOnly));
+  	}
+  	return 1 + max(height(n->left(), blackOnly),height(n->right(), blackOnly));
+  }

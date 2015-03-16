@@ -1,0 +1,115 @@
+COEN 70
+Mar 3
+==
+
+insert(int x, node*& p) {
+	if (p == NULL) {
+		p = new node(x);
+		return;
+	}
+	if (x >= p -> d) {
+		insert(x,p -> rc);
+	} else {
+		insert(x,p->lc);
+	}
+	return;
+}
+
+remove(int x, node*& p) {
+	if (!p) {
+		return;
+	}
+	if(p -> d > x) {
+		remove(x, p -> lc);
+	} else if ( p -> d < x) {
+		remove(x, p -> rc);
+	} else {
+		if(p -> lc != NULL && p -> rc != NULL) {
+			p -> d = findMax(p -> lc);
+			remove(p -> d, p -> lc);
+		} else {
+			node* t = p;
+			if(p -> lc) {
+				p = p -> lc;
+			} else {
+				p = p -> rc;
+			}
+			delete t;
+		}
+	}
+}
+=======================================
+Induction
+Sum of i from 1 to N = ((n+1)n)/2
+
+Prove by induction
+	Base Case:
+		N = 1
+		Sum = 1
+			RHS:((1+1)*1)/2 = 1
+	Inductive Steps:
+		Assume true for N = k -> ((k+1)k)/2
+		Prove true for N = k+1
+		LHS = ((k+1)k)/2 + (k + 1) = (k^2+3k+2)/2 = (k+2)(k+1)/2 = RHS
+		RHS = ((k+2)(k+1))/2
+	Since Base Case is true, use prove by induction, "Sum of i from 1 to N = ((n+1)n)/2" is true for all numbers.
+
+Structural Induction
+     _
+	/ \
+   / o \
+  /_1_1_\
+
+  1 + x + y == 1 + size(left) + size(right)
+
+int size(node* p) {
+	if(p == NULL)
+		return 0;
+	else
+		return 1 + size(p -> lc) + size(p -> rc);
+}
+
+--
+
+Full + Complete Binary Tree has N leaves, then there are 2N - 1 nodes;
+
+1 node -> Leaf -> 2(1) - 1 = 1
+
+L -> x leaves -> 2x - 1 nodes
+R -> y leaves -> 2y - 1 nodes
+
+2(x+y) - 1 = nodes in T
+
+2x - 1 + 2y - 1 + 1 = 2x + 2y - 1
+RHS == 2x + 2y - 1 == LHS
+
+--
+nodes = edges(links) + 1
+
+1 node - 0 edges -> 0 + 1 = 1 node
+
+assume true for Left and Right
+	L -> x edges -> x + 1 nodes
+	R -> y edges -> y + 1 nodes
+
+LHS = x + y + 2 + 1 = x + y + 3 nodes
+RHS = x + 1 + y + 1 + 1 = x + y + 3 nodes
+LHS == RHS so true
+--
+Full + Complete Binary tree of height h
+there are 2^(h+1) - 1 nodes
+
+Base case:
+	1 node -> 0 height -> 2^(0+1) - 1 = 1
+
+Asssume true for L,R
+	L -> x height -> 2^(x+1)-1 nodes
+	R -> y height -> 2^(y+1)-1 nodes
+
+	x = y since it's FULL
+	Height of T = x + 1  = y + 1
+	so 2^(x+1+1) - 1 nodes
+	2^(x+2) - 1
+
+	2^(x+1)-1 + 2^(x+1) -1 + 1 = 2^(x+1)+2^(x+1) - 1 = 2^(x+2) - 1
+	

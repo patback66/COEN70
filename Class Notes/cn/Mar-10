@@ -1,0 +1,129 @@
+COEN 70
+Mar 10
+==
+**There might be an easier way to solve a problem.
+
+Open Notes
+	*Paper Only
+~1:50 hours
+
+-----------
+BFS
+
+queue q;
+q.push(r);
+while(!q.empty()) {
+	node* p = q.top();
+	q.pop();
+
+	if (p != NULL) {
+		//Do STH
+		q.push(p -> lc);
+		q.push(p -> rc);
+	}
+}
+---
+DFS
+
+1.
+stack s;
+s.push(r);
+while(!s.empty()) {
+	node* p = s.top();
+	s.pop();
+	if(p!=NULL) {
+		s.push(p -> rc);
+		s.push(p -> lc);
+	}
+}
+
+pre-order
+
+//Back Tracking
+void preOrder(node* r) {
+	stack s;
+	node* p = r;
+	while(!s.empty() || p != NULL) {
+		if(p!=NULL) {
+			//DO STH
+			s.push(p);
+			p = p -> lc;
+		} else {
+			p = p.pop();
+			s.top();
+			p = p -> rc;
+		}
+	}
+}
+
+void inOrder(node* r) {
+	stack s;
+	node* p = r;
+	while(!s.empty() || p != NULL) {
+		if(p != NULL) {
+			s.push(p);
+			p = p -> lc;
+		} else {
+			p = p.pop();
+			s.top();
+			//DO STH
+			p = p -> rc;
+		}
+	}
+}
+
+void postOrder(node* r) {
+	stack s;
+	node* p = r;
+	while(!s.empty() || p != NULL) {
+		if(p != NULL) {
+			s.push(p);
+			p = p -> lc;
+		} else {
+			while(!s.empty() && p == s.top() -> rc) {
+				p = s.top();
+				s.pop();
+				//Do STH
+			}
+			p = s.empty()?NULL:s.top()->rc;
+		}
+	}
+}
+
+==
+Graph
+
+printDFS(const vertex& u, const vertex& v) {
+	stack<vertex> s;
+	queue<vertex> n;
+
+	bool found = false;
+
+	vertex a;
+	vertex b;
+
+	this -> clearVisited(); //Help
+	s.push(u);
+	cout << "DFS(" << u << "," << v << ")";
+	do {
+		a = s.pop();
+		if (a == v) {
+			cout << " -> " << a;
+			found = true;
+		} else {
+			if (!(this -> isVisited(a)))
+			{
+				this -> visited(a);
+				cout << " - " << a;
+				this -> getNeighbors(a, n);
+				while(!n.empty()) {
+					b = n.pop();
+					if (!(this -> isVisited(b)))
+					{
+						s.push(b);
+					}
+				}
+			}
+		}
+	} while (!s.empty());
+}

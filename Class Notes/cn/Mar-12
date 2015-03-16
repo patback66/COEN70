@@ -1,0 +1,64 @@
+COEN 70
+Mar 12
+==
+Class, Struct
+	Templates
+	Constructors(default, non_default, copy)
+	Destructor
+	operators +,-,*,/,<,>,==,++,--,<<,>>
+	public/private/protected
+
+	Inheritance
+	Virtual
+	Polymorphism
+		Destructor must be virtual
+Data Structure
+	Array (static,dynamic)
+		+ Quick Access O(1) if you know the index, search O(n)
+		- size change O(n)
+	Link-list (Single, Double, Circular)
+		+ size change O(1)
+		- No Quick Access, Search O(n)
+	Tree (Binary, BST, 2 - 3, heap, rb)
+		+ Access/Search O(log n)
+
+	ADT (Assume exists)
+		Bag (Keyed, Set)
+		List (Ordered)
+			Iterators
+		BST (binary tree)
+		AVL (bst)
+
+		2-3 (rb)
+			Rotation is easier
+			//Implementation easier
+			A little bit faster
+
+	BFS
+	DFS
+
+	Advantage of ADT
+	Disadvantage of ADT
+
+	**Full ADT implementation
+		*Consider subclass or wrapper of exist class
+
+	You can say call left rotate
+	Call AVL Rotation
+
+	Check completeness
+		by default assume all the node is full
+		when encounter a node with only left node,
+		keep going and check if all the rest nodes are leaf
+Induction Prove
+	|V| = |E| + 1
+	Base Case
+		E = 0, V = 1
+	Induction
+		True for some |E| = k
+			|V| = k + 1
+		then for |E| = k + 1
+			LHS: from statement we get |V| = (k + 1) + 1 = K + 2
+			RHS: from k, |V| = k + 1 + 1 = K + 2
+Office
+	6:00 PM Monday - Benna Hall
