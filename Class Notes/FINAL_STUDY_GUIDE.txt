@@ -220,7 +220,6 @@ RB/2-3 Trees
     x, y (x < y)
   Three Links
     left < x, x <= middle < y, y < right
-  [REF:OneNote - Mar 5]
 
   RBTree
     1. All the path need to have same number of black tree
