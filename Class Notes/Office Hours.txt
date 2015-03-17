@@ -1,0 +1,55 @@
+5 questions
+Syntax/Implementation
+Proof
+Design
+
+RB vs 2-3
+    -They are the same
+    -Lab wasn't recursively
+    -We rely on recursive fixes - go up to the root
+    
+Friend inside template - Rule of 3
+    -Output operator
+        -friend ostreamm& operator << <>(const ostream& cout
+        
+    template <Class T>
+    class A {
+        public:
+            friend void f<>(const A<T>&);
+    }
+    
+Find if a tree is a max/min heap
+    don't try to check for all - break it up
+    We know how to check inf it's a min heap (besides being complete)
+    min heap
+        p->d < p->rc->d &&
+        p->d < p->lc->d
+                OR
+        (p->d > p->rc->d) || (p->d> p->lc->d) 
+            return false
+        
+   return  minheap(p->lc); //true to return true
+           && minheap(p->rc)
+           
+   if((p->rc != NULL && p->rc->d<p->d)||(p->lc!=NULL && p->lc->d < p->d)
+   
+    bool isHeap(node* p) {
+        if(p->lc != NULL && p->lc->d < p->d)
+            return maxheap(p);
+        else
+            return minheap(p);
+    
+   }
+   
+class pm : class public st
+
+destructor
+for(int i = 0; i < v.size(); i++) {
+    n* teamp v[i]->l;
+    while(temp!=NULL) {
+        n* d = temp;
+        temp = temp->l;
+        delete d;
+    }
+    delete v;
+}

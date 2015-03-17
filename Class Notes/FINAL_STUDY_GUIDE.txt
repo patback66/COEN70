@@ -1,4 +1,23 @@
+Matthew Koken
+
+Study Guide: Overview
+  Quick Overview: What do I need to know?
+  Ctor/Dtor/ Copy constructors
+  Friend
+  Polymorphism
+  Induction
+  RB/2-3 Trees
+  Traversals
+  ADT: queue
+  ADT: Priority Queue
+  ADT: BST
+  ADT: AVL
+  ADT: RB Tree
+  Notes from Office Hours
+
+
 Quick Overview: What do I need to know?
+/////////////
   Class, Struct
   	Templates
   	Constructors(default, non_default, copy)
@@ -91,12 +110,13 @@ Friend
 
   //need to make a function prototype
   template <class T>
-  ostream& operator<< (ostrem &, const set<T>&);
+  ostream& operator<< (ostream &, const set<T>&);
 
   template <class T>
   class set{
       public:
           friend ostream& operator<< < >(ostream& out, const set &);
+          //THE <> IS IMPORTANT
   }
 
 Polymorphism
@@ -253,124 +273,124 @@ RB/2-3 Trees
 
 Traversals
 /////////////
------------
-BFS
-
-queue q;
-q.push(r);
-while(!q.empty()) {
-	node* p = q.top();
-	q.pop();
-
-	if (p != NULL) {
-		//Do STH
-		q.push(p -> lc);
-		q.push(p -> rc);
-	}
-}
----
-DFS
-
-1.
-stack s;
-s.push(r);
-while(!s.empty()) {
-	node* p = s.top();
-	s.pop();
-	if(p!=NULL) {
-		s.push(p -> rc);
-		s.push(p -> lc);
-	}
-}
-
-pre-order
-
-//Back Tracking
-  void preOrder(node* r) {
-  	stack s;
-  	node* p = r;
-  	while(!s.empty() || p != NULL) {
-  		if(p!=NULL) {
-  			//DO STH
-  			s.push(p);
-  			p = p -> lc;
-  		} else {
-  			p = p.pop();
-  			s.top();
-  			p = p -> rc;
-  		}
+  -----------
+  BFS
+  
+  queue q;
+  q.push(r);
+  while(!q.empty()) {
+  	node* p = q.top();
+  	q.pop();
+  
+  	if (p != NULL) {
+  		//Do STH
+  		q.push(p -> lc);
+  		q.push(p -> rc);
   	}
   }
-
-  void inOrder(node* r) {
-  	stack s;
-  	node* p = r;
-  	while(!s.empty() || p != NULL) {
-  		if(p != NULL) {
-  			s.push(p);
-  			p = p -> lc;
-  		} else {
-  			p = p.pop();
-  			s.top();
-  			//DO STH
-  			p = p -> rc;
-  		}
+  ---
+  DFS
+  
+  1.
+  stack s;
+  s.push(r);
+  while(!s.empty()) {
+  	node* p = s.top();
+  	s.pop();
+  	if(p!=NULL) {
+  		s.push(p -> rc);
+  		s.push(p -> lc);
   	}
   }
-
-  void postOrder(node* r) {
-  	stack s;
-  	node* p = r;
-  	while(!s.empty() || p != NULL) {
-  		if(p != NULL) {
-  			s.push(p);
-  			p = p -> lc;
-  		} else {
-  			while(!s.empty() && p == s.top() -> rc) {
-  				p = s.top();
-  				s.pop();
-  				//Do STH
-  			}
-  			p = s.empty()?NULL:s.top()->rc;
-  		}
-  	}
-  }
-
-  //Graphs
-  printDFS(const vertex& u, const vertex& v) {
-  	stack<vertex> s;
-  	queue<vertex> n;
-
-  	bool found = false;
-
-  	vertex a;
-  	vertex b;
-
-  	this -> clearVisited(); //Help
-  	s.push(u);
-  	cout << "DFS(" << u << "," << v << ")";
-  	do {
-  		a = s.pop();
-  		if (a == v) {
-  			cout << " -> " << a;
-  			found = true;
-  		} else {
-  			if (!(this -> isVisited(a)))
-  			{
-  				this -> visited(a);
-  				cout << " - " << a;
-  				this -> getNeighbors(a, n);
-  				while(!n.empty()) {
-  					b = n.pop();
-  					if (!(this -> isVisited(b)))
-  					{
-  						s.push(b);
-  					}
-  				}
-  			}
-  		}
-  	} while (!s.empty());
-  }
+  
+  pre-order
+  
+  //Back Tracking
+    void preOrder(node* r) {
+    	stack s;
+    	node* p = r;
+    	while(!s.empty() || p != NULL) {
+    		if(p!=NULL) {
+    			//DO STH
+    			s.push(p);
+    			p = p -> lc;
+    		} else {
+    			p = p.pop();
+    			s.top();
+    			p = p -> rc;
+    		}
+    	}
+    }
+  
+    void inOrder(node* r) {
+    	stack s;
+    	node* p = r;
+    	while(!s.empty() || p != NULL) {
+    		if(p != NULL) {
+    			s.push(p);
+    			p = p -> lc;
+    		} else {
+    			p = p.pop();
+    			s.top();
+    			//DO STH
+    			p = p -> rc;
+    		}
+    	}
+    }
+  
+    void postOrder(node* r) {
+    	stack s;
+    	node* p = r;
+    	while(!s.empty() || p != NULL) {
+    		if(p != NULL) {
+    			s.push(p);
+    			p = p -> lc;
+    		} else {
+    			while(!s.empty() && p == s.top() -> rc) {
+    				p = s.top();
+    				s.pop();
+    				//Do STH
+    			}
+    			p = s.empty()?NULL:s.top()->rc;
+    		}
+    	}
+    }
+  
+    //Graphs
+    printDFS(const vertex& u, const vertex& v) {
+    	stack<vertex> s;
+    	queue<vertex> n;
+  
+    	bool found = false;
+  
+    	vertex a;
+    	vertex b;
+  
+    	this -> clearVisited(); //Help
+    	s.push(u);
+    	cout << "DFS(" << u << "," << v << ")";
+    	do {
+    		a = s.pop();
+    		if (a == v) {
+    			cout << " -> " << a;
+    			found = true;
+    		} else {
+    			if (!(this -> isVisited(a)))
+    			{
+    				this -> visited(a);
+    				cout << " - " << a;
+    				this -> getNeighbors(a, n);
+    				while(!n.empty()) {
+    					b = n.pop();
+    					if (!(this -> isVisited(b)))
+    					{
+    						s.push(b);
+    					}
+    				}
+    			}
+    		}
+    	} while (!s.empty());
+    }
 
 ADT: queue
 /////////////
@@ -1360,4 +1380,62 @@ ADT: RB Tree
   		return max(height(n->left(), blackOnly),height(n->right(), blackOnly));
   	}
   	return 1 + max(height(n->left(), blackOnly),height(n->right(), blackOnly));
+  }
+  
+Notes from Office Hours
+/////////////
+  5 questions
+  Syntax/Implementation
+  Proof
+  Design
+  
+  RB vs 2-3
+      -They are the same
+      -Lab wasn't recursively
+      -We rely on recursive fixes - go up to the root
+      
+  Friend inside template - Rule of 3
+      -Output operator
+          -friend ostreamm& operator << <>(const ostream& cout
+          
+      template <Class T>
+      class A {
+          public:
+              friend void f<>(const A<T>&);
+      }
+      
+  Find if a tree is a max/min heap
+      don't try to check for all - break it up
+      We know how to check inf it's a min heap (besides being complete)
+      min heap
+          p->d < p->rc->d &&
+          p->d < p->lc->d
+                  OR
+          (p->d > p->rc->d) || (p->d> p->lc->d) 
+              return false
+          
+     return  minheap(p->lc); //true to return true
+             && minheap(p->rc)
+             
+     if((p->rc != NULL && p->rc->d<p->d)||(p->lc!=NULL && p->lc->d < p->d)
+     
+      bool isHeap(node* p) {
+          if(p->lc != NULL && p->lc->d < p->d)
+              return maxheap(p);
+          else
+              return minheap(p);
+      
+     }
+     
+  class pm : class public st
+  
+  destructor
+  for(int i = 0; i < v.size(); i++) {
+      n* teamp v[i]->l;
+      while(temp!=NULL) {
+          n* d = temp;
+          temp = temp->l;
+          delete d;
+      }
+      delete v;
   }
